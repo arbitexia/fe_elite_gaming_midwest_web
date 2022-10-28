@@ -5,16 +5,11 @@ import {
   UIImage,
 } from '@/components/UI';
 import { Box } from '@mui/material';
-import {
-  TextBox,
-  TextFieldWrapper,
-  LoginButton,
-  LinkText,
-} from './index.styles';
+import { TextBox, TextFieldWrapper, LoginButton, LinkText } from './ui';
 
 function AuthLogin() {
   return (
-    <UIFlexSpaceBox sx={{ alignItems: 'center', width: '100%' }} maxWidth="lg">
+    <UIFlexSpaceBox sx={{ flexWrap: 'wrap', width: '100%' }} maxWidth="lg">
       <UIFlexColumnBox>
         <UIImage src="images/icons/logo.svg" width={256} height={245} />
         <TextBox>

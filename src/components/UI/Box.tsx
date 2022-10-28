@@ -12,7 +12,6 @@ export const UIFlexSpaceBox = styled(Box)(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  flexWrap: 'wrap',
   gap: theme.spacing(1),
 }));
 
