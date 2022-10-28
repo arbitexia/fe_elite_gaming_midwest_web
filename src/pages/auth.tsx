@@ -8,6 +8,7 @@ import {
   AuthVerifyModule,
 } from '@/modules/Auth';
 import { Typography, Box } from '@mui/material';
+import { styled, Container, Toolbar, ContainerProps } from '@mui/material';
 
 const AuthPage = () => {
   const router = useRouter();
@@ -33,19 +34,24 @@ const AuthPage = () => {
     }
   }, [router.query]);
 
+  const AuthContentWrapper = styled(Box)(({ theme }) => ({
+    backgroundImage: `url(/images/login/bg.png)`,
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    minHeight: '100vh',
+    width: '100%',
+  }));
+
   return (
-    <AuthLayout>
-      <UIFlexCenterBox>
-        {currModule === 0 && <AuthLoginModule />}
-        {currModule === 1 && <AuthSignupModule />}
-        {currModule === 2 && <AuthVerifyModule />}
-        <Box>
-          <Typography component="a" href="/">
-            Click here to back to home
-          </Typography>
-        </Box>
-      </UIFlexCenterBox>
-    </AuthLayout>
+    <AuthContentWrapper>
+      <AuthLayout>
+        <UIFlexCenterBox>
+          {currModule === 0 && <AuthLoginModule />}
+          {currModule === 1 && <AuthSignupModule />}
+          {currModule === 2 && <AuthVerifyModule />}
+        </UIFlexCenterBox>
+      </AuthLayout>
+    </AuthContentWrapper>
   );
 };
 
