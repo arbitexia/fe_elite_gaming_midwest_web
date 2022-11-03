@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppSEO } from '@/components/App';
-import { UIAppLayoutWrapper, UIContainer } from '@/components/UI';
+import { UIAuthContainer, UIAuthLayoutWrapper } from '@/components/UI';
 
 interface Props {
   bg?: string;
@@ -11,10 +11,10 @@ interface Props {
 
 const AuthLayout = (props: Props) => {
   return (
-    <UIAppLayoutWrapper sx={{ background: props.bg }}>
+    <UIAuthLayoutWrapper sx={{ background: props.bg }}>
       <AppSEO title={props.title || ''} description={props.description || ''} />
-      <UIContainer sx={{ py: 3 }}>{props.children}</UIContainer>
-    </UIAppLayoutWrapper>
+      <UIAuthContainer>{props.children}</UIAuthContainer>
+    </UIAuthLayoutWrapper>
   );
 };
 

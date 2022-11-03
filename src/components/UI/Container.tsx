@@ -1,10 +1,5 @@
-import { styled, Container, Toolbar, ContainerProps } from '@mui/material';
-
-const UIContentWrapper = styled(Container)(({ theme }) => ({
-  padding: theme.spacing(2, 6),
-  gap: theme.spacing(3),
-  width: '100%',
-}));
+import { UIContentWrapper, UIAuthContentWrapper } from './ui';
+import { Toolbar, ContainerProps } from '@mui/material';
 
 export const UIContainer = ({ children, ...rest }: ContainerProps) => {
   return (
@@ -13,4 +8,8 @@ export const UIContainer = ({ children, ...rest }: ContainerProps) => {
       {children}
     </UIContentWrapper>
   );
+};
+
+export const UIAuthContainer = ({ children, ...rest }: ContainerProps) => {
+  return <UIAuthContentWrapper {...rest}>{children}</UIAuthContentWrapper>;
 };

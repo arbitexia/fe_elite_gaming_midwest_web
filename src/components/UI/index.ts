@@ -5,6 +5,6 @@ export {
   UIFlexWrapBox,
 } from './Box';
 export { UINavButton } from './Button';
-export { UIContainer } from './Container';
+export { UIContainer, UIAuthContainer } from './Container';
 export { UIImage } from './Image';
-export { UIAppLayoutWrapper } from './Wrapper';
+export { UIAppLayoutWrapper, UIAuthLayoutWrapper } from './Wrapper';
