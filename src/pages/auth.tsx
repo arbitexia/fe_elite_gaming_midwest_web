@@ -34,24 +34,12 @@ const AuthPage = () => {
     }
   }, [router.query]);
 
-  const AuthContentWrapper = styled(Box)(({ theme }) => ({
-    backgroundImage: `url(/images/login/bg.png)`,
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    minHeight: '100vh',
-    width: '100%',
-  }));
-
   return (
-    <AuthContentWrapper>
-      <AuthLayout>
-        <UIFlexCenterBox>
-          {currModule === 0 && <AuthLoginModule />}
-          {currModule === 1 && <AuthSignupModule />}
-          {currModule === 2 && <AuthVerifyModule />}
-        </UIFlexCenterBox>
-      </AuthLayout>
-    </AuthContentWrapper>
+    <AuthLayout>
+      {currModule === 0 && <AuthLoginModule />}
+      {currModule === 1 && <AuthSignupModule />}
+      {currModule === 2 && <AuthVerifyModule />}
+    </AuthLayout>
   );
 };
 

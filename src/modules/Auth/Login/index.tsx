@@ -1,21 +1,19 @@
-import {
-  UIFlexCenterBox,
-  UIFlexColumnBox,
-  UIFlexSpaceBox,
-  UIImage,
-} from '@/components/UI';
+import { UIFlexCenterBox, UIFlexSpaceBox } from '@/components/UI';
 import { Box } from '@mui/material';
-import { TextBox, TextFieldWrapper, LoginButton, LinkText } from './ui';
+import {
+  UITextFieldWrapper,
+  UIAuthButton,
+  UILinkText,
+} from '@/modules/Auth/ui';
+import { AuthLogo } from '@/components/Auth';
 
 function AuthLogin() {
   return (
-    <UIFlexSpaceBox sx={{ flexWrap: 'wrap', width: '100%' }} maxWidth="lg">
-      <UIFlexColumnBox>
-        <UIImage src="images/icons/logo.svg" width={256} height={245} />
-        <TextBox>
-          Maximizing Your Revenue by Providing the Most Detailed Reporting
-        </TextBox>
-      </UIFlexColumnBox>
+    <UIFlexSpaceBox
+      sx={{ flexWrap: 'wrap', width: '100%', minHeight: '100vh' }}
+      maxWidth="lg"
+    >
+      <AuthLogo />
       <UIFlexCenterBox>
         <Box>
           <Box
@@ -26,14 +24,16 @@ function AuthLogin() {
             Log in
           </Box>
           <Box justifyContent={'center'} flexDirection="row" display={'flex'}>
-            <TextFieldWrapper placeholder="Enter phone number" />
+            <UITextFieldWrapper placeholder="Enter phone number" />
           </Box>
-          <LoginButton>Log in</LoginButton>
-          <UIFlexSpaceBox sx={{ marginTop: '100px', width: 350, mx: 'auto' }}>
-            <LinkText sx={{ color: '#1bac8e' }}>+ Create New Account</LinkText>
-            <LinkText sx={{ color: '#B7B7B7' }}>
+          <UIAuthButton>Log in</UIAuthButton>
+          <UIFlexSpaceBox sx={{ marginTop: 8, width: 350, mx: 'auto' }}>
+            <UILinkText sx={{ color: '#1bac8e' }} href="/auth?path=signup">
+              + Create New Account
+            </UILinkText>
+            <UILinkText sx={{ color: '#B7B7B7' }}>
               Login as Administrator
-            </LinkText>
+            </UILinkText>
           </UIFlexSpaceBox>
         </Box>
       </UIFlexCenterBox>
