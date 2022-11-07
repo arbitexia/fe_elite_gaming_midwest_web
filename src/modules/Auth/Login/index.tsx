@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { UIFlexCenterBox, UIFlexSpaceBox } from '@/components/UI';
 import { Box } from '@mui/material';
 import { useFormik } from 'formik';
@@ -9,8 +9,11 @@ import {
 } from '@/modules/Auth/ui';
 import { AuthLogo, PhoneMask } from '@/components/Auth';
 import { LoginSchema } from '@/utils/yupSchema';
+import { useAppToast } from '@/providers';
 
 function AuthLogin() {
+  const showToast = useAppToast();
+  const [errorMsg, setErrorMsg] = useState<string>('');
   const formik = useFormik({
     initialValues: {
       phoneNumber: '',
@@ -18,6 +21,20 @@ function AuthLogin() {
     validationSchema: LoginSchema,
     onSubmit: async (values) => {},
   });
+  useEffect(() => {
+    if (errorMsg) {
+      showToast({
+        severity: 'error',
+        message: errorMsg,
+      });
+    }
+  }, [errorMsg]);
+
+  useEffect(() => {
+    if (formik.errors.phoneNumber) {
+      setErrorMsg(formik?.errors.phoneNumber);
+    }
+  }, [formik]);
 
   return (
     <UIFlexSpaceBox
@@ -43,12 +60,6 @@ function AuthLogin() {
               }}
             />
           </Box>
-          {formik.touched.phoneNumber && formik.errors.phoneNumber && (
-            <Box component={'p'} sx={{ color: 'red', fontSize: '12px' }}>
-              *{formik.errors.phoneNumber}
-            </Box>
-          )}
-
           <UIAuthButton onClick={() => formik.handleSubmit()}>
             Log in
           </UIAuthButton>

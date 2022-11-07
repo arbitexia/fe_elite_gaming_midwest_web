@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { UIFlexSpaceBox } from '@/components/UI';
 import { Box, SxProps } from '@mui/material';
 import { useFormik } from 'formik';
@@ -14,7 +14,10 @@ import {
 import { AuthLogo, PhoneMask } from '@/components/Auth';
 import { SignupSchema } from '@/utils/yupSchema';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { useAppToast } from '@/providers';
+import { Dayjs } from 'dayjs';
 
 const popperSx: SxProps = {
   '& .MuiPaper-root': {
@@ -29,6 +32,10 @@ const popperSx: SxProps = {
 };
 
 function AuthSignup() {
+  const showToast = useAppToast();
+
+  const [errorMsg, setErrorMsg] = useState<string>('');
+
   const formik = useFormik({
     initialValues: {
       phoneNumber: '',
@@ -37,8 +44,29 @@ function AuthSignup() {
       confirmAge: false,
     },
     validationSchema: SignupSchema,
-    onSubmit: async (values) => {},
+    onSubmit: async (values) => {
+      console.log(values);
+    },
   });
+
+  useEffect(() => {
+    if (errorMsg) {
+      showToast({
+        severity: 'error',
+        message: errorMsg,
+      });
+    }
+  }, [errorMsg]);
+
+  useEffect(() => {
+    if (formik.errors.phoneNumber) {
+      setErrorMsg(formik?.errors.phoneNumber);
+    } else if (formik.errors.email) {
+      setErrorMsg(formik?.errors.email);
+    } else if (formik.errors.birthday) {
+      setErrorMsg(formik.errors.birthday);
+    }
+  }, [formik]);
 
   return (
     <UIFlexSpaceBox
@@ -72,11 +100,6 @@ function AuthSignup() {
             }}
           />
         </Box>
-        {formik.touched.phoneNumber && formik.errors.phoneNumber && (
-          <Box component={'p'} sx={{ color: 'red', fontSize: '12px' }}>
-            *{formik.errors.phoneNumber}
-          </Box>
-        )}
         <Box
           justifyContent={'center'}
           flexDirection="row"
@@ -89,11 +112,7 @@ function AuthSignup() {
             type="email"
           />
         </Box>
-        {formik.touched.email && formik.errors.email && (
-          <Box component={'p'} sx={{ color: 'red', fontSize: '12px' }}>
-            *{formik.errors.email}
-          </Box>
-        )}
+
         <Box
           justifyContent={'center'}
           flexDirection="row"
@@ -101,29 +120,17 @@ function AuthSignup() {
           mb={2}
         >
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
+            <MobileDatePicker
               value={formik.values.birthday}
-              onChange={(birth) => {
+              onChange={(birth: Dayjs | null) => {
                 formik.setFieldValue('birthday', birth);
               }}
-              inputFormat="MM/DD/YYYY"
-              renderInput={(params) => <UITextFieldWrapper {...params} />}
-              InputProps={{
-                sx: {
-                  '& .MuiSvgIcon-root': { color: '#89C8C6' },
-                },
-              }}
-              PopperProps={{
-                sx: popperSx,
-              }}
+              renderInput={(params) => (
+                <UITextFieldWrapper {...params} placeholder="Birthday" />
+              )}
             />
           </LocalizationProvider>
         </Box>
-        {formik.touched.birthday && formik.errors.birthday && (
-          <Box component={'p'} sx={{ color: 'red', fontSize: '12px' }}>
-            *{formik.errors.birthday}
-          </Box>
-        )}
 
         <UIFlexSpaceBox mt={4} sx={{ alignItems: 'flex-start' }}>
           <UICheckBox
@@ -138,7 +145,11 @@ function AuthSignup() {
             age, accept the <UILinkText>Terms and Conditions.</UILinkText>
           </UITextBox>
         </UIFlexSpaceBox>
-        <UIAuthButton onClick={() => formik.handleSubmit()}>
+
+        <UIAuthButton
+          onClick={() => formik.handleSubmit()}
+          disabled={!formik.values.confirmAge}
+        >
           Submit
         </UIAuthButton>
       </Box>
