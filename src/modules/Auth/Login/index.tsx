@@ -1,20 +1,32 @@
+import { useRouter } from 'next/router';
 import { UIFlexCenterBox, UIFlexSpaceBox } from '@/components/UI';
 import { Box } from '@mui/material';
 import {
-  UITextFieldWrapper,
-  UIAuthButton,
-  UILinkText,
+  StyledTextFieldWrapper,
+  StyledAuthButton,
+  StyledLinkText,
 } from '@/modules/Auth/ui';
-import { AuthLogo } from '@/components/Auth';
+
+import { AuthLogo } from '@/modules/Auth';
 
 function AuthLogin() {
+  const router = useRouter();
+  const handleLogin = () => {
+    //TODO Send phone number to be and fetch verification code
+    router.push('/auth?path=verify&type=login');
+  };
+  const handleSignup = () => {
+    router.push('/auth?path=signup');
+  };
+  const handleAdmin = () => {
+    //TODO Redirect to Admin auth url
+  };
   return (
     <UIFlexSpaceBox
-      sx={{ flexWrap: 'wrap', width: '100%', minHeight: '100vh' }}
-      maxWidth="lg"
+      sx={{ flexWrap: 'wrap', width: '100%', minHeight: '100vh', gap: 0 }}
     >
       <AuthLogo />
-      <UIFlexCenterBox>
+      <UIFlexCenterBox sx={{ width: '50%' }}>
         <Box>
           <Box
             component={'h1'}
@@ -24,16 +36,16 @@ function AuthLogin() {
             Log in
           </Box>
           <Box justifyContent={'center'} flexDirection="row" display={'flex'}>
-            <UITextFieldWrapper placeholder="Enter phone number" />
+            <StyledTextFieldWrapper placeholder="Enter phone number" />
           </Box>
-          <UIAuthButton>Log in</UIAuthButton>
+          <StyledAuthButton onClick={handleLogin}>Log in</StyledAuthButton>
           <UIFlexSpaceBox sx={{ marginTop: 8, width: 350, mx: 'auto' }}>
-            <UILinkText sx={{ color: '#1bac8e' }} href="/auth?path=signup">
+            <StyledLinkText sx={{ color: '#1bac8e' }} onClick={handleSignup}>
               + Create New Account
-            </UILinkText>
-            <UILinkText sx={{ color: '#B7B7B7' }}>
+            </StyledLinkText>
+            <StyledLinkText sx={{ color: '#B7B7B7' }} onClick={handleAdmin}>
               Login as Administrator
-            </UILinkText>
+            </StyledLinkText>
           </UIFlexSpaceBox>
         </Box>
       </UIFlexCenterBox>

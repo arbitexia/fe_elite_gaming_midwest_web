@@ -5,7 +5,6 @@ import {
   Box,
   Divider,
   Drawer,
-  Container,
   IconButton,
   List,
   ListItem,
@@ -64,6 +63,10 @@ export default function AppNavbar(props: Props) {
       router.push(`/auth?path=${key.toLowerCase()}`);
   };
 
+  const handleLogo = () => {
+    router.push('/');
+  };
+
   return (
     <Box sx={{ display: 'flex' }}>
       <AppBar
@@ -78,7 +81,7 @@ export default function AppNavbar(props: Props) {
           borderRadius: '0px 0px 20px 20px',
         }}
       >
-        <Toolbar component={Container} sx={{ height: '86px' }}>
+        <Toolbar sx={{ height: '86px' }}>
           <IconButton
             aria-label="open drawer"
             edge="start"
@@ -92,6 +95,7 @@ export default function AppNavbar(props: Props) {
               display: { xs: 'none', sm: 'block' },
               cursor: 'pointer',
             }}
+            onClick={handleLogo}
           >
             <UIImage src="images/icons/logo.svg" width={56} height={54} />
           </Box>

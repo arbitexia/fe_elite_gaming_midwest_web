@@ -1,14 +1,11 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { AuthLayout } from '@/layouts';
-import { UIFlexCenterBox } from '@/components/UI';
 import {
   AuthLoginModule,
   AuthSignupModule,
   AuthVerifyModule,
 } from '@/modules/Auth';
-import { Typography, Box } from '@mui/material';
-import { styled, Container, Toolbar, ContainerProps } from '@mui/material';
 
 const AuthPage = () => {
   const router = useRouter();

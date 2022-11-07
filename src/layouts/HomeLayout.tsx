@@ -1,6 +1,6 @@
 import React from 'react';
-import { AppSEO, AppNavbar } from '@/components/App';
-import { UIAppLayoutWrapper, UIContainer } from '@/components/UI';
+import { AppSEO, AppNavbar, AppFooter, AppToolbar } from '@/components/App';
+import { UIAppLayoutWrapper } from '@/components/UI';
 
 interface Props {
   bg?: string;
@@ -11,10 +11,14 @@ interface Props {
 
 const HomeLayout = (props: Props) => {
   return (
-    <UIAppLayoutWrapper sx={{ background: props.bg }}>
+    <UIAppLayoutWrapper sx={{ background: props.bg, minHeight: '100vh' }}>
       <AppSEO title={props.title || ''} description={props.description || ''} />
       <AppNavbar />
-      <UIContainer sx={{ py: 3 }}>{props.children}</UIContainer>
+      {/* <UIContainer sx={{ py: 3 }}> */}
+      <AppToolbar />
+      {props.children}
+      {/* </UIContainer> */}
+      <AppFooter />
     </UIAppLayoutWrapper>
   );
 };

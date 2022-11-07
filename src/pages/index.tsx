@@ -1,12 +1,25 @@
 import type { NextPage } from 'next';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { HomeLayout } from '@/layouts';
+import {
+  HeroContent,
+  LearnContent,
+  CheckInContent,
+  LocationContent,
+  FaqContent,
+  ContactContent,
+} from '@/modules/Home';
 
 const Home: NextPage = () => {
   return (
     <HomeLayout bg={'black'}>
-      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-        <Typography variant="h3">Main Web View</Typography>
+      <Box>
+        <HeroContent />
+        <LearnContent />
+        <CheckInContent />
+        <LocationContent />
+        <FaqContent />
+        <ContactContent />
       </Box>
     </HomeLayout>
   );

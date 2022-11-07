@@ -17,7 +17,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
   },
-  "svg.preview.background": "white",
+  "svg.preview.background": "editor",
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
   },
@@ -42,6 +42,5 @@
   },
   "[jsonc]": {
     "editor.defaultFormatter": "vscode.json-language-features"
-  },
-  "nuxt.isNuxtApp": false
+  }
 }
