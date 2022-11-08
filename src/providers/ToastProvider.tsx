@@ -21,6 +21,7 @@ function AppToastProvider({ children, ...rest }: AppToastProviderProps) {
   const [severity, setSeverity] = useState<AlertColor>('success');
 
   const value = ({ severity, message }: ToastContextType) => {
+    // console.log(message, severity, open);
     setOpen(true);
     setMessage(message || '');
     setSeverity(severity || 'success');

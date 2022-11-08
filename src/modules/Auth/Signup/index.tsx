@@ -55,18 +55,9 @@ function AuthSignup() {
         severity: 'error',
         message: errorMsg,
       });
+      setErrorMsg('');
     }
   }, [errorMsg]);
-
-  useEffect(() => {
-    if (formik.errors.phoneNumber) {
-      setErrorMsg(formik?.errors.phoneNumber);
-    } else if (formik.errors.email) {
-      setErrorMsg(formik?.errors.email);
-    } else if (formik.errors.birthday) {
-      setErrorMsg(formik.errors.birthday);
-    }
-  }, [formik]);
 
   return (
     <UIFlexSpaceBox
@@ -93,10 +84,19 @@ function AuthSignup() {
           mb={2}
         >
           <UITextFieldWrapper
+            id="phoneNumber"
+            name="phoneNumber"
             placeholder="Enter phone number"
-            {...formik.getFieldProps('phoneNumber')}
+            value={formik.values.phoneNumber}
             InputProps={{
               inputComponent: PhoneMask as any,
+            }}
+            onBlur={formik.handleBlur}
+            onChange={(e) => {
+              formik.handleChange(e);
+              if (formik.errors?.phoneNumber) {
+                setErrorMsg(formik.errors?.phoneNumber);
+              }
             }}
           />
         </Box>
@@ -107,9 +107,18 @@ function AuthSignup() {
           mb={2}
         >
           <UITextFieldWrapper
+            id="email"
+            name="email"
             placeholder="Email"
-            {...formik.getFieldProps('email')}
             type="email"
+            value={formik.values.email}
+            onBlur={formik.handleBlur}
+            onChange={(e) => {
+              formik.handleChange(e);
+              if (formik.errors?.email) {
+                setErrorMsg(formik.errors?.email);
+              }
+            }}
           />
         </Box>
 
@@ -125,6 +134,11 @@ function AuthSignup() {
               onChange={(birth: Dayjs | null) => {
                 formik.setFieldValue('birthday', birth);
               }}
+              onClose={() => {
+                setErrorMsg(formik.errors.birthday ?? '');
+              }}
+              onOpen={() => setErrorMsg('')}
+              inputFormat="MM/DD/YYYY"
               renderInput={(params) => (
                 <UITextFieldWrapper {...params} placeholder="Birthday" />
               )}
@@ -147,7 +161,19 @@ function AuthSignup() {
         </UIFlexSpaceBox>
 
         <UIAuthButton
-          onClick={() => formik.handleSubmit()}
+          onClick={() => {
+            const { phoneNumber, email, birthday } = formik.errors;
+            if (formik.errors) {
+              if (phoneNumber) {
+                setErrorMsg(phoneNumber);
+              } else if (email) {
+                setErrorMsg(email);
+              } else if (birthday) {
+                setErrorMsg(birthday);
+              }
+            }
+            formik.handleSubmit();
+          }}
           disabled={!formik.values.confirmAge}
         >
           Submit
