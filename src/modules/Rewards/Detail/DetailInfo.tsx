@@ -1,5 +1,5 @@
-import { RewardsCardProgress } from './cardProgress';
-import { RewardsCardPoint } from './cardPoint';
+import { RewardsCardProgress } from '../CardProgress';
+import { RewardsCardPoint } from '../CardPoint';
 import { RewardItemType } from '@/types';
 import {
   StyledRewardsName,
@@ -7,7 +7,7 @@ import {
   StyledRewardsCardPoint,
   StyledRewardsSpecKey,
   StyledRewardsSpecValue,
-} from './ui';
+} from '../ui';
 import { UIFlexWrapBox } from '@/components/UI';
 import { Box } from '@mui/material';
 
@@ -20,7 +20,6 @@ export const RewardsInfoBox = ({
   myPoint,
   rewardItem,
 }: RewardsInfoBoxProps) => {
-  console.log(rewardItem.specifications);
   return (
     <>
       <StyledRewardsName>{rewardItem?.name}</StyledRewardsName>

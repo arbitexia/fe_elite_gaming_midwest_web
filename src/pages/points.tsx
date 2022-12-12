@@ -6,7 +6,7 @@ import {
   UIImage,
 } from '@/components/UI';
 import { DashboardLayout } from '@/layouts';
-import { PointsMain } from '@/modules/Point';
+import { PointsContent } from '@/modules/Point';
 
 const MyPoints = () => {
   return (
@@ -39,7 +39,7 @@ const MyPoints = () => {
               height: 'calc(100% - 122px)',
             }}
           >
-            <PointsMain />
+            <PointsContent />
           </UIFlexColumnBox>
         </Box>
       </UIContainer>

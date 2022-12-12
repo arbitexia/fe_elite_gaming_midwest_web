@@ -5,12 +5,12 @@ import {
   StyledPointText,
   StyledScoreText,
 } from './ui';
-import { LocationType } from '@/types';
+import { PointsType } from '@/types';
 
 export type PointsCardProps = {
   index: number;
   deg: number;
-  item: LocationType;
+  item: PointsType;
   filter: boolean;
 };
 

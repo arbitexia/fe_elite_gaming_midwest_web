@@ -8,7 +8,7 @@ const ProfilePage = () => {
   const router = useRouter();
   const { type } = router.query;
   return (
-    <DashboardLayout title="My Points">
+    <DashboardLayout title="Profile">
       <UIContainer>
         <Box sx={{ px: '165px' }}>
           <ProfileHeader />

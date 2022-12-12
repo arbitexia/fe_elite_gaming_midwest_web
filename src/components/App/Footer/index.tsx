@@ -35,7 +35,7 @@ const AppFooter = () => {
           width: '100%',
           height: '100%',
           opacity: 0.3,
-          background: 'url("images/back-effect.gif")',
+          background: 'url("/images/back-effect.gif")',
           backgroundSize: '100% 100%',
           backgroundRepeat: 'no-repeat',
           zIndex: 0,

@@ -10,6 +10,8 @@ import {
 import { rewardsData } from '@/_mock/rewards';
 import { RewardItemType } from '@/types';
 import { Divider, Box, Button } from '@mui/material';
+import Carousel from 'react-material-ui-carousel';
+import { RewardDetailCard } from '@/modules/Rewards/Detail/DetailCard';
 
 const RewardsById = () => {
   const router = useRouter();
@@ -24,7 +26,7 @@ const RewardsById = () => {
   }, [id]);
 
   return (
-    <DashboardLayout title="My Points">
+    <DashboardLayout title={rewardItem ? rewardItem.name : 'Rewards'}>
       <UIContainer sx={{ minHeight: 'calc(100vh - 86px)' }}>
         <RewardsHeader />
         <Divider
@@ -43,31 +45,9 @@ const RewardsById = () => {
               backdropFilter: 'blur(20px)',
               borderRadius: '30px',
               padding: '25px 30px',
-              gap: '90px',
             }}
           >
-            <UIImage src={rewardItem.url} width={477} height={510} />
-            <Box mt="35px">
-              <RewardsInfoBox rewardItem={rewardItem} myPoint={29000} />
-              <Button
-                sx={{
-                  mt: '40px',
-                  background:
-                    'linear-gradient(165.13deg, #37D099 -18.62%, #008A83 99.26%)',
-                  border: '1px solid rgba(191, 215, 225, 0.05)',
-                  borderRadius: '12px',
-                  fontWeight: '500',
-                  fontSize: '24px',
-                  lineHeight: '36px',
-                  color: '#FFFFFF',
-                  width: '310px',
-                  height: '68px',
-                  textTransform: 'none',
-                }}
-              >
-                Exchange Offer
-              </Button>
-            </Box>
+            <RewardDetailCard rewardItem={rewardItem} />
           </UIFlexWrapBox>
         )}
       </UIContainer>

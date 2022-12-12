@@ -9,7 +9,7 @@ import { Box, Typography, List } from '@mui/material';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { locationData } from '@/_mock/Home';
-import LocationItem from './locationItem';
+import LocationItem from './LocationItem';
 
 const accessToken =
   'pk.eyJ1Ijoic2FoaWx0aGFrYXJlNTIxIiwiYSI6ImNrbjVvMTkzNDA2MXQydnM2OHJ6aHJvbXEifQ.z5aEqRBTtDMWoxVzf3aGsg';
@@ -67,7 +67,7 @@ const LocationContent = () => {
             height: '640px',
             mt: '50px',
             background: 'rgba(72, 124, 118, 0.14)',
-            backgroundImage: 'url("images/location.svg")',
+            backgroundImage: 'url("/images/location.svg")',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'right top',
             border: '2px solid rgba(137, 200, 198, 0.05)',

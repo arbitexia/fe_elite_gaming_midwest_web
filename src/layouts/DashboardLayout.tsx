@@ -1,9 +1,9 @@
 import { ReactNode } from 'react';
-// import { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
+import { useAuth } from '@/hooks';
 import { UIAppLayoutWrapper } from '@/components/UI';
 import { Box } from '@mui/material';
 import { AppSEO, AppToolbar, AppNavbar, AppFooter } from '@/components/App';
-// import { useAuth } from '@/hooks';
 
 interface Props {
   title: string;
@@ -11,9 +11,9 @@ interface Props {
 }
 
 function DashboardLayout(props: Props) {
-  // const router = useRouter();
-  // const { isAuthenticated } = useAuth();
-  // if (!isAuthenticated) router.push('/');
+  const router = useRouter();
+  const { isAuthenticated } = useAuth();
+  if (!isAuthenticated) router.push('/');
   return (
     <UIAppLayoutWrapper>
       <Box

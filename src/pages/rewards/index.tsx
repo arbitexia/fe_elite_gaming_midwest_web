@@ -10,7 +10,7 @@ import { rewardsData } from '@/_mock/rewards';
 
 const Rewards = () => {
   return (
-    <DashboardLayout title="My Points">
+    <DashboardLayout title="Rewards">
       <UIContainer sx={{ minHeight: 'calc(100vh - 86px)' }}>
         <RewardsHeader />
         <Divider
@@ -31,4 +31,5 @@ const Rewards = () => {
     </DashboardLayout>
   );
 };
+
 export default Rewards;

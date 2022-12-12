@@ -17,6 +17,25 @@ export const UIDefaultButton = styled(Button)({
   color: '#FFFFFF',
 });
 
+export const UIHoverButton = styled(Button)({
+  background: 'rgba(137, 200, 198, 0.2)',
+  color: '#83A9A8',
+  border: '1px solid rgba(191, 215, 225, 0.05)',
+  borderRadius: '20px',
+  fontWeight: '500',
+  fontSize: '16px',
+  lineHeight: '24px',
+  textTransform: 'none',
+  '&:hover': {
+    color: '#FFFFFF',
+    background: 'linear-gradient(165.13deg, #37D099 -18.62%, #008A83 99.26%)',
+  },
+  '&:disabled': {
+    color: '#83A9A8',
+    background: 'rgba(137, 200, 198, 0.2)',
+  },
+});
+
 // export const UINavButton = styled(Button)<UINavButtonProp>(({ btnType }) => ({
 //   background:
 //     btnType === 'Signup'

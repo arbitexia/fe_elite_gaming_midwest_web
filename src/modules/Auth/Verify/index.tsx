@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { UIFlexCenterBox, UIFlexSpaceBox } from '@/components/UI';
 import { Box, Typography } from '@mui/material';
 import {
@@ -8,19 +9,20 @@ import {
 } from '@/modules/Auth/ui';
 
 import { AuthLogo } from '@/modules/Auth';
+import { useAuth } from '@/hooks';
 
 function AuthVerify() {
   const router = useRouter();
   const { type } = router.query;
+  const { onLogin } = useAuth();
   const handleVerify = () => {
-    router.push('/profile');
+    onLogin('auth');
+    router.push('/points');
   };
   const handleSignup = () => {
     router.push('/auth?path=signup');
   };
-  const handleAdmin = () => {
-    //TODO Redirect to Admin auth url
-  };
+
   return (
     <UIFlexSpaceBox
       sx={{ flexWrap: 'wrap', width: '100%', minHeight: '100vh', gap: 0 }}
@@ -57,9 +59,11 @@ function AuthVerify() {
             <StyledLinkText sx={{ color: '#1bac8e' }} onClick={handleSignup}>
               + Create New Account
             </StyledLinkText>
-            <StyledLinkText sx={{ color: '#B7B7B7' }} onClick={handleAdmin}>
-              Login as Administrator
-            </StyledLinkText>
+            <Link href="https://admin.elitegaming.rpatdev.com" passHref={true}>
+              <StyledLinkText sx={{ color: '#B7B7B7' }}>
+                Login as Administrator
+              </StyledLinkText>
+            </Link>
           </UIFlexSpaceBox>
         </Box>
       </UIFlexCenterBox>

@@ -1,7 +1,7 @@
 export type RewardItemType = {
   id: number;
   name: string;
-  url: string;
+  url: string[];
   location: string;
   point: number;
   specifications: object;

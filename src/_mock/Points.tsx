@@ -1,6 +1,6 @@
-import { LocationType } from '@/types';
+import { PointsType } from '@/types';
 
-export const locationData: LocationType[] = [
+export const locationData: PointsType[] = [
   {
     id: 1,
     location: 'Mariland, USA',

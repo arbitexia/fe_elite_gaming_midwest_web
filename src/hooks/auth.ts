@@ -9,7 +9,6 @@ export const useAuth = () => {
 
   const onLogin = (authToken: string) => {
     dispatch(setAuthState(authToken));
-    router.push('/');
   };
 
   return {
@@ -18,7 +17,7 @@ export const useAuth = () => {
     onLogin,
     onLogout: () => {
       dispatch(setAuthState(''));
-      router.push('/login');
+      router.push('/auth?path=login');
     },
   };
 };

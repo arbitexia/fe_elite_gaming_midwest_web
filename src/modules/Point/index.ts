@@ -1,2 +1,2 @@
-export { default as PointsCard } from './card';
-export { default as PointsMain } from './main';
+export { default as PointsCard } from './PointsCard';
+export { default as PointsContent } from './PointsContent';

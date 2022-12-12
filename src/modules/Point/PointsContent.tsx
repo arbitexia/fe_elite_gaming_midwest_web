@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import PointsCard from './card';
+import PointsCard from './PointsCard';
 import { UIImage } from '@/components/UI';
 import {
   StyledArrowButton,
@@ -9,7 +9,7 @@ import {
 } from './ui';
 import { locationData } from '@/_mock/Points';
 
-const PointsMain = () => {
+const PointsContent = () => {
   const [currDeg, setCurrDeg] = useState(0);
   const [second, setSecond] = useState(1);
   const rotateAngle = 360 / locationData.length;
@@ -91,4 +91,4 @@ const PointsMain = () => {
   );
 };
 
-export default PointsMain;
+export default PointsContent;

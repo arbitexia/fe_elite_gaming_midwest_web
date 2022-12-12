@@ -6,14 +6,14 @@ import {
   UIImage,
 } from '@/components/UI';
 import { Box, Typography } from '@mui/material';
-import HeroCard from './heroCard';
+import HeroCard from './HeroCard';
 import { heroData } from '@/_mock/Home';
 import { StyledHeroBg, StyledHeroTabletBg } from './ui';
 
 const HeroContent = () => {
   const router = useRouter();
   const handleSignUp = () => {
-    router.push('/auth?type=signup');
+    router.push('/auth?path=signup');
   };
   return (
     <Box
