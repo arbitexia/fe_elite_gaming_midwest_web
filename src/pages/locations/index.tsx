@@ -1,4 +1,4 @@
-import { UIContainer, UIFlexWrapBox } from '@/components/UI';
+import { UIContainer, UIWrapPanel } from '@/components/UI';
 import { LocationsHeader, LocationsCard } from '@/modules/Locations';
 import { DashboardLayout } from '@/layouts';
 import { locationsData } from '@/_mock/Locations';
@@ -8,13 +8,11 @@ const Locations = () => {
     <DashboardLayout title="Locations">
       <UIContainer sx={{ minHeight: 'calc(100vh - 86px)' }}>
         <LocationsHeader />
-        <UIFlexWrapBox
-          sx={{ gap: '40px', py: '60px', justifyContent: 'center' }}
-        >
+        <UIWrapPanel itemSpacing={40} paddingY={60}>
           {locationsData.map((item) => {
             return <LocationsCard key={item.id} item={item} />;
           })}
-        </UIFlexWrapBox>
+        </UIWrapPanel>
       </UIContainer>
     </DashboardLayout>
   );
