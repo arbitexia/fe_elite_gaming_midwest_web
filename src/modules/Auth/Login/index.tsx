@@ -12,6 +12,7 @@ import { useFormik } from 'formik';
 import { AuthLogo } from '@/modules/Auth';
 import { useAppToast } from '@/providers';
 import { TextMaskCustom } from '../TextMask';
+import { useAuth } from '@/hooks';
 
 function AuthLogin() {
   const router = useRouter();
@@ -19,6 +20,11 @@ function AuthLogin() {
   const handleSignup = () => {
     router.push('/auth?path=signup');
   };
+  const { onLogin } = useAuth({
+    handleAuthUserSuccess: () => {
+      router.push('/auth?path=verify&type=login');
+    },
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -28,7 +34,7 @@ function AuthLogin() {
     validateOnBlur: false,
     onSubmit: async (values) => {
       if (handleFormikChange('phoneNumber', values.phoneNumber)) return;
-      router.push('/auth?path=verify&type=login');
+      onLogin(values.phoneNumber.replace(/\D/g, ''));
     },
   });
 

@@ -12,7 +12,7 @@ interface Props {
 
 function DashboardLayout(props: Props) {
   const router = useRouter();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth({});
   if (!isAuthenticated) router.push('/');
   return (
     <UIAppLayoutWrapper>
@@ -25,7 +25,7 @@ function DashboardLayout(props: Props) {
         <AppSEO title={props.title} description="" />
         <AppNavbar />
         <AppToolbar />
-        {props.children}
+        {isAuthenticated && props.children}
         <AppFooter />
       </Box>
     </UIAppLayoutWrapper>

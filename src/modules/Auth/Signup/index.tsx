@@ -16,16 +16,17 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { MobileDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { Moment } from 'moment';
 import { TextMaskCustom } from '../TextMask';
+import { useAuth } from '@/hooks';
 
 function AuthSignup() {
   const [checked, setChecked] = useState(false);
-
   const router = useRouter();
   const appToast = useAppToast();
-
-  const handleSignup = () => {
-    router.push('/auth?path=verify&type=signup');
-  };
+  const { onRegister } = useAuth({
+    handleAuthRegisterSuccess: () => {
+      router.push('/auth?path=verify&type=signup');
+    },
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -39,6 +40,11 @@ function AuthSignup() {
       if (handleFormikChange('phoneNumber', values.phoneNumber)) return;
       if (handleFormikChange('email', values.email)) return;
       if (handleFormikChange('birthday', values.birthday)) return;
+      onRegister(
+        values.phoneNumber.replace(/\D/g, ''),
+        values.email,
+        values.birthday
+      );
     },
   });
 

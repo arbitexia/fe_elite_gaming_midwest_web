@@ -13,7 +13,6 @@ const AuthPage = () => {
 
   useEffect(() => {
     const { path } = router.query;
-    if (!path) router.push('/404');
 
     switch (path) {
       case 'login':
@@ -25,11 +24,8 @@ const AuthPage = () => {
       case 'verify':
         setCurrModule(2);
         break;
-      default:
-        router.push('/404');
-        break;
     }
-  }, [router.query]);
+  }, [router]);
 
   return (
     <AuthLayout>

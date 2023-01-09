@@ -10,15 +10,41 @@ import {
 
 import { AuthLogo } from '@/modules/Auth';
 import { useAuth } from '@/hooks';
+import { useFormik } from 'formik';
+import { useAppToast } from '@/providers';
 
 function AuthVerify() {
   const router = useRouter();
+  const appToast = useAppToast();
   const { type } = router.query;
-  const { onLogin } = useAuth();
-  const handleVerify = () => {
-    onLogin('auth');
-    router.push('/points');
+  const { onVerifyPhone } = useAuth({
+    handleAuthVerifySuccess: () => {
+      router.push('/points');
+    },
+  });
+
+  const handleFormikChange = (value: string) => {
+    let error = '';
+    const phoneRegExp = /^[0-9]{4}$/i;
+    if (!value) error = 'Verification Code is required';
+    else if (!value.match(phoneRegExp) || value.length < 4)
+      error = 'Verification Code is not valid';
+    if (error) appToast({ severity: 'error', message: error });
+    return error;
   };
+
+  const formik = useFormik({
+    initialValues: {
+      token: '',
+    },
+    validateOnChange: false,
+    validateOnBlur: false,
+    onSubmit: (values) => {
+      if (handleFormikChange(values.token)) return;
+      onVerifyPhone(values.token);
+    },
+  });
+
   const handleSignup = () => {
     router.push('/auth?path=signup');
   };
@@ -29,7 +55,7 @@ function AuthVerify() {
     >
       <AuthLogo />
       <UIFlexCenterBox sx={{ width: '50%' }}>
-        <Box>
+        <Box component="form" onSubmit={formik.handleSubmit}>
           <Box
             component={'h1'}
             textAlign="center"
@@ -38,11 +64,17 @@ function AuthVerify() {
             {type === 'login' ? 'Log in' : 'Sign up'}
           </Box>
           <Box justifyContent={'center'} flexDirection="row" display={'flex'}>
-            <StyledTextFieldWrapper placeholder="Enter the code we sent to your phone number" />
+            <StyledTextFieldWrapper
+              name="token"
+              value={formik.values.token}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                // handleFormikChange(e.target.value);
+                formik.handleChange(e);
+              }}
+              placeholder="Enter the code we sent to your phone number"
+            />
           </Box>
-          <StyledAuthButton onClick={handleVerify}>
-            Verify Code
-          </StyledAuthButton>
+          <StyledAuthButton type="submit">Verify Code</StyledAuthButton>
           <Typography
             sx={{
               marginTop: '15px',

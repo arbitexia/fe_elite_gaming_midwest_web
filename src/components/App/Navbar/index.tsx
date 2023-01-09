@@ -40,7 +40,7 @@ export default function AppNavbar(props: Props) {
   const { window } = props;
   const router = useRouter();
   const path = router.asPath.slice(1, router.asPath.length);
-  const { isAuthenticated, onLogout } = useAuth();
+  const { isAuthenticated, onLogout } = useAuth({});
   const [navItems, setNavItems] = useState<string[]>([]);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorElNotifications, setAnchorElNotifications] =

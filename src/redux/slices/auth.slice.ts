@@ -1,29 +1,165 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from '@/redux/store';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { authApi } from '@/redux/apis';
+import { AxiosError } from 'axios';
+import { RootState, AppDispatch } from '@/redux/store';
+import {
+  ReduxJson,
+  CustomerAuthParams,
+  CustomerAuthType,
+  RegisterParams,
+  RegisterType,
+  VerifyPhoneParams,
+  VerifyPhoneType,
+} from '@/types';
 
-export interface AuthState {
-  authToken: string;
+export enum ResponseStatus {
+  PENDING = 'pending',
+  FAILED = 'failed',
+  SUCCESS = 'success',
 }
 
 // Initial state
-const initialState: AuthState = {
-  authToken: '',
+const initialState: ReduxJson.AuthState = {
+  loading: true,
+  status: null,
+  accessToken: '',
+  refreshToken: '',
+  message: '',
+  errorMessage: null,
+  user: null,
+  role: {},
 };
+
+export const authorizeCustomer = createAsyncThunk<
+  CustomerAuthType,
+  CustomerAuthParams,
+  { dispatch: AppDispatch; state: RootState }
+>('auth/authorizeCustomer', async (params: CustomerAuthParams, thunkAPI) => {
+  try {
+    return await authApi.authorizeCustomer(params);
+  } catch (error) {
+    const err = error as AxiosError;
+    err.response?.status === 403 && thunkAPI.dispatch(logoutUser);
+    return thunkAPI.rejectWithValue(err.response?.data);
+  }
+});
+
+export const register = createAsyncThunk<
+  RegisterType,
+  RegisterParams,
+  { dispatch: AppDispatch; state: RootState }
+>('auth/register', async (params: RegisterParams, thunkAPI) => {
+  try {
+    return await authApi.register(params);
+  } catch (error) {
+    const err = error as AxiosError;
+    return thunkAPI.rejectWithValue(err.response?.data);
+  }
+});
+
+export const verifyPhone = createAsyncThunk<
+  VerifyPhoneType,
+  VerifyPhoneParams,
+  { dispatch: AppDispatch; state: RootState }
+>('auth/verifyPhone', async (params: VerifyPhoneParams, thunkAPI) => {
+  try {
+    return await authApi.verifyPhone(params);
+  } catch (error) {
+    const err = error as AxiosError;
+    return thunkAPI.rejectWithValue(err.response?.data);
+  }
+});
 
 // Actual Slice
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    // Action to set the authentication status
-    setAuthState(state, action) {
-      state.authToken = action.payload;
+    clearAuthMessage: (
+      state: ReduxJson.AuthState,
+      { payload }: PayloadAction<string>
+    ) => {
+      state.errorMessage = payload;
+      state.message = payload;
     },
+    logoutUser: (state: ReduxJson.AuthState) => {
+      state.user = null;
+      state.role = {};
+      state.accessToken = '';
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(authorizeCustomer.pending, (state) => {
+        state.loading = true;
+        state.status = ResponseStatus.PENDING;
+        state.errorMessage = null;
+      })
+      .addCase(
+        authorizeCustomer.fulfilled,
+        (state, { payload }: PayloadAction<CustomerAuthType>) => {
+          state.loading = false;
+          state.status = ResponseStatus.SUCCESS;
+          state.message = payload.message;
+        }
+      )
+      .addCase(authorizeCustomer.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.status = ResponseStatus.FAILED;
+        state.errorMessage = payload as string;
+      })
+      .addCase(verifyPhone.pending, (state) => {
+        state.loading = true;
+        state.status = ResponseStatus.PENDING;
+        state.errorMessage = null;
+      })
+      .addCase(
+        verifyPhone.fulfilled,
+        (state, { payload }: PayloadAction<VerifyPhoneType>) => {
+          state.loading = false;
+          state.status = ResponseStatus.SUCCESS;
+          state.user = payload.user;
+          state.role = payload.role;
+          state.message = 'Verify Success';
+          state.accessToken = payload.accessToken;
+          localStorage.setItem('accessToken', payload.accessToken);
+          state.refreshToken = payload.refreshToken;
+        }
+      )
+      .addCase(verifyPhone.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.status = ResponseStatus.FAILED;
+        state.user = {};
+        state.role = {};
+        state.refreshToken = '';
+        state.errorMessage = payload as string;
+      })
+      .addCase(register.pending, (state) => {
+        state.loading = true;
+        state.status = ResponseStatus.PENDING;
+        state.errorMessage = null;
+      })
+      .addCase(
+        register.fulfilled,
+        (state, { payload }: PayloadAction<RegisterType>) => {
+          state.loading = false;
+          state.status = ResponseStatus.SUCCESS;
+          state.message = payload.message;
+        }
+      )
+      .addCase(register.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.status = ResponseStatus.FAILED;
+        state.errorMessage = payload as string;
+      });
   },
 });
 
-export const { setAuthState } = authSlice.actions;
+export const { clearAuthMessage, logoutUser } = authSlice.actions;
 
+export const getReturnMessage = (state: RootState) => state.auth?.message;
+export const getMe = (state: RootState) => state.auth?.user;
+export const getRole = (state: RootState) => state.auth?.role;
 export const authSelector = (state: RootState) => state.auth;
 
 export default authSlice.reducer;
