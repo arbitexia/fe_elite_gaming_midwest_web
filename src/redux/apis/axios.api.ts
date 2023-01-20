@@ -23,7 +23,7 @@ export const setupJwt = (store: Store<unknown, AnyAction>) => {
         if (err.response.status === 401 && !originalConfig._retry) {
           originalConfig._retry = true;
           try {
-            const rs = await axios.post(`${baseUrl}/api/refreshToken`, {
+            const rs = await axios.post(`${baseUrl}/api/refresh_token`, {
               refreshToken: localStorage.getItem('refreshToken'),
             });
 

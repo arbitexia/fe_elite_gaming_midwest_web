@@ -1,7 +1,7 @@
 import { UIContainer, UIWrapPanel } from '@/components/UI';
 import { LocationsHeader, LocationsCard } from '@/modules/Locations';
 import { DashboardLayout } from '@/layouts';
-import { locationsData } from '@/_mock/Locations';
+//import { locationsData } from '@/_mock/Locations';
 
 const Locations = () => {
   return (

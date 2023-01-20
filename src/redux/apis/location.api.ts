@@ -19,8 +19,7 @@ export const getLocations = async (params: GetLocationsParam) => {
 };
 
 export const getLocation = async (params: GetLocationParam) => {
-  const response = await jwtAxios.post(`/location/:id`, {
-    params,
+  const response = await jwtAxios.post(`/location/${params.locationId}`, {
     headers: getAuthorizeHeader(),
   });
   return response.data;

@@ -5,7 +5,7 @@ import { Divider } from '@mui/material';
 import { LocationsDetail } from '@/modules/Locations/Detail';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { locationsData } from '@/_mock/Locations';
+//import { locationsData } from '@/_mock/Locations';
 import { LocationType } from '@/types';
 
 const LocationsById = () => {
