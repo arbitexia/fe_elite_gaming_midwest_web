@@ -19,4 +19,14 @@ export declare namespace CommonType {
     state: string;
     zipcode: string;
   };
+
+  export type PageInfo = {
+    page: number;
+    size: number;
+    total: number;
+  };
+  export type Pagination<T> = {
+    data: T[];
+    pageInfo: PageInfo;
+  };
 }

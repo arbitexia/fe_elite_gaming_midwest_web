@@ -26,6 +26,10 @@ export type VerifyPhoneType = {
   refreshToken: string;
 };
 
+export type RefreshTokenType = {
+  accessToken: string;
+};
+
 export type RegisterType = {
   message: string;
 };

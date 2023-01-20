@@ -21,7 +21,7 @@ export const authorizeCustomer = async (params: CustomerAuthParams) => {
   console.log(params);
   console.log(headers);
   const response = await axios.post(
-    `${baseUrl}/api/authorizeCustomer`,
+    `${baseUrl}/api/authorize_customer`,
     params,
     {
       headers,
@@ -39,7 +39,7 @@ export const register = async (params: RegisterParams) => {
 };
 
 export const verifyPhone = async (params: VerifyPhoneParams) => {
-  const response = await axios.post(`${baseUrl}/api/verifyPhone`, params, {
+  const response = await axios.post(`${baseUrl}/api/verify_phone`, params, {
     headers,
   });
   return response.data;
