@@ -7,7 +7,6 @@ import {
   GetLocationsParam,
   GetLocationParam,
   ResponseStatus,
-  CommonType,
   LocationType,
 } from '@/types';
 
@@ -24,7 +23,7 @@ const initialState: ReduxJson.LocationState = {
 };
 
 export const getLocations = createAsyncThunk<
-  CommonType.Pagination<LocationType>,
+  LocationType[],
   GetLocationsParam,
   { dispatch: AppDispatch; state: RootState }
 >('location/getLocations', async (params: GetLocationsParam, thunkAPI) => {
@@ -69,14 +68,10 @@ export const locationSlice = createSlice({
       })
       .addCase(
         getLocations.fulfilled,
-        (
-          state,
-          { payload }: PayloadAction<CommonType.Pagination<LocationType>>
-        ) => {
+        (state, { payload }: PayloadAction<LocationType[]>) => {
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
-          state.pageInfo = payload.pageInfo;
-          state.locations = payload.data;
+          state.locations = payload;
         }
       )
       .addCase(getLocations.rejected, (state, { payload }) => {

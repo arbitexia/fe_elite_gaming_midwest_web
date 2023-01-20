@@ -10,7 +10,6 @@ import {
   RegisterType,
   VerifyPhoneParams,
   VerifyPhoneType,
-  RefreshTokenType,
 } from '@/types';
 
 export enum ResponseStatus {
@@ -85,10 +84,10 @@ export const authSlice = createSlice({
     },
     refreshToken: (
       state: ReduxJson.AuthState,
-      { payload }: PayloadAction<RefreshTokenType>
+      { payload }: PayloadAction<string>
     ) => {
-      state.accessToken = payload.accessToken;
-      localStorage.setItem('accessToken', payload.accessToken);
+      state.accessToken = payload;
+      localStorage.setItem('accessToken', payload);
     },
     logoutUser: (state: ReduxJson.AuthState) => {
       state.user = null;
@@ -143,7 +142,6 @@ export const authSlice = createSlice({
         state.status = ResponseStatus.FAILED;
         state.user = {};
         state.role = {};
-        state.refreshToken = '';
         state.accessToken = '';
         state.errorMessage = payload as string;
       })

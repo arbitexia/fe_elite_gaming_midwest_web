@@ -11,7 +11,7 @@ import { getAuthorizeHeader } from '@/libs/data-helper';
 import { GetLocationsParam, GetLocationParam } from '@/types';
 
 export const getLocations = async (params: GetLocationsParam) => {
-  const response = await jwtAxios.post(`/locations`, {
+  const response = await jwtAxios.get(`/locations`, {
     params,
     headers: getAuthorizeHeader(),
   });
@@ -19,7 +19,7 @@ export const getLocations = async (params: GetLocationsParam) => {
 };
 
 export const getLocation = async (params: GetLocationParam) => {
-  const response = await jwtAxios.post(`/location/${params.locationId}`, {
+  const response = await jwtAxios.get(`/location/${params.locationId}`, {
     headers: getAuthorizeHeader(),
   });
   return response.data;

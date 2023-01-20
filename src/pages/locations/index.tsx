@@ -1,15 +1,28 @@
+import { useState, useEffect } from 'react';
 import { UIContainer, UIWrapPanel } from '@/components/UI';
 import { LocationsHeader, LocationsCard } from '@/modules/Locations';
 import { DashboardLayout } from '@/layouts';
 //import { locationsData } from '@/_mock/Locations';
+// import { LocationType, GetLocationsParam } from '@/types';
+import { useLocation } from '@/hooks';
 
 const Locations = () => {
+  const [searchValue, setSearchValue] = useState('');
+  const { locations, onGetLocations } = useLocation();
+
+  useEffect(() => {
+    onGetLocations({ filterBy: { search: searchValue } });
+  }, [searchValue]);
+
   return (
     <DashboardLayout title="Locations">
       <UIContainer sx={{ minHeight: 'calc(100vh - 86px)' }}>
-        <LocationsHeader />
+        <LocationsHeader
+          searchValue={searchValue}
+          onValueChange={(value) => setSearchValue(value)}
+        />
         <UIWrapPanel itemSpacing={40} paddingY={60}>
-          {locationsData.map((item) => {
+          {locations.map((item) => {
             return <LocationsCard key={item.id} item={item} />;
           })}
         </UIWrapPanel>

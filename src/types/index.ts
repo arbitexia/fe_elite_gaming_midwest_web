@@ -15,6 +15,7 @@ export type {
   CustomerAuthType,
   RegisterType,
   VerifyPhoneType,
+  RefreshTokenPrams,
   RefreshTokenType,
 } from './auth.type';
 

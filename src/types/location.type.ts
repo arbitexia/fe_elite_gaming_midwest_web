@@ -12,10 +12,10 @@ export type GetLocationsParam = {
   filterBy: {
     search: string;
   };
-  cursor: {
-    page: number;
-    size: number;
-  };
+  // cursor: {
+  //   page: number;
+  //   size: number;
+  // };
 };
 
 export type GetLocationParam = {

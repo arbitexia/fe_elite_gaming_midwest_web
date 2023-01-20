@@ -4,9 +4,11 @@ import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import { wrapper } from '@/redux/store';
 import { AppToastProvider, AppThemeProvider } from '@/providers';
+import { setupJwt } from '@/redux/apis';
 
 function EliteApp({ Component, pageProps }: AppProps) {
   const store = useStore();
+  setupJwt(store);
   return (
     <AppThemeProvider>
       <AppToastProvider>

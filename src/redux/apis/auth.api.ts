@@ -6,41 +6,43 @@
 /**
  * Author: Dan Finkel
  */
-import { CustomerAuthParams, RegisterParams, VerifyPhoneParams } from '@/types';
+import {
+  CustomerAuthParams,
+  RegisterParams,
+  VerifyPhoneParams,
+  RefreshTokenPrams,
+} from '@/types';
 import axios from 'axios';
 import config from '@/config';
+import { getHeader } from '@/libs/data-helper';
 
 const baseUrl: string = config.API_URL || '';
+const headers = getHeader();
 
-const headers = {
-  'Access-Control-Allow-Origin': config.API_URL || '',
-  'Access-Control-Allow-Methods': 'GET,POST',
+export const refreshToken = async (params: RefreshTokenPrams) => {
+  const response = await axios.post(`${baseUrl}/api/refresh`, params, headers);
+  return response.data;
 };
 
 export const authorizeCustomer = async (params: CustomerAuthParams) => {
-  console.log(params);
-  console.log(headers);
   const response = await axios.post(
     `${baseUrl}/api/authorize_customer`,
     params,
-    {
-      headers,
-    }
+    headers
   );
-  console.log(response);
   return response.data;
 };
 
 export const register = async (params: RegisterParams) => {
-  const response = await axios.post(`${baseUrl}/api/register`, params, {
-    headers,
-  });
+  const response = await axios.post(`${baseUrl}/api/register`, params, headers);
   return response.data;
 };
 
 export const verifyPhone = async (params: VerifyPhoneParams) => {
-  const response = await axios.post(`${baseUrl}/api/verify_phone`, params, {
-    headers,
-  });
+  const response = await axios.post(
+    `${baseUrl}/api/verify_phone`,
+    params,
+    headers
+  );
   return response.data;
 };

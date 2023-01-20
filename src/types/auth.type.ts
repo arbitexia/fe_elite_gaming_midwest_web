@@ -1,6 +1,10 @@
 import { UserType } from './user.type';
 import { RoleType } from './role.type';
 
+export type RefreshTokenPrams = {
+  refreshToken: string;
+};
+
 export type CustomerAuthParams = {
   identifier: string;
 };
