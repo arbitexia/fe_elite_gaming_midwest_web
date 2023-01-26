@@ -1,3 +1,4 @@
+import { AssetType } from './asset.type';
 import { CommonType } from './common.type';
 
 export type LocationType = {
@@ -7,7 +8,7 @@ export type LocationType = {
   address: CommonType.Address;
   status: boolean;
   type: string;
-  urls: string[];
+  gallery: AssetType.Gallery[];
 };
 
 export type GetLocationsParam = {
