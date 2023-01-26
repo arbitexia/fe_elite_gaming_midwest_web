@@ -1,7 +1,7 @@
 import React from 'react';
 import { UIFlexWrapBox, UIContainer } from '@/components/UI';
 import { Box, Typography } from '@mui/material';
-import FaqItem from './FaqItem';
+import FaqItem from './faqItem';
 import { faqData } from '@/_mock/Home';
 
 const FaqContent = () => {

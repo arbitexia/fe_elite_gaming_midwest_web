@@ -1,5 +1,6 @@
 import { PaletteMode } from '@mui/material';
-import { ResponseStatus } from './common.type';
+import { ResponseStatus, CommonType } from './common.type';
+import { LocationType } from './location.type';
 
 export declare namespace ReduxJson {
   export type CommonReduxData<T> = {
@@ -24,5 +25,14 @@ export declare namespace ReduxJson {
     role: object;
     message: string;
     errorMessage: string | null;
+  };
+
+  export type LocationState = {
+    loading: boolean;
+    status: ResponseStatus | null;
+    locations: LocationType[];
+    pageInfo: CommonType.PageInfo | null;
+    message: string | null;
+    error: string | null;
   };
 }

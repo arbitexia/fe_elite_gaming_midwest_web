@@ -3,7 +3,15 @@ import { StyledSearchTextField } from './ui';
 import { Divider, Typography, InputAdornment } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
 
-export const LocationsHeader = () => {
+interface LocationsHeaderProps {
+  searchValue: string;
+  onValueChange: (value: string) => void;
+}
+
+export const LocationsHeader = ({
+  searchValue,
+  onValueChange,
+}: LocationsHeaderProps) => {
   return (
     <>
       <UIFlexSpaceBox sx={{ mt: '35px' }}>
@@ -22,6 +30,15 @@ export const LocationsHeader = () => {
           </Typography>
         </UIFlexWrapBox>
         <StyledSearchTextField
+          placeholder="Search"
+          size="small"
+          sx={{
+            '.MuiOutlinedInput-root': { width: '160px' },
+            '.Mui-focused': { width: '250px' },
+            input: { color: '#b7b7b7' },
+          }}
+          value={searchValue}
+          onChange={(e) => onValueChange(e.target.value)}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -29,7 +46,6 @@ export const LocationsHeader = () => {
               </InputAdornment>
             ),
           }}
-          placeholder="Search"
         />
       </UIFlexSpaceBox>
       <Divider

@@ -27,7 +27,6 @@ const PointsContent = () => {
         setCurrDeg((prev) => prev - rotateAngle);
       }, 100);
     }
-    console.log(currDeg);
   };
   const handlePrev = () => {
     if (currDeg + rotateAngle >= 360) {

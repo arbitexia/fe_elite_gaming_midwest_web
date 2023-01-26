@@ -15,9 +15,13 @@ import {
 } from 'redux-persist';
 import { createWrapper } from 'next-redux-wrapper';
 import storage from './storage';
-import { authReducer, appReducer } from './slices';
+import { authReducer, appReducer, locationReducer } from './slices';
 
-const combinedReducer = combineReducers({ auth: authReducer, app: appReducer });
+const combinedReducer = combineReducers({
+  auth: authReducer,
+  app: appReducer,
+  location: locationReducer,
+});
 
 const createStore = () => {
   const persistConfig = {

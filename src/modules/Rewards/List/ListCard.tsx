@@ -2,8 +2,8 @@ import { useRouter } from 'next/router';
 import { UIFlexWrapBox, UIHoverButton, UIImage } from '@/components/UI';
 import { Box, Typography } from '@mui/material';
 import { RewardItemType } from '@/types';
-import { RewardsCardProgress } from '../CardProgress';
-import { RewardsCardPoint } from '../CardPoint';
+import { RewardsCardProgress } from '../cardProgress';
+import { RewardsCardPoint } from '../cardPoint';
 import { StyledRewardsCardPoint } from '../ui';
 
 export type RewardsCardProps = {

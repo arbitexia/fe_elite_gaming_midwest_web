@@ -9,7 +9,7 @@ import { Box, Typography, List } from '@mui/material';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { locationData } from '@/_mock/Home';
-import LocationItem from './LocationItem';
+import LocationItem from './locationItem';
 
 const accessToken =
   'pk.eyJ1Ijoic2FoaWx0aGFrYXJlNTIxIiwiYSI6ImNrbjVvMTkzNDA2MXQydnM2OHJ6aHJvbXEifQ.z5aEqRBTtDMWoxVzf3aGsg';

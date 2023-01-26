@@ -1,6 +1,10 @@
 import { UserType } from './user.type';
 import { RoleType } from './role.type';
 
+export type RefreshTokenPrams = {
+  refreshToken: string;
+};
+
 export type CustomerAuthParams = {
   identifier: string;
 };
@@ -24,6 +28,10 @@ export type VerifyPhoneType = {
   role: RoleType.Role;
   accessToken: string;
   refreshToken: string;
+};
+
+export type RefreshTokenType = {
+  accessToken: string;
 };
 
 export type RegisterType = {

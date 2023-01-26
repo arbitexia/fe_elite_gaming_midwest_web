@@ -82,10 +82,20 @@ export const authSlice = createSlice({
       state.errorMessage = payload;
       state.message = payload;
     },
+    refreshToken: (
+      state: ReduxJson.AuthState,
+      { payload }: PayloadAction<string>
+    ) => {
+      state.accessToken = payload;
+      localStorage.setItem('accessToken', payload);
+    },
     logoutUser: (state: ReduxJson.AuthState) => {
       state.user = null;
       state.role = {};
       state.accessToken = '';
+      state.refreshToken = '';
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
     },
   },
   extraReducers: (builder) => {
@@ -124,6 +134,7 @@ export const authSlice = createSlice({
           state.accessToken = payload.accessToken;
           localStorage.setItem('accessToken', payload.accessToken);
           state.refreshToken = payload.refreshToken;
+          localStorage.setItem('refreshToken', payload.refreshToken);
         }
       )
       .addCase(verifyPhone.rejected, (state, { payload }) => {
@@ -131,7 +142,7 @@ export const authSlice = createSlice({
         state.status = ResponseStatus.FAILED;
         state.user = {};
         state.role = {};
-        state.refreshToken = '';
+        state.accessToken = '';
         state.errorMessage = payload as string;
       })
       .addCase(register.pending, (state) => {
@@ -155,7 +166,7 @@ export const authSlice = createSlice({
   },
 });
 
-export const { clearAuthMessage, logoutUser } = authSlice.actions;
+export const { clearAuthMessage, logoutUser, refreshToken } = authSlice.actions;
 
 export const getReturnMessage = (state: RootState) => state.auth?.message;
 export const getMe = (state: RootState) => state.auth?.user;

@@ -1,6 +1,10 @@
 export type { LocationItemDataProps } from './home';
 export type { PointsType } from './point';
-export type { LocationType } from './location';
+export type {
+  LocationType,
+  GetLocationsParam,
+  GetLocationParam,
+} from './location.type';
 export type { RewardItemType } from './rewards';
 export type { CommonType } from './common.type';
 export { ResponseStatus, AuthCallbackStatus } from './common.type';
@@ -11,6 +15,8 @@ export type {
   CustomerAuthType,
   RegisterType,
   VerifyPhoneType,
+  RefreshTokenPrams,
+  RefreshTokenType,
 } from './auth.type';
 
 export type { ReduxJson } from './redux.type';
