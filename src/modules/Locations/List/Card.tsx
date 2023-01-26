@@ -12,7 +12,7 @@ export const LocationsCard = ({ item }: LocationsCardProps) => {
   const router = useRouter();
   return (
     <StyledCardBox>
-      <UIImage src={item.urls[0]} width={220} height={235} />
+      <UIImage src={item.urls ? item.urls[0] : ''} width={220} height={235} />
       <Typography
         sx={{
           mt: '30px',
@@ -43,7 +43,9 @@ export const LocationsCard = ({ item }: LocationsCardProps) => {
           color: 'rgba(255, 255, 255, 0.6)',
         }}
       >
-        {item.location}
+        {`${item.address?.address1 ?? ''} ${item.address?.address2 ?? ''} ${
+          item.address?.city ?? ''
+        } ${item.address?.state ?? ''} ${item.address?.zipcode ?? ''}`}
       </Typography>
       <UIHoverButton
         onClick={() => router.push(`/locations/${item.id}`)}
