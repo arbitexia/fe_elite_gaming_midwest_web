@@ -84,7 +84,7 @@ export const LocationsDetail = ({ locationItem }: LocationsDetailProps) => {
                 return (
                   <Box
                     component="img"
-                    src={`/${gallery.asset?.url}`}
+                    src={`${gallery.asset?.url}`}
                     alt={'carousel'}
                     key={index}
                     sx={{
