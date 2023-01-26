@@ -6,7 +6,7 @@ import {
   UIImage,
 } from '@/components/UI';
 import { Box, Typography } from '@mui/material';
-import HeroCard from './HeroCard';
+import HeroCard from './heroCard';
 import { heroData } from '@/_mock/Home';
 import { StyledHeroBg, StyledHeroTabletBg } from './ui';
 

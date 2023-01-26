@@ -1,5 +1,5 @@
-import { RewardsCardProgress } from '../CardProgress';
-import { RewardsCardPoint } from '../CardPoint';
+import { RewardsCardProgress } from '../cardProgress';
+import { RewardsCardPoint } from '../cardPoint';
 import { RewardItemType } from '@/types';
 import {
   StyledRewardsName,
