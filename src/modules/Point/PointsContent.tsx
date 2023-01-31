@@ -16,7 +16,7 @@ interface PointsContentProps {
 const PointsContent = ({ points }: PointsContentProps) => {
   const [currDeg, setCurrDeg] = useState(0);
   const [second, setSecond] = useState(1);
-  const rotateAngle = 360 / points.length;
+  const rotateAngle = 360 / (points.length == 0 ? 1 : points.length);
   const handleNext = () => {
     if (currDeg - rotateAngle <= -360) {
       setSecond(0);
