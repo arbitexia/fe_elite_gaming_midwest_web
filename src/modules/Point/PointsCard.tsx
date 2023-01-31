@@ -5,12 +5,12 @@ import {
   StyledPointText,
   StyledScoreText,
 } from './ui';
-import { PointsType } from '@/types';
+import { PointType } from '@/types';
 
 export type PointsCardProps = {
   index: number;
   deg: number;
-  item: PointsType;
+  item: PointType;
   filter: boolean;
 };
 
@@ -23,7 +23,9 @@ const PointsCard = ({ index, deg, item, filter }: PointsCardProps) => {
       }}
     >
       <UIFlexCenterBox sx={{ position: 'relative', height: '100%' }}>
-        <StyledLocationBox>{item.location}</StyledLocationBox>
+        <StyledLocationBox>
+          {item.userLocation?.location?.name ?? ''}
+        </StyledLocationBox>
         <UIFlexColumnBox
           sx={{
             height: '100%',
