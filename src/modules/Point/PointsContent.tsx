@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PointsCard from './PointsCard';
 import { UIImage } from '@/components/UI';
 import {
@@ -7,12 +7,23 @@ import {
   StyledPointAnimBox,
   StyledSendButton,
 } from './ui';
-import { locationData } from '@/_mock/Points';
+import { PointType } from '@/types';
 
-const PointsContent = () => {
+interface PointsContentProps {
+  points: PointType[];
+}
+
+const PointsContent = ({ points }: PointsContentProps) => {
   const [currDeg, setCurrDeg] = useState(0);
   const [second, setSecond] = useState(1);
-  const rotateAngle = 360 / locationData.length;
+  const rotateAngle = 360 / (points.length == 0 ? 1 : points.length);
+
+  const index = 0;
+
+  useEffect(() => {
+    setCurrDeg(0);
+  }, [index]);
+
   const handleNext = () => {
     if (currDeg - rotateAngle <= -360) {
       setSecond(0);
@@ -52,7 +63,7 @@ const PointsContent = () => {
             transition: `transform ${second}s`,
           }}
         >
-          {locationData.map((item, index) => {
+          {points.map((item, index) => {
             return (
               <PointsCard
                 key={item.id}
@@ -60,8 +71,7 @@ const PointsContent = () => {
                 deg={rotateAngle}
                 item={item}
                 filter={
-                  (locationData.length - currDeg / rotateAngle) %
-                    locationData.length ===
+                  (points.length - currDeg / rotateAngle) % points.length ===
                   index
                 }
               />

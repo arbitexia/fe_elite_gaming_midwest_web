@@ -1,5 +1,4 @@
 export type { LocationItemDataProps } from './home';
-export type { PointsType } from './point';
 export type {
   LocationType,
   GetLocationsParam,
@@ -22,3 +21,4 @@ export type {
 export type { ReduxJson } from './redux.type';
 export type { UserType } from './user.type';
 export type { RoleType } from './role.type';
+export type { UserLocation, PointType, GetPointParam } from './point.type';
