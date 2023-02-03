@@ -69,6 +69,7 @@ export const useAuth = ({
   return {
     isAuthenticated: authState.accessToken ? true : false,
     accessToken: authState.accessToken,
+    me: authState.user,
     onLogin,
     onRegister,
     onVerifyPhone,

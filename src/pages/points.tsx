@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Typography, Box } from '@mui/material';
 import {
   UIContainer,
@@ -7,8 +8,21 @@ import {
 } from '@/components/UI';
 import { DashboardLayout } from '@/layouts';
 import { PointsContent } from '@/modules/Point';
+import { usePoint, useAuth } from '@/hooks';
+import { GetPointParam, UserType } from '@/types';
 
 const MyPoints = () => {
+  const { points, onGetPoints } = usePoint();
+  const { me } = useAuth({});
+
+  useEffect(() => {
+    if (!me) return;
+    let param: GetPointParam = {
+      userId: parseInt((me as UserType.User).id),
+    };
+    onGetPoints(param);
+  }, [me]);
+
   return (
     <DashboardLayout title="My Points">
       <UIContainer sx={{ maxHeight: 'calc(100vh - 86px)' }}>
@@ -39,7 +53,7 @@ const MyPoints = () => {
               height: 'calc(100% - 122px)',
             }}
           >
-            <PointsContent />
+            <PointsContent points={points} />
           </UIFlexColumnBox>
         </Box>
       </UIContainer>

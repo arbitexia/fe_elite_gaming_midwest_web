@@ -80,11 +80,11 @@ export const LocationsDetail = ({ locationItem }: LocationsDetailProps) => {
               navButtonsAlwaysVisible
               sx={{ minHeight: '320px', maxHeight: '400px' }}
             >
-              {locationItem.urls?.map((url, index) => {
+              {locationItem.gallery?.map((gallery, index) => {
                 return (
                   <Box
                     component="img"
-                    src={`/${url}`}
+                    src={`${gallery.asset?.url}`}
                     alt={'carousel'}
                     key={index}
                     sx={{

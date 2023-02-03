@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
-import { UIImage, UIHoverButton } from '@/components/UI';
-import { Typography } from '@mui/material';
+import { UIHoverButton } from '@/components/UI';
+import { Box, Typography } from '@mui/material';
 import { LocationType } from '@/types';
 import { StyledCardBox } from './ui';
 
@@ -12,7 +12,16 @@ export const LocationsCard = ({ item }: LocationsCardProps) => {
   const router = useRouter();
   return (
     <StyledCardBox>
-      <UIImage src={item.urls ? item.urls[0] : ''} width={220} height={235} />
+      <Box
+        component="img"
+        src={
+          item.gallery && item.gallery.length > 0
+            ? item.gallery[0].asset?.url
+            : ''
+        }
+        width={220}
+        height={235}
+      />
       <Typography
         sx={{
           mt: '30px',
