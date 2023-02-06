@@ -1,19 +1,19 @@
 import { RewardsCardProgress } from '../cardProgress';
 import { RewardsCardPoint } from '../cardPoint';
-import { RewardItemType } from '@/types';
+import { ProductType } from '@/types';
 import {
   StyledRewardsName,
   StyledRewardsLocation,
   StyledRewardsCardPoint,
-  StyledRewardsSpecKey,
-  StyledRewardsSpecValue,
+  // StyledRewardsSpecKey,
+  // StyledRewardsSpecValue,
 } from '../ui';
 import { UIFlexWrapBox } from '@/components/UI';
 import { Box } from '@mui/material';
 
 export type RewardsInfoBoxProps = {
   myPoint: number;
-  rewardItem: RewardItemType;
+  rewardItem: ProductType;
 };
 
 export const RewardsInfoBox = ({
@@ -23,7 +23,9 @@ export const RewardsInfoBox = ({
   return (
     <>
       <StyledRewardsName>{rewardItem?.name}</StyledRewardsName>
-      <StyledRewardsLocation>{rewardItem?.location}</StyledRewardsLocation>
+      <StyledRewardsLocation>
+        {rewardItem?.location?.name ?? ''}
+      </StyledRewardsLocation>
       <Box mt="29px">
         <RewardsCardPoint itemPoint={rewardItem.point} />
       </Box>
@@ -36,7 +38,7 @@ export const RewardsInfoBox = ({
         </span>
       </StyledRewardsCardPoint>
       <UIFlexWrapBox mt="20px">
-        <Box>
+        {/* <Box>
           {Object.keys(rewardItem.specifications).map((key, index) => {
             return (
               <StyledRewardsSpecKey key={index}>{key}: </StyledRewardsSpecKey>
@@ -51,7 +53,7 @@ export const RewardsInfoBox = ({
               </StyledRewardsSpecValue>
             );
           })}
-        </Box>
+        </Box> */}
       </UIFlexWrapBox>
     </>
   );

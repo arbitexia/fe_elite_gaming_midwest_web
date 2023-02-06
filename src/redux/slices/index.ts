@@ -6,6 +6,15 @@ export {
 } from './app.slice';
 
 export {
+  default as assetReducer,
+  assetSelector,
+  clearAssetMessage,
+  setGalleries,
+  removeGalleryItem,
+  addGalleryItem,
+} from './asset.slice';
+
+export {
   default as authReducer,
   authSelector,
   authorizeCustomer,
@@ -33,3 +42,11 @@ export {
   getPoints,
   resetPointMessage,
 } from './point.slice';
+
+export {
+  default as productReducer,
+  productSelector,
+  getProducts,
+  getProduct,
+  resetProductMessage,
+} from './product.slice';

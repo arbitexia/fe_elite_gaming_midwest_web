@@ -1,14 +1,18 @@
 import { UIFlexWrapBox } from '@/components/UI';
-import { RewardItemType } from '@/types';
+import { ProductType } from '@/types';
 import { Box, Button } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
 import { RewardsInfoBox } from './DetailInfo';
 
 export interface RewardDetailCardProps {
-  rewardItem: RewardItemType;
+  rewardItem: ProductType;
+  myPoint: number | undefined;
 }
 
-export const RewardDetailCard = ({ rewardItem }: RewardDetailCardProps) => {
+export const RewardDetailCard = ({
+  rewardItem,
+  myPoint,
+}: RewardDetailCardProps) => {
   return (
     <UIFlexWrapBox
       sx={{
@@ -17,26 +21,28 @@ export const RewardDetailCard = ({ rewardItem }: RewardDetailCardProps) => {
     >
       <Box sx={{ width: '477px' }}>
         <Carousel navButtonsAlwaysVisible sx={{ height: '450px' }}>
-          {rewardItem.url.map((url, index) => {
-            return (
-              <Box
-                component="img"
-                src={`/${url}`}
-                alt={'carousel'}
-                key={index}
-                sx={{
-                  width: '477px',
-                  height: '415px',
-                  objectFit: 'contain',
-                  borderRadius: '12px',
-                }}
-              />
-            );
+          {rewardItem.gallery?.map((item) => {
+            if (item.asset) {
+              return (
+                <Box
+                  component="img"
+                  src={`/${item.asset.url}`}
+                  alt={'carousel'}
+                  key={item.asset.url}
+                  sx={{
+                    width: '477px',
+                    height: '415px',
+                    objectFit: 'contain',
+                    borderRadius: '12px',
+                  }}
+                />
+              );
+            }
           })}
         </Carousel>
       </Box>
       <Box mt="35px">
-        <RewardsInfoBox rewardItem={rewardItem} myPoint={29000} />
+        <RewardsInfoBox rewardItem={rewardItem} myPoint={myPoint ?? 0} />
         <Button
           sx={{
             mt: '40px',
