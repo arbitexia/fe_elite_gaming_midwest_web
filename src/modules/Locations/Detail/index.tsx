@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { UIFlexWrapBox, UIWrapPanel } from '@/components/UI';
+import { UIFlexWrapBox } from '@/components/UI';
 import { LocationType, ProductType } from '@/types';
 import { Box, Typography } from '@mui/material';
 import mapboxgl from 'mapbox-gl';
@@ -158,13 +158,18 @@ export const LocationsDetail = ({ locationItem }: LocationsDetailProps) => {
         >
           Rewards
         </Typography>
-        <UIWrapPanel
-          sx={{ gap: '15px', width: '100%', height: '827px', overflow: 'auto' }}
+        <UIFlexWrapBox
+          sx={{
+            gap: '15px',
+            width: '100%',
+            maxHeight: '827px',
+            overflow: 'auto',
+          }}
         >
           {rewardsData.map((item) => {
             return <RewardCard item={item} key={item.id} />;
           })}
-        </UIWrapPanel>
+        </UIFlexWrapBox>
       </Box>
     </UIFlexWrapBox>
   );
