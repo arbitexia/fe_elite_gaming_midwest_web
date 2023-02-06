@@ -24,3 +24,8 @@ export type GetLocationsParam = {
 export type GetLocationParam = {
   locationId: number;
 };
+
+export type LocationMenuItemType = {
+  value: string;
+  label: string;
+};

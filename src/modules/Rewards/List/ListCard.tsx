@@ -1,14 +1,14 @@
 import { useRouter } from 'next/router';
 import { UIFlexWrapBox, UIHoverButton, UIImage } from '@/components/UI';
 import { Box, Typography } from '@mui/material';
-import { RewardItemType } from '@/types';
+import { ProductType } from '@/types';
 import { RewardsCardProgress } from '../cardProgress';
 import { RewardsCardPoint } from '../cardPoint';
 import { StyledRewardsCardPoint } from '../ui';
 
 export type RewardsCardProps = {
   point: number;
-  item: RewardItemType;
+  item: ProductType;
 };
 
 export const RewardsCard = ({ point, item }: RewardsCardProps) => {
@@ -30,7 +30,15 @@ export const RewardsCard = ({ point, item }: RewardsCardProps) => {
       }}
     >
       <Box sx={{ position: 'relative' }}>
-        <UIImage src={item.url[0]} width={220} height={235} />
+        <UIImage
+          src={
+            item.gallery && item.gallery.length
+              ? item.gallery[0].asset?.url ?? '/images/noImage.jpg'
+              : '/images/noImage.jpg'
+          }
+          width={220}
+          height={235}
+        />
         <Typography
           sx={{
             position: 'absolute',
@@ -55,7 +63,7 @@ export const RewardsCard = ({ point, item }: RewardsCardProps) => {
             color: 'rgba(255, 255, 255, 0.57)',
           }}
         >
-          {item.location}
+          {item.location?.name}
         </Typography>
       </Box>
       <RewardsCardProgress myPoint={point} itemPoint={item.point} />
