@@ -1,5 +1,5 @@
 export declare namespace AssetType {
-  enum AssetItemType {
+  enum AssetType {
     IMAGE = 'IMAGE',
     VIDEO = 'VIDEO',
     DOCUMENT = 'DOCUMENT',

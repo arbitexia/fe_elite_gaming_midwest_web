@@ -16,21 +16,17 @@ import {
 import { createWrapper } from 'next-redux-wrapper';
 import storage from './storage';
 import {
-  assetReducer,
   authReducer,
   appReducer,
   locationReducer,
   pointReducer,
-  productReducer,
 } from './slices';
 
 const combinedReducer = combineReducers({
   auth: authReducer,
   app: appReducer,
   location: locationReducer,
-  asset: assetReducer,
   point: pointReducer,
-  product: productReducer,
 });
 
 const createStore = () => {
@@ -38,7 +34,7 @@ const createStore = () => {
     key: 'root',
     version: 1,
     storage,
-    whitelist: ['auth', 'app', 'asset', 'location', 'point', 'product'],
+    whitelist: ['auth', 'app', 'location', 'point'],
   };
 
   const persistedReducer = persistReducer(persistConfig, combinedReducer);

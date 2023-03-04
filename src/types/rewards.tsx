@@ -1,9 +1,3 @@
-import { ProductType } from './product.type';
-
-export interface RewardsDetailProps {
-  rewardsItem: ProductType;
-}
-
 export type RewardItemType = {
   id: number;
   name: string;

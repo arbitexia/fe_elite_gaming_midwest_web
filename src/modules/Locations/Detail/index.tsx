@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { UIFlexWrapBox } from '@/components/UI';
-import { LocationType, ProductType } from '@/types';
+import { LocationType } from '@/types';
 import { Box, Typography } from '@mui/material';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import { rewardsData } from '@/_mock/rewards';
 import { RewardCard } from './RewardCard';
 import { StyledLocationCardBox } from './ui';
 import Carousel from 'react-material-ui-carousel';
-import { useProduct } from '@/hooks';
 
 const accessToken =
   'pk.eyJ1Ijoic2FoaWx0aGFrYXJlNTIxIiwiYSI6ImNrbjVvMTkzNDA2MXQydnM2OHJ6aHJvbXEifQ.z5aEqRBTtDMWoxVzf3aGsg';
@@ -19,13 +19,8 @@ export interface LocationsDetailProps {
 export const LocationsDetail = ({ locationItem }: LocationsDetailProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [map, setMap] = useState<mapboxgl.Map>();
-  const { products } = useProduct();
-  const mapNode = useRef(null);
-  const [rewardsData, setRewardsData] = useState<ProductType[]>([]);
 
-  useEffect(() => {
-    setRewardsData(products.filter((x) => x.locationId === locationItem.id));
-  }, products);
+  const mapNode = useRef(null);
 
   useEffect(() => {
     const node = mapNode.current;
@@ -59,7 +54,6 @@ export const LocationsDetail = ({ locationItem }: LocationsDetailProps) => {
       mapboxMap.remove();
     };
   }, []);
-
   return (
     <UIFlexWrapBox sx={{ justifyContent: 'space-between' }} py="45px">
       <Box width="48%">
@@ -159,12 +153,7 @@ export const LocationsDetail = ({ locationItem }: LocationsDetailProps) => {
           Rewards
         </Typography>
         <UIFlexWrapBox
-          sx={{
-            gap: '15px',
-            width: '100%',
-            maxHeight: '827px',
-            overflow: 'auto',
-          }}
+          sx={{ gap: '15px', width: '100%', height: '827px', overflow: 'auto' }}
         >
           {rewardsData.map((item) => {
             return <RewardCard item={item} key={item.id} />;

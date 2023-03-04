@@ -1,14 +1,12 @@
 import { Dialog, IconButton, DialogContent } from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
 import { RewardDetailCard } from '@/modules/Rewards/Detail/DetailCard';
-import { ProductType } from '@/types';
-import { usePoint } from '@/hooks';
-import { useEffect, useState } from 'react';
+import { RewardItemType } from '@/types';
 
 export interface RewardDetailDialogProps {
   open: boolean;
   onClose: () => void;
-  item: ProductType;
+  item: RewardItemType;
 }
 
 export const RewardDetailDialog = ({
@@ -16,15 +14,6 @@ export const RewardDetailDialog = ({
   onClose,
   item,
 }: RewardDetailDialogProps) => {
-  const { points } = usePoint();
-  const [myPoint, setMyPoint] = useState(0);
-
-  useEffect(() => {
-    let point = points.find(
-      (x) => x.userLocation?.locationId === item.locationId
-    );
-    setMyPoint(point?.point ?? 0);
-  }, [points]);
   return (
     <Dialog
       open={open}
@@ -56,7 +45,7 @@ export const RewardDetailDialog = ({
         <CloseIcon />
       </IconButton>
       <DialogContent sx={{ width: '1100px', height: '500px' }}>
-        <RewardDetailCard rewardItem={item} myPoint={myPoint} />
+        <RewardDetailCard rewardItem={item} />
       </DialogContent>
     </Dialog>
   );

@@ -1,10 +1,7 @@
 import { UIFlexWrapBox, UIImage } from '@/components/UI';
 import { Box, Typography } from '@mui/material';
 
-interface RewardsFilterBoxProps {
-  totalPoint: number;
-}
-const RewardsFilterBox = ({ totalPoint }: RewardsFilterBoxProps) => {
+const RewardsFilterBox = () => {
   return (
     <UIFlexWrapBox sx={{ mt: '26px', justifyContent: 'end' }}>
       <Box
@@ -18,7 +15,7 @@ const RewardsFilterBox = ({ totalPoint }: RewardsFilterBoxProps) => {
         }}
       >
         <UIImage src={'images/icons/points-color.svg'} width={29} height={23} />
-        <Typography>My Points : {totalPoint}</Typography>
+        <Typography>My Points : 29000</Typography>
       </Box>
     </UIFlexWrapBox>
   );
