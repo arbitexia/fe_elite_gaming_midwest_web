@@ -38,7 +38,7 @@ function AuthLogin() {
     },
   });
 
-  const handleFormikChange = (name: string, value: string) => {
+  const handleFormikChange = (name: string, value: string, isBlur = false) => {
     let error = '';
     if (name === 'phoneNumber') {
       const phoneRegExp = /^\([0-9]{3}\) [0-9]{3} [0-9]{4}$/i;
@@ -46,7 +46,7 @@ function AuthLogin() {
       else if (!value.match(phoneRegExp) || value.length < 10)
         error = 'Phonenumber is not valid';
     }
-    if (error) appToast({ severity: 'error', message: error });
+    if (error) appToast({ severity: 'error', message: error, isBlur });
     return error;
   };
 
@@ -69,8 +69,10 @@ function AuthLogin() {
               name="phoneNumber"
               placeholder="Phone Number"
               value={formik.values.phoneNumber}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                handleFormikChange('phoneNumber', e.target.value);
+              onBlur={(e) => {
+                handleFormikChange('phoneNumber', e.target.value, true);
+              }}
+              onChange={(e) => {
                 formik.handleChange(e);
               }}
               InputProps={{

@@ -17,7 +17,7 @@ export const LocationsCard = ({ item }: LocationsCardProps) => {
         src={
           item.gallery && item.gallery.length > 0
             ? item.gallery[0].asset?.url
-            : ''
+            : '/images/noImage.jpg'
         }
         width={220}
         height={235}

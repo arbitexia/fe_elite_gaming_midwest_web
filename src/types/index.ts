@@ -1,5 +1,4 @@
 export type { LocationItemDataProps } from './home';
-export type { PointsType } from './point';
 export type {
   LocationType,
   GetLocationsParam,

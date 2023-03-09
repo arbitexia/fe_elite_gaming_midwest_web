@@ -80,22 +80,36 @@ export const LocationsDetail = ({ locationItem }: LocationsDetailProps) => {
               navButtonsAlwaysVisible
               sx={{ minHeight: '320px', maxHeight: '400px' }}
             >
-              {locationItem.gallery?.map((gallery, index) => {
-                return (
-                  <Box
-                    component="img"
-                    src={`${gallery.asset?.url}`}
-                    alt={'carousel'}
-                    key={index}
-                    sx={{
-                      width: '100%',
-                      height: '320px',
-                      objectFit: 'contain',
-                      borderRadius: '12px',
-                    }}
-                  />
-                );
-              })}
+              {locationItem.gallery && locationItem.gallery.length > 0 ? (
+                locationItem.gallery?.map((gallery, index) => {
+                  return (
+                    <Box
+                      component="img"
+                      src={`${gallery.asset?.url}`}
+                      alt={'carousel'}
+                      key={index}
+                      sx={{
+                        width: '100%',
+                        height: '320px',
+                        objectFit: 'contain',
+                        borderRadius: '12px',
+                      }}
+                    />
+                  );
+                })
+              ) : (
+                <Box
+                  component="img"
+                  src={'/images/noImage.jpg'}
+                  alt={'carousel'}
+                  sx={{
+                    width: '100%',
+                    height: '320px',
+                    objectFit: 'contain',
+                    borderRadius: '12px',
+                  }}
+                />
+              )}
             </Carousel>
           </Box>
           <Typography

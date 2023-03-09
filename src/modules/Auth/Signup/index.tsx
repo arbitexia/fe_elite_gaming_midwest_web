@@ -48,7 +48,7 @@ function AuthSignup() {
     },
   });
 
-  const handleFormikChange = (name: string, value: string) => {
+  const handleFormikChange = (name: string, value: string, isBlur = false) => {
     let error = '';
     if (name === 'phoneNumber') {
       const phoneRegExp = /^\([0-9]{3}\) [0-9]{3} [0-9]{4}$/i;
@@ -73,7 +73,7 @@ function AuthSignup() {
         error = 'Invalid Birthday';
       }
     }
-    if (error) appToast({ severity: 'error', message: error });
+    if (error) appToast({ severity: 'error', message: error, isBlur });
     return error;
   };
 
@@ -108,8 +108,10 @@ function AuthSignup() {
               name="phoneNumber"
               placeholder="Phone Number"
               value={formik.values.phoneNumber}
+              onBlur={(e) => {
+                handleFormikChange('phoneNumber', e.target.value, true);
+              }}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                handleFormikChange('phoneNumber', e.target.value);
                 formik.handleChange(e);
               }}
               InputProps={{
@@ -128,8 +130,10 @@ function AuthSignup() {
               id="email"
               name="email"
               value={formik.values.email}
+              onBlur={(e) => {
+                handleFormikChange('phoneNumber', e.target.value, true);
+              }}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                handleFormikChange('email', e.target.value);
                 formik.handleChange(e);
               }}
             />
