@@ -3,8 +3,9 @@ import { UIFlexSpaceBox } from '@/components/UI';
 import { ListItem, ListItemText, Typography, Divider } from '@mui/material';
 import { LocationItemDataProps } from '@/types';
 
-export type LocationItemProps = {
+export interface LocationItemProps {
   data: LocationItemDataProps;
+  key: string
 };
 
 const LocationItem = ({ data }: LocationItemProps) => {

@@ -115,7 +115,7 @@ const LocationContent = () => {
               }}
             >
               {locationData.map((item, index) => {
-                return <LocationItem key={index} data={item} />;
+                return <LocationItem key={`location-item-${index}`} data={item} />;
               })}
             </List>
           </Box>
