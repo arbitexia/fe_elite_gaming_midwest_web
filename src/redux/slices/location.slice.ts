@@ -71,7 +71,7 @@ export const locationSlice = createSlice({
         (state, { payload }: PayloadAction<LocationType[]>) => {
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
-          state.locations = payload;
+          state.locations = payload?.filter((obj) => obj.status === 'OPEN');
         }
       )
       .addCase(getLocations.rejected, (state, { payload }) => {

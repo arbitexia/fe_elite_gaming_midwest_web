@@ -33,3 +33,18 @@ export {
   getPoints,
   resetPointMessage,
 } from './point.slice';
+
+export {
+  default as rewardReducer,
+  rewardSelector,
+  filterRewards,
+  filterRewardsByLocationId,
+  resetRewardMessage,
+} from './reward.slice';
+
+export {
+  default as transactionReducer,
+  transactionSelector,
+  createTransaction,
+  resetTransactionMessage,
+} from './transaction.slice';

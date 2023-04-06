@@ -1,18 +1,19 @@
 import { useRouter } from 'next/router';
-import { UIFlexWrapBox, UIHoverButton, UIImage } from '@/components/UI';
+import { UIFlexWrapBox, UIHoverButton } from '@/components/UI';
 import { Box, Typography } from '@mui/material';
-import { RewardItemType } from '@/types';
+import { RewardType } from '@/types';
 import { RewardsCardProgress } from '../cardProgress';
 import { RewardsCardPoint } from '../cardPoint';
 import { StyledRewardsCardPoint } from '../ui';
 
 export type RewardsCardProps = {
   point: number;
-  item: RewardItemType;
+  item: RewardType.Data;
 };
 
 export const RewardsCard = ({ point, item }: RewardsCardProps) => {
   const router = useRouter();
+  const { product, location } = item;
   return (
     <UIFlexWrapBox
       sx={{
@@ -30,7 +31,20 @@ export const RewardsCard = ({ point, item }: RewardsCardProps) => {
       }}
     >
       <Box sx={{ position: 'relative' }}>
-        <UIImage src={item.url[0]} width={220} height={235} />
+        <Box
+          component="img"
+          sx={{
+            width: '220px',
+            height: '235px',
+            objectFit: 'cover',
+          }}
+          src={
+            product?.gallery?.[0]?.asset?.url
+              ? `${product?.gallery?.[0]?.asset?.url}`
+              : 'images/noImage.jpg'
+          }
+          alt="image"
+        />
         <Typography
           sx={{
             position: 'absolute',
@@ -42,7 +56,7 @@ export const RewardsCard = ({ point, item }: RewardsCardProps) => {
             color: '#FFFFFF',
           }}
         >
-          {item.name}
+          {product?.name}
         </Typography>
         <Typography
           sx={{
@@ -55,23 +69,23 @@ export const RewardsCard = ({ point, item }: RewardsCardProps) => {
             color: 'rgba(255, 255, 255, 0.57)',
           }}
         >
-          {item.location}
+          {location?.name}
         </Typography>
       </Box>
-      <RewardsCardProgress myPoint={point} itemPoint={item.point} />
-      <RewardsCardPoint itemPoint={item.point} />
+      <RewardsCardProgress myPoint={point} itemPoint={product?.point} />
+      <RewardsCardPoint itemPoint={product?.point} />
       <StyledRewardsCardPoint>
         Points Completion:{' '}
         <span>
-          {point}/{item.point}
+          {point}/{product?.point}
         </span>
       </StyledRewardsCardPoint>
       <UIHoverButton
-        disabled={point < item.point ? true : false}
+        disabled={point < product.point ? true : false}
         sx={{ mt: '30px', width: '220px', height: '42px' }}
         onClick={() => router.push(`/rewards/${item.id}`)}
       >
-        {point < item.point ? 'Replenish' : 'Exchange Offer'}
+        {point < product.point ? 'Replenish' : 'Exchange Offer'}
       </UIHoverButton>
     </UIFlexWrapBox>
   );

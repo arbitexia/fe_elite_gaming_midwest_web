@@ -2,6 +2,7 @@ import { PaletteMode } from '@mui/material';
 import { ResponseStatus, CommonType } from './common.type';
 import { LocationType } from './location.type';
 import { PointType } from './point.type';
+import { RewardType } from './rewards.type';
 
 export declare namespace ReduxJson {
   export type CommonReduxData<T> = {
@@ -41,6 +42,23 @@ export declare namespace ReduxJson {
     loading: boolean;
     status: ResponseStatus | null;
     points: PointType[];
+    message: string | null;
+    error: string | null;
+  };
+
+  export type RewardState = {
+    loading: boolean;
+    status: ResponseStatus | null;
+    message: string | null;
+    error: string | null;
+    rewards: RewardType.Data[];
+    availableRewards: RewardType.DataList | null;
+    pageInfo: CommonType.PageInfo | null;
+  };
+
+  export type TransactionState = {
+    loading: boolean;
+    status: ResponseStatus | null;
     message: string | null;
     error: string | null;
   };

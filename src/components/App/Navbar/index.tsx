@@ -133,7 +133,7 @@ export default function AppNavbar(props: Props) {
             {navItems.map((item) => (
               <StyledNavButton
                 key={item}
-                btnType={item}
+                btntype={item}
                 onClick={() => handleNavBtnClick(item)}
                 sx={{
                   color: item.toLowerCase().includes(path)

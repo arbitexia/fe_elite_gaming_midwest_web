@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { UIFlexWrapBox } from '@/components/UI';
-import { LocationType } from '@/types';
+import { UIFlexColumnBox, UIFlexWrapBox } from '@/components/UI';
+import { RewardType } from '@/types';
 import { Box, Typography } from '@mui/material';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { rewardsData } from '@/_mock/rewards';
 import { RewardCard } from './RewardCard';
 import { StyledLocationCardBox } from './ui';
 import Carousel from 'react-material-ui-carousel';
@@ -13,10 +12,10 @@ const accessToken =
   'pk.eyJ1Ijoic2FoaWx0aGFrYXJlNTIxIiwiYSI6ImNrbjVvMTkzNDA2MXQydnM2OHJ6aHJvbXEifQ.z5aEqRBTtDMWoxVzf3aGsg';
 
 export interface LocationsDetailProps {
-  locationItem: LocationType;
+  rewardItem: RewardType.DataList;
 }
 
-export const LocationsDetail = ({ locationItem }: LocationsDetailProps) => {
+export const LocationsDetail = ({ rewardItem }: LocationsDetailProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [map, setMap] = useState<mapboxgl.Map>();
 
@@ -29,10 +28,7 @@ export const LocationsDetail = ({ locationItem }: LocationsDetailProps) => {
       container: node,
       accessToken: accessToken,
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [
-        locationItem.coordinates?.lng ?? 0,
-        locationItem.coordinates?.lat ?? 0,
-      ],
+      center: [rewardItem.coords?.lng ?? 0, rewardItem.coords?.lat ?? 0],
       zoom: 15,
     });
     mapboxMap.on('load', () => {
@@ -43,8 +39,8 @@ export const LocationsDetail = ({ locationItem }: LocationsDetailProps) => {
       markerIcon.style.height = '25px';
       new mapboxgl.Marker(markerIcon)
         .setLngLat({
-          lng: locationItem.coordinates?.lng ?? 0,
-          lat: locationItem.coordinates?.lat ?? 0,
+          lng: rewardItem.coords?.lng ?? 0,
+          lat: rewardItem.coords?.lat ?? 0,
         })
         .addTo(mapboxMap);
     });
@@ -68,11 +64,11 @@ export const LocationsDetail = ({ locationItem }: LocationsDetailProps) => {
           }}
         >
           <span>Location: </span>
-          {`${locationItem.address?.address1 ?? ''} ${
-            locationItem.address?.address2 ?? ''
-          } ${locationItem.address?.city ?? ''} ${
-            locationItem.address?.state ?? ''
-          } ${locationItem.address?.zipcode ?? ''}`}
+          {`${rewardItem.address?.address1 ?? ''} ${
+            rewardItem.address?.address2 ?? ''
+          } ${rewardItem.address?.city ?? ''} ${
+            rewardItem.address?.state ?? ''
+          } ${rewardItem.address?.zipcode ?? ''}`}
         </Typography>
         <StyledLocationCardBox>
           <Box>
@@ -80,8 +76,8 @@ export const LocationsDetail = ({ locationItem }: LocationsDetailProps) => {
               navButtonsAlwaysVisible
               sx={{ minHeight: '320px', maxHeight: '400px' }}
             >
-              {locationItem.gallery && locationItem.gallery.length > 0 ? (
-                locationItem.gallery?.map((gallery, index) => {
+              {rewardItem.gallery && rewardItem.gallery.length > 0 ? (
+                rewardItem.gallery?.map((gallery, index) => {
                   return (
                     <Box
                       component="img"
@@ -152,13 +148,19 @@ export const LocationsDetail = ({ locationItem }: LocationsDetailProps) => {
         >
           Rewards
         </Typography>
-        <UIFlexWrapBox
-          sx={{ gap: '15px', width: '100%', height: '827px', overflow: 'auto' }}
+        <UIFlexColumnBox
+          sx={{
+            gap: '15px',
+            width: '100%',
+            height: '827px',
+            justifyContent: 'flex-start',
+            overflow: 'auto',
+          }}
         >
-          {rewardsData.map((item) => {
-            return <RewardCard item={item} key={item.id} />;
+          {rewardItem.reward?.map((item, index) => {
+            return <RewardCard item={item} key={index} />;
           })}
-        </UIFlexWrapBox>
+        </UIFlexColumnBox>
       </Box>
     </UIFlexWrapBox>
   );
