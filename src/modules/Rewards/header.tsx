@@ -18,11 +18,13 @@ type DropboxType = {
 };
 type RewardHeaderProps = {
   setFilterLocation?: (locationId: number) => void;
+  setFilterPoint?: (pointId: number) => void;
   isFilter?: boolean;
 };
 
 const RewardsHeader = ({
   setFilterLocation,
+  setFilterPoint,
   isFilter = false,
 }: RewardHeaderProps) => {
   const router = useRouter();
@@ -93,7 +95,9 @@ const RewardsHeader = ({
             <Typography>Points</Typography>
             <UISelectBox
               items={pointData}
-              onSelectChange={(value) => console.log(value)}
+              onSelectChange={(value) =>
+                setFilterPoint && setFilterPoint(+value)
+              }
             />
           </StyledFilterBox>
         </UIFlexWrapBox>
