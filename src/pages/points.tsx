@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Typography, Box } from '@mui/material';
 import {
   UIContainer,
@@ -8,12 +8,14 @@ import {
 } from '@/components/UI';
 import { DashboardLayout } from '@/layouts';
 import { PointsContent } from '@/modules/Point';
-import { usePoint, useAuth } from '@/hooks';
-import { GetPointParam, UserType } from '@/types';
+import { usePoint, useAuth, useLocation } from '@/hooks';
+import { GetPointParam, PointType, UserType } from '@/types';
 
 const MyPoints = () => {
   const { points, onGetPoints } = usePoint();
+  const { locations, onGetLocations } = useLocation();
   const { me } = useAuth({});
+  const [userPoints, setUserPoint] = useState<PointType[]>();
 
   useEffect(() => {
     if (!me) return;
@@ -22,6 +24,35 @@ const MyPoints = () => {
     };
     onGetPoints(param);
   }, [me]);
+
+  useEffect(() => {
+    if (locations) {
+      const filteredPoint = locations
+        .filter(
+          (location) =>
+            !points.some(
+              (point) => location.id === point.userLocation?.locationId
+            )
+        )
+        ?.map((obj) => {
+          return {
+            id: 0,
+            userLocationId: 0,
+            userLocation: {
+              id: 0,
+              userId: Number((me as UserType.User)?.id) ?? 0,
+              locationId: obj.id,
+              location: obj,
+              createdAt: obj.createdAt,
+            },
+            point: 0,
+            createdAt: obj.createdAt,
+          };
+        });
+
+      setUserPoint([...points, ...filteredPoint]);
+    }
+  }, [locations]);
 
   return (
     <DashboardLayout title="My Points">
@@ -53,7 +84,7 @@ const MyPoints = () => {
               height: 'calc(100% - 122px)',
             }}
           >
-            <PointsContent points={points} />
+            {userPoints && <PointsContent points={userPoints} />}
           </UIFlexColumnBox>
         </Box>
       </UIContainer>

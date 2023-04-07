@@ -1,7 +1,9 @@
 import { UIFlexWrapBox, UIImage } from '@/components/UI';
+import { usePoint } from '@/hooks';
 import { Box, Typography } from '@mui/material';
 
 const RewardsFilterBox = () => {
+  const { onGetPointCount } = usePoint();
   return (
     <UIFlexWrapBox sx={{ mt: '26px', justifyContent: 'end' }}>
       <Box
@@ -15,7 +17,7 @@ const RewardsFilterBox = () => {
         }}
       >
         <UIImage src={'images/icons/points-color.svg'} width={29} height={23} />
-        <Typography>My Points : 29000</Typography>
+        <Typography>My Points : {onGetPointCount()}</Typography>
       </Box>
     </UIFlexWrapBox>
   );

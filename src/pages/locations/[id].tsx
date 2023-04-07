@@ -1,31 +1,30 @@
+import { useEffect } from 'react';
 import { DashboardLayout } from '@/layouts';
 import { UIContainer } from '@/components/UI';
 import { LocationDetailHeader } from '@/modules/Locations/Detail/Header';
-// import { Divider } from '@mui/material';
 import { LocationsDetail } from '@/modules/Locations/Detail';
-import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-//import { locationsData } from '@/_mock/Locations';
-import { LocationType } from '@/types';
-import { useLocation } from '@/hooks';
+import { useReward } from '@/hooks';
 
 const LocationsById = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { onGetLocationById } = useLocation();
-  const [locationItem, setLocationItem] = useState<
-    LocationType | undefined | null
-  >(null);
+  const { availableRewards, onFilterRewardsByLocationId } = useReward();
   useEffect(() => {
-    setLocationItem(onGetLocationById(parseInt(id as string)));
+    onFilterRewardsByLocationId({
+      filterBy: { locationId: parseInt(id as string) },
+      cursor: { page: 0, size: 1000 },
+    });
   }, [id]);
 
   return (
-    <DashboardLayout title={locationItem ? locationItem.name : 'Rewards'}>
-      {locationItem && (
+    <DashboardLayout
+      title={availableRewards ? availableRewards.name : 'Rewards'}
+    >
+      {availableRewards && (
         <UIContainer sx={{ minHeight: 'calc(100vh - 86px)' }}>
-          <LocationDetailHeader name={locationItem.name} />
-          <LocationsDetail locationItem={locationItem} />
+          <LocationDetailHeader name={availableRewards.name} />
+          <LocationsDetail rewardItem={availableRewards} />
         </UIContainer>
       )}
     </DashboardLayout>

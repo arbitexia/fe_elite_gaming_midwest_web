@@ -1,14 +1,21 @@
 import { UIFlexWrapBox } from '@/components/UI';
-import { RewardItemType } from '@/types';
+import { RewardType } from '@/types';
 import { Box, Button } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
 import { RewardsInfoBox } from './DetailInfo';
 
 export interface RewardDetailCardProps {
-  rewardItem: RewardItemType;
+  myPoint: number;
+  rewardItem: RewardType.Data;
+  onExchange: () => void;
 }
 
-export const RewardDetailCard = ({ rewardItem }: RewardDetailCardProps) => {
+export const RewardDetailCard = ({
+  rewardItem,
+  myPoint,
+  onExchange,
+}: RewardDetailCardProps) => {
+  const { product } = rewardItem;
   return (
     <UIFlexWrapBox
       sx={{
@@ -17,11 +24,12 @@ export const RewardDetailCard = ({ rewardItem }: RewardDetailCardProps) => {
     >
       <Box sx={{ width: '477px' }}>
         <Carousel navButtonsAlwaysVisible sx={{ height: '450px' }}>
-          {rewardItem.url.map((url, index) => {
+          {product?.gallery?.map((obj, index) => {
+            const url = obj.asset?.url ?? 'images/noImage.jpg';
             return (
               <Box
                 component="img"
-                src={`/${url}`}
+                src={`${url}`}
                 alt={'carousel'}
                 key={index}
                 sx={{
@@ -36,7 +44,7 @@ export const RewardDetailCard = ({ rewardItem }: RewardDetailCardProps) => {
         </Carousel>
       </Box>
       <Box mt="35px">
-        <RewardsInfoBox rewardItem={rewardItem} myPoint={29000} />
+        <RewardsInfoBox rewardItem={rewardItem} myPoint={myPoint} />
         <Button
           sx={{
             mt: '40px',
@@ -52,6 +60,8 @@ export const RewardDetailCard = ({ rewardItem }: RewardDetailCardProps) => {
             height: '68px',
             textTransform: 'none',
           }}
+          onClick={onExchange}
+          disabled={myPoint < product.point ? true : false}
         >
           Exchange Offer
         </Button>

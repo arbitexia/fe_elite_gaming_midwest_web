@@ -30,4 +30,7 @@ export declare namespace CommonType {
     data: T[];
     pageInfo: PageInfo;
   };
+  export type Message = {
+    message: string;
+  };
 }
