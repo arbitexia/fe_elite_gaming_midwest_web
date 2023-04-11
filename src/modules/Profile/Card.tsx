@@ -7,9 +7,14 @@ import {
   StyledProfileLabel,
   StyledProfileButton,
 } from './ui';
-import { profileData } from '@/_mock/profile';
+import { UserType } from '@/types';
+import { format } from 'date-fns';
+import { formatPhoneNumber } from '@/libs/data-helper';
 
-export const ProfileCard = () => {
+type ProfileCardProps = {
+  profile: UserType.User;
+};
+export const ProfileCard = ({ profile }: ProfileCardProps) => {
   const router = useRouter();
   const handleEdit = () => {
     router.push('/profile?type=edit');
@@ -51,15 +56,19 @@ export const ProfileCard = () => {
           <StyledProfileLabel>Full Name</StyledProfileLabel>
           <StyledProfileLabel>Phone number</StyledProfileLabel>
           <StyledProfileLabel>Email</StyledProfileLabel>
-          <StyledProfileLabel>Location</StyledProfileLabel>
+          {/* <StyledProfileLabel>Location</StyledProfileLabel> */}
           <StyledProfileLabel>Birthday</StyledProfileLabel>
         </Box>
         <Box>
-          <StyledProfileValue>{profileData.fullName}</StyledProfileValue>
-          <StyledProfileValue>{profileData.phonenumber}</StyledProfileValue>
-          <StyledProfileValue>{profileData.email}</StyledProfileValue>
-          <StyledProfileValue>{profileData.location}</StyledProfileValue>
-          <StyledProfileValue>{profileData.birthday}</StyledProfileValue>
+          <StyledProfileValue>{`${profile.firstName} ${profile.lastName}`}</StyledProfileValue>
+          <StyledProfileValue>
+            {formatPhoneNumber(profile.phone)}
+          </StyledProfileValue>
+          <StyledProfileValue>{profile.email}</StyledProfileValue>
+          {/* <StyledProfileValue>{profile.firstLogin}</StyledProfileValue> */}
+          <StyledProfileValue>
+            {format(new Date(profile.birthday), 'yyyy-MM-dd')}
+          </StyledProfileValue>
         </Box>
       </UIFlexWrapBox>
     </UIFlexWrapBox>

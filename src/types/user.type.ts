@@ -1,18 +1,11 @@
 import { CommonType } from './common.type';
 import { AssetType } from './asset.type';
 import { RoleType } from './role.type';
+import { UserStatus } from '@/constants';
 
 export declare namespace UserType {
-  enum Status {
-    ACTIVATED = 'ACTIVATED',
-    DISABLED = 'DISABLED',
-    ARCHIVED = 'ARCHIVED',
-    VERIFY_PHONE = 'VERIFY_PHONE',
-    VERIFY_EMAIL = 'VERIFY_EMAIL',
-  }
-
   type User = {
-    id: string;
+    id: number;
     firstName?: string;
     lastName?: string;
     userName?: string;
@@ -21,9 +14,13 @@ export declare namespace UserType {
     phone: string;
     address?: CommonType.Address;
     birthday: string;
-    status: Status;
-    role: RoleType.Role;
+    status: UserStatus;
+    role?: RoleType.Role;
     createdAt?: string;
     updatedAt?: string;
   };
 }
+export type UpdateUserParam = {
+  userId: number;
+  input: UserType.User;
+};

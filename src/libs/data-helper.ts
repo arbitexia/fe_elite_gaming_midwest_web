@@ -1,4 +1,4 @@
-import { UserStatus, RequestStatus, RewardStatus } from '@/constants/Enum';
+import { UserStatus, RequestStatus, RewardStatus } from '@/constants';
 import config from '@/config';
 
 export const getColor = (value: string) => {
@@ -35,3 +35,14 @@ export const getAuthorizeHeader = () => {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
   };
 };
+
+export const formatPhoneNumber = (str: string) => {
+  const cleaned = ('' + str).replace(/\D/g, '');
+  const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+  if (match) {
+    return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+  }
+  return null;
+};
+
+export const convertMBtoBytes = (mbValue: number) => mbValue * 1048576;

@@ -10,6 +10,8 @@ import {
   RegisterType,
   VerifyPhoneParams,
   VerifyPhoneType,
+  UserType,
+  UpdateUserParam,
 } from '@/types';
 
 export enum ResponseStatus {
@@ -70,6 +72,18 @@ export const verifyPhone = createAsyncThunk<
   }
 });
 
+export const updateProfile = createAsyncThunk<
+  UserType.User,
+  UpdateUserParam,
+  { dispatch: AppDispatch; state: RootState }
+>('user/updateProfile', async (params: UpdateUserParam, thunkAPI) => {
+  try {
+    return await authApi.updateUser(params);
+  } catch (error) {
+    const err = error as AxiosError;
+    return thunkAPI.rejectWithValue(err.response?.data);
+  }
+});
 // Actual Slice
 export const authSlice = createSlice({
   name: 'auth',
@@ -162,6 +176,24 @@ export const authSlice = createSlice({
         state.loading = false;
         state.status = ResponseStatus.FAILED;
         state.errorMessage = payload as string;
+      })
+      .addCase(updateProfile.pending, (state) => {
+        state.loading = true;
+        state.status = ResponseStatus.PENDING;
+        state.errorMessage = null;
+      })
+      .addCase(
+        updateProfile.fulfilled,
+        (state, { payload }: PayloadAction<UserType.User>) => {
+          state.loading = false;
+          state.status = ResponseStatus.SUCCESS;
+          state.user = payload;
+        }
+      )
+      .addCase(updateProfile.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.status = ResponseStatus.FAILED;
+        state.errorMessage = null;
       });
   },
 });

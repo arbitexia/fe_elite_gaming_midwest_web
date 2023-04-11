@@ -1,23 +1,44 @@
-export declare namespace AssetType {
-  enum AssetType {
-    IMAGE = 'IMAGE',
-    VIDEO = 'VIDEO',
-    DOCUMENT = 'DOCUMENT',
-  }
+import { Assets } from '@/constants';
 
-  type Gallery = {
-    id: number;
-    assetId: number;
-    victimId: number;
-    model: number;
-    asset?: Asset;
+export type CreateUploadFormParams = {
+  fileName: string;
+};
+
+export type PresignedPostType = {
+  url: string;
+  fields: {
+    Policy: string;
+    [key: string]: string;
   };
+};
 
-  type Asset = {
+export type UpdateGalleryParams = {
+  id: number;
+  assetId: number;
+};
+
+export type CreateAssetParams = {
+  input: {
+    desc: string;
     name: string;
+    type: Assets;
+    url: string;
+  };
+};
+
+export declare namespace AssetType {
+  type Asset = {
     id: number;
+    name: string;
     desc?: string;
     type: string;
     url: string;
+  };
+  type Gallery = {
+    id: number;
+    assetId: number;
+    victimId?: number;
+    asset?: Asset;
+    model?: string;
   };
 }

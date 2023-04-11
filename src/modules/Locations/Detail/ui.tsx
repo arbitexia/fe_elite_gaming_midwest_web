@@ -23,6 +23,7 @@ export const StyledRewardCardBox = styled(UIFlexWrapBox)({
   padding: '20px',
   gap: '20px',
   alignItems: 'center',
+  flexWrap: 'nowrap',
 });
 
 export const StyledRewardImageBox = styled(Box)({

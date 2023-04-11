@@ -3,4 +3,5 @@ export * as locationApi from './location.api';
 export * as pointApi from './point.api';
 export * as rewardApi from './reward.api';
 export * as transactionApi from './transaction.api';
+export * as assetApi from './asset.api';
 export { jwtAxios, setupJwt } from './axios.api';
