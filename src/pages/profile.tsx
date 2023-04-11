@@ -3,17 +3,26 @@ import { UIContainer } from '@/components/UI';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import { Box } from '@mui/material';
 import { ProfileCard, ProfileHeader, ProfileEdit } from '@/modules/Profile';
-import { useAuth } from '@/hooks';
+import { useAsset, useAuth } from '@/hooks';
 import { UpdateUserParam, UserType } from '@/types';
 
 const ProfilePage = () => {
   const router = useRouter();
   const { type } = router.query;
   const { me, onUpdateProfile } = useAuth({});
+  const { onCreateAsset } = useAsset();
 
   const handleEdit = async (value: UpdateUserParam) => {
     try {
-      await onUpdateProfile(value);
+      if (value?.profileFile) {
+        const assetData = await onCreateAsset(value.profileFile);
+        await onUpdateProfile({
+          ...value,
+          input: { ...value.input, avatar: assetData },
+        });
+      } else {
+        await onUpdateProfile(value);
+      }
       router.push('/profile');
     } catch (error) {
       console.log(error);

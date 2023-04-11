@@ -19,6 +19,7 @@ export const ProfileCard = ({ profile }: ProfileCardProps) => {
   const handleEdit = () => {
     router.push('/profile?type=edit');
   };
+
   return (
     <UIFlexWrapBox
       sx={{
@@ -37,18 +38,33 @@ export const ProfileCard = ({ profile }: ProfileCardProps) => {
       </StyledProfileButton>
       <UIFlexCenterBox sx={{ width: '40%', height: '100%' }}>
         <Box sx={{ height: '350px' }}>
-          <Avatar
-            variant="rounded"
-            sx={{
-              bgcolor: 'light-gray',
-              height: '300px',
-              width: '300px',
-              position: 'relative',
-              opacity: '1',
-              borderRadius: '20px',
-            }}
-            // src={}
-          />
+          {profile?.avatar?.url ? (
+            <Box
+              component="img"
+              sx={{
+                height: '300px',
+                width: '300px',
+                position: 'relative',
+                background: 'rgba(196, 196, 196, 0.5)',
+                borderRadius: '20px',
+              }}
+              alt="profile"
+              src={profile.avatar?.url}
+            />
+          ) : (
+            <Avatar
+              variant="rounded"
+              sx={{
+                bgcolor: 'light-gray',
+                height: '300px',
+                width: '300px',
+                position: 'relative',
+                opacity: '1',
+                borderRadius: '20px',
+              }}
+              // src={}
+            />
+          )}
         </Box>
       </UIFlexCenterBox>
       <UIFlexWrapBox sx={{ gap: '80px', height: '100%', alignItems: 'center' }}>

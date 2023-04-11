@@ -23,4 +23,5 @@ export declare namespace UserType {
 export type UpdateUserParam = {
   userId: number;
   input: UserType.User;
+  profileFile?: File;
 };

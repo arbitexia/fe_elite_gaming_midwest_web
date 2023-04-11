@@ -69,6 +69,6 @@ export declare namespace ReduxJson {
     status: ResponseStatus | null;
     message: string | null;
     error: string | null;
-    gallery: AssetType.Gallery | null;
+    avatar: AssetType.Asset | null;
   };
 }
