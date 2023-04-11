@@ -19,10 +19,14 @@ const MyPoints = () => {
 
   useEffect(() => {
     if (!me) return;
-    let param: GetPointParam = {
-      userId: parseInt((me as UserType.User).id),
+    const loadData = async () => {
+      const param: GetPointParam = {
+        userId: (me as UserType.User).id,
+      };
+      await onGetPoints(param);
+      await onGetLocations({ filterBy: { search: '' } });
     };
-    onGetPoints(param);
+    loadData();
   }, [me]);
 
   useEffect(() => {

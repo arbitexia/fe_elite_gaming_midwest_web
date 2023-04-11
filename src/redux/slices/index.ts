@@ -10,6 +10,7 @@ export {
   authSelector,
   authorizeCustomer,
   register,
+  updateProfile,
   verifyPhone,
   getReturnMessage,
   getMe,
@@ -48,3 +49,13 @@ export {
   createTransaction,
   resetTransactionMessage,
 } from './transaction.slice';
+
+export {
+  default as assetReducer,
+  assetSelector,
+  clearAssetMessage,
+  createAsset,
+  // createGallery,
+  updateGallery,
+  // deleteGallery,
+} from './asset.slice';

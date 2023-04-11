@@ -3,6 +3,7 @@ import { ResponseStatus, CommonType } from './common.type';
 import { LocationType } from './location.type';
 import { PointType } from './point.type';
 import { RewardType } from './rewards.type';
+import { AssetType } from './asset.type';
 
 export declare namespace ReduxJson {
   export type CommonReduxData<T> = {
@@ -61,5 +62,13 @@ export declare namespace ReduxJson {
     status: ResponseStatus | null;
     message: string | null;
     error: string | null;
+  };
+
+  export type AssetState = {
+    loading: boolean;
+    status: ResponseStatus | null;
+    message: string | null;
+    error: string | null;
+    gallery: AssetType.Gallery | null;
   };
 }

@@ -11,10 +11,12 @@ import {
   RegisterParams,
   VerifyPhoneParams,
   RefreshTokenPrams,
+  UpdateUserParam,
 } from '@/types';
 import axios from 'axios';
 import config from '@/config';
-import { getHeader } from '@/libs/data-helper';
+import { getAuthorizeHeader, getHeader } from '@/libs/data-helper';
+import { jwtAxios } from './axios.api';
 
 const baseUrl: string = config.API_URL || '';
 const headers = getHeader();
@@ -44,5 +46,12 @@ export const verifyPhone = async (params: VerifyPhoneParams) => {
     params,
     headers
   );
+  return response.data;
+};
+
+export const updateUser = async (params: UpdateUserParam) => {
+  const response = await jwtAxios.put(`/users`, params, {
+    headers: getAuthorizeHeader(),
+  });
   return response.data;
 };

@@ -3,16 +3,32 @@ import { UIContainer } from '@/components/UI';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import { Box } from '@mui/material';
 import { ProfileCard, ProfileHeader, ProfileEdit } from '@/modules/Profile';
+import { useAuth } from '@/hooks';
+import { UpdateUserParam, UserType } from '@/types';
 
 const ProfilePage = () => {
   const router = useRouter();
   const { type } = router.query;
+  const { me, onUpdateProfile } = useAuth({});
+
+  const handleEdit = async (value: UpdateUserParam) => {
+    try {
+      await onUpdateProfile(value);
+      router.push('/profile');
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <DashboardLayout title="Profile">
       <UIContainer>
         <Box sx={{ px: '165px' }}>
           <ProfileHeader />
-          {type === 'edit' ? <ProfileEdit /> : <ProfileCard />}
+          {type === 'edit' ? (
+            <ProfileEdit profile={me as UserType.User} onEdit={handleEdit} />
+          ) : (
+            <ProfileCard profile={me as UserType.User} />
+          )}
         </Box>
       </UIContainer>
     </DashboardLayout>

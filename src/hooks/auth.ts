@@ -5,12 +5,13 @@ import {
   authorizeCustomer,
   register,
   verifyPhone,
+  updateProfile,
   clearAuthMessage,
 } from '@/redux/slices';
 import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from './redux';
 import { useAppToast } from '@/providers';
-import { AuthCallbackStatus, ResponseStatus } from '@/types';
+import { AuthCallbackStatus, ResponseStatus, UpdateUserParam } from '@/types';
 export interface useAuthProps {
   handleAuthVerifySuccess?: () => void;
   handleAuthUserSuccess?: () => void;
@@ -66,12 +67,17 @@ export const useAuth = ({
     dispatch(register({ phone, email, birthday }));
   };
 
+  const onUpdateProfile = async (param: UpdateUserParam) => {
+    await dispatch(updateProfile(param));
+  };
+
   return {
     isAuthenticated: authState.accessToken ? true : false,
     accessToken: authState.accessToken,
     me: authState.user,
     onLogin,
     onRegister,
+    onUpdateProfile,
     onVerifyPhone,
     onLogout: () => {
       dispatch(logoutUser());

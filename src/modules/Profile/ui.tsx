@@ -54,6 +54,9 @@ export const StyledProfileTextField = styled(UIDefaultTextField)({
     lineHeight: '24px',
     color: '#83A9A8',
   },
+  '.Mui-disabled': {
+    WebkitTextFillColor: '#83A9A8 !important',
+  },
 });
 
 export const StyledProfileTextArea = styled(TextField)({
