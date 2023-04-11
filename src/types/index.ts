@@ -29,6 +29,5 @@ export type {
   AssetType,
   CreateUploadFormParams,
   PresignedPostType,
-  UpdateGalleryParams,
   CreateAssetParams,
 } from './asset.type';

@@ -55,7 +55,4 @@ export {
   assetSelector,
   clearAssetMessage,
   createAsset,
-  // createGallery,
-  updateGallery,
-  // deleteGallery,
 } from './asset.slice';

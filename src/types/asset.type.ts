@@ -12,11 +12,6 @@ export type PresignedPostType = {
   };
 };
 
-export type UpdateGalleryParams = {
-  id: number;
-  assetId: number;
-};
-
 export type CreateAssetParams = {
   input: {
     desc: string;

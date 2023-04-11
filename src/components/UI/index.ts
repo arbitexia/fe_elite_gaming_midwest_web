@@ -4,7 +4,7 @@ export {
   UIFlexColumnBox,
   UIFlexWrapBox,
 } from './Box';
-export { UIDefaultButton, UIHoverButton } from './Button';
+export { UIDefaultButton, UIHoverButton, UIActionButton } from './Button';
 export { UIContainer } from './Container';
 export { UIImage } from './Image';
 export { UIWrapPanel } from './WrapPanel';

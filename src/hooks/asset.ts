@@ -2,21 +2,14 @@ import { useEffect } from 'react';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { Assets, ResponseStatus } from '@/constants';
 import { assetApi } from '@/redux/apis';
-import {
-  assetSelector,
-  clearAssetMessage,
-  createAsset,
-  // createGallery,
-  // deleteGallery,
-  updateGallery,
-} from '@/redux/slices';
+import { assetSelector, clearAssetMessage, createAsset } from '@/redux/slices';
 import { useAppToast } from '@/providers';
 import { AssetType, PresignedPostType } from '@/types';
 import { useAppDispatch, useAppSelector } from './redux';
 
 export const useAsset = () => {
   const appToast = useAppToast();
-  const { message, error, loading, gallery, status } =
+  const { message, error, loading, avatar, status } =
     useAppSelector(assetSelector);
   const dispatch = useAppDispatch();
 
@@ -28,15 +21,6 @@ export const useAsset = () => {
       dispatch(clearAssetMessage(''));
     }
   }, [loading]);
-
-  // const onDeleteImage = async (index: number) => {
-  //   if (galleries[index].id !== 0) {
-  //     await dispatch(deleteGallery({ galleryId: galleries[index].id }));
-  //   }
-  //   const newGalleries = [...galleries];
-  //   newGalleries.splice(index, 1);
-  //   dispatch(setGalleries(newGalleries));
-  // };
 
   const uploadImageS3 = async (file: File) => {
     const presignedPostData: PresignedPostType =
@@ -56,7 +40,7 @@ export const useAsset = () => {
 
   const onCreateAsset = async (file: File): Promise<AssetType.Asset> => {
     const url = await uploadImageS3(file);
-    const gallery: PayloadAction<unknown> = await dispatch(
+    const assetData: PayloadAction<unknown> = await dispatch(
       createAsset({
         input: {
           desc: '',
@@ -66,48 +50,11 @@ export const useAsset = () => {
         },
       })
     );
-    return gallery.payload as AssetType.Asset;
-  };
-
-  // const onSaveGallery = async (victimId: number, model: string) => {
-  //   galleries.forEach(async (gallery, index) => {
-  //     if (gallery.id === 0) {
-  //       dispatch(removeGalleryItem(index));
-  //       await dispatch(
-  //         createGallery({
-  //           input: {
-  //             assetId: gallery.assetId,
-  //             victimId,
-  //             model,
-  //           },
-  //         })
-  //       );
-  //     }
-  //   });
-  // };
-
-  const onUpdateGallery = async (index: number, asset: AssetType.Asset) => {
-    // const gallery = galleries[index];
-    // if (gallery.id === 0) {
-    //   const tmp = [...galleries];
-    //   tmp[index] = {
-    //     id: 0,
-    //     assetId: asset.id,
-    //     asset,
-    //   };
-    //   dispatch(setGalleries(tmp));
-    // } else {
-    //   const result = await dispatch(
-    //     updateGallery({ id: gallery.id, assetId: asset.id })
-    //   );
-    // }
+    return assetData.payload as AssetType.Asset;
   };
 
   return {
-    gallery,
+    avatar,
     onCreateAsset,
-    // onSaveGallery,
-    onUpdateGallery,
-    // onDeleteImage,
   };
 };

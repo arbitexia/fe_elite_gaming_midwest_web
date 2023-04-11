@@ -23,6 +23,7 @@ import {
   NavbarMenu,
   StyledProfileMenuItem,
 } from './ui';
+import { UserType } from '@/types';
 
 interface Props {
   /**
@@ -40,7 +41,7 @@ export default function AppNavbar(props: Props) {
   const { window } = props;
   const router = useRouter();
   const path = router.asPath.slice(1, router.asPath.length);
-  const { isAuthenticated, onLogout } = useAuth({});
+  const { isAuthenticated, onLogout, me } = useAuth({});
   const [navItems, setNavItems] = useState<string[]>([]);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorElNotifications, setAnchorElNotifications] =
@@ -167,11 +168,28 @@ export default function AppNavbar(props: Props) {
                   aria-haspopup="true"
                   disableRipple
                 >
-                  <Avatar
-                    sx={{ height: 39, width: 39 }}
-                    src={''}
-                    alt={'avatar'}
-                  />
+                  {(me as UserType.User)?.avatar?.url ? (
+                    <Box
+                      component="img"
+                      sx={{
+                        height: 39,
+                        width: 39,
+                        position: 'relative',
+                        background: 'rgba(196, 196, 196, 0.5)',
+                        borderRadius: '30px',
+                        marginRight: 1,
+                      }}
+                      alt="profile"
+                      src={(me as UserType.User).avatar?.url}
+                    />
+                  ) : (
+                    <Avatar
+                      sx={{ height: 39, width: 39 }}
+                      src={''}
+                      alt={'avatar'}
+                    />
+                  )}
+
                   <UIImage
                     src="images/icons/arrow-down.svg"
                     width={14}

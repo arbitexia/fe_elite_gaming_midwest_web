@@ -1,11 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   UIFlexWrapBox,
   UIFlexCenterBox,
   UIFlexColumnBox,
+  UIActionButton,
 } from '@/components/UI';
 import { Box, Avatar, Typography } from '@mui/material';
-import { Edit as EditIcon } from '@mui/icons-material';
+import { Delete, Edit as EditIcon } from '@mui/icons-material';
 import {
   StyledProfileEditLabel,
   StyledProfileButton,
@@ -18,8 +19,6 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { MobileDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { Moment } from 'moment';
 import { useAppToast } from '@/providers';
-import { AssetType } from '@/types';
-import { useAsset } from '@/hooks';
 
 type profileEditProps = {
   profile: UserType.User;
@@ -27,9 +26,8 @@ type profileEditProps = {
 };
 export const ProfileEdit = ({ profile, onEdit }: profileEditProps) => {
   const appToast = useAppToast();
-  const { onCreateAsset } = useAsset();
-
   const [selectedFile, setSelectedFile] = useState<string>();
+  const [uploadPhoto, setUploadPhoto] = useState<File>();
 
   const profileFormik = useFormik({
     initialValues: profile,
@@ -48,6 +46,7 @@ export const ProfileEdit = ({ profile, onEdit }: profileEditProps) => {
           birthday: values.birthday,
           status: profile.status,
         },
+        profileFile: uploadPhoto,
       };
       onEdit(dataToSave);
     },
@@ -79,8 +78,7 @@ export const ProfileEdit = ({ profile, onEdit }: profileEditProps) => {
       return;
     }
     reader.onloadend = async () => {
-      const asset: AssetType.Asset = await onCreateAsset(file);
-      // onUpdateGallery(activeStep, asset);
+      setUploadPhoto(file);
       setSelectedFile(reader.result as string);
     };
     reader.readAsDataURL(file);
@@ -106,14 +104,41 @@ export const ProfileEdit = ({ profile, onEdit }: profileEditProps) => {
         <UIFlexCenterBox sx={{ width: '40%', height: '100%' }}>
           <UIFlexColumnBox
             sx={{
+              position: 'relative',
               height: '350px',
               '& input': {
                 display: 'none',
               },
             }}
           >
+            {selectedFile && (
+              <Box sx={{ position: 'absolute', zIndex: 3, right: 0, top: 12 }}>
+                <UIActionButton
+                  icon={<Delete />}
+                  color="#F14336"
+                  handleClick={() => setSelectedFile(undefined)}
+                  size={24}
+                />
+              </Box>
+            )}
+
             <label htmlFor="photo-upload" style={{ position: 'relative' }}>
               {selectedFile ? (
+                <>
+                  <Box
+                    component="img"
+                    sx={{
+                      height: '300px',
+                      width: '300px',
+                      position: 'relative',
+                      background: 'rgba(196, 196, 196, 0.5)',
+                      borderRadius: '20px',
+                    }}
+                    alt="profile"
+                    src={selectedFile}
+                  />
+                </>
+              ) : profile?.avatar?.url ? (
                 <Box
                   component="img"
                   sx={{
@@ -123,8 +148,8 @@ export const ProfileEdit = ({ profile, onEdit }: profileEditProps) => {
                     background: 'rgba(196, 196, 196, 0.5)',
                     borderRadius: '20px',
                   }}
-                  alt="profile"
-                  src={selectedFile}
+                  alt="avatar"
+                  src={profile.avatar.url}
                 />
               ) : (
                 <>

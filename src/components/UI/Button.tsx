@@ -1,5 +1,4 @@
-import { styled, Button } from '@mui/material';
-
+import { styled, Button, SvgIcon, Typography } from '@mui/material';
 // type UINavButtonProp = {
 //   btnType: string;
 // };
@@ -36,24 +35,41 @@ export const UIHoverButton = styled(Button)({
   },
 });
 
-// export const UINavButton = styled(Button)<UINavButtonProp>(({ btnType }) => ({
-//   background:
-//     btnType === 'Signup'
-//       ? 'radial-gradient(300.75% 955.63% at 85.18% 5.81%, rgba(0, 255, 148, 0.16) 0%, rgba(255, 255, 255, 0.002) 100%), radial-gradient(97.65% 173.77% at -3.15% 77.15%, rgba(14, 71, 112, 0.2) 0%, rgba(24, 77, 89, 0.2) 23.15%, rgba(17, 54, 81, 0) 100%), #001817'
-//       : btnType === 'Login'
-//       ? 'rgba(191, 215, 225, 0.05)'
-//       : 'transparent',
-//   border:
-//     btnType === 'Signup'
-//       ? '1px solid rgba(191, 215, 225, 0.05)'
-//       : btnType === 'Login'
-//       ? '1px solid rgba(137, 200, 198, 0.2)'
-//       : 'transparent',
-//   borderRadius: '8px',
-//   width: '100px',
-//   height: '42px',
-//   fontWeight: '500',
-//   fontSize: '14px',
-//   lineHeight: '21px',
-//   color: '#FFFFFF',
-// }));
+type UIActionButtonProps = {
+  handleClick(event: React.MouseEvent<HTMLButtonElement>): void;
+  icon: React.ReactNode | React.ReactNode[];
+  color: string;
+  title?: string;
+  size?: number;
+};
+
+export const UIActionButton = ({
+  handleClick,
+  icon,
+  color,
+  title,
+  size,
+}: UIActionButtonProps) => {
+  return (
+    <Button onClick={handleClick} sx={{ marginLeft: 3, textTransform: 'none' }}>
+      <SvgIcon
+        sx={{ color: { color }, width: size ?? '17px', height: size ?? '17px' }}
+      >
+        {icon}
+      </SvgIcon>
+      {title && (
+        <Typography
+          sx={{
+            color: { color },
+            fontSize: '13px',
+            fontWeight: 700,
+            marginLeft: '8px',
+            lineHeight: '14px',
+          }}
+        >
+          {title}
+        </Typography>
+      )}
+    </Button>
+  );
+};
