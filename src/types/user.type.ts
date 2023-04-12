@@ -16,6 +16,7 @@ export declare namespace UserType {
     birthday: string;
     status: UserStatus;
     role?: RoleType.Role;
+    coupon?: number;
     createdAt?: string;
     updatedAt?: string;
   };

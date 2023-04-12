@@ -78,11 +78,18 @@ const Rewards = () => {
         <RewardsFilterBox />
         <UIWrapPanel itemSpacing={40} paddingY={60}>
           {rewards?.map((item) => {
-            const point =
+            const userPoint =
               points.find(
                 (p) => p?.userLocation?.locationId === item.locationId
               )?.point ?? 0;
-            return <RewardsCard key={item.id} point={point} item={item} />;
+            return (
+              <RewardsCard
+                key={item.id}
+                userPoint={userPoint}
+                userCoupon={(me as UserType.User)?.coupon ?? 0}
+                item={item}
+              />
+            );
           })}
         </UIWrapPanel>
       </UIContainer>

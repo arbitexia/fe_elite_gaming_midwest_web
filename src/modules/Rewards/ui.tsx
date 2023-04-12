@@ -20,6 +20,13 @@ export const StyledRewardsCardPoint = styled(Typography)({
   },
 });
 
+export const StyledRewardsCardCoupon = styled(Typography)({
+  fontWeight: '600',
+  fontSize: '12px',
+  lineHeight: '14px',
+  color: 'rgba(137, 200, 198, 0.8)',
+});
+
 export const StyledRewardsName = styled(Typography)({
   fontWeight: '600',
   fontSize: '32px',

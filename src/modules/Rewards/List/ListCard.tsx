@@ -4,21 +4,27 @@ import { Box, Typography } from '@mui/material';
 import { RewardType } from '@/types';
 import { RewardsCardProgress } from '../cardProgress';
 import { RewardsCardPoint } from '../cardPoint';
-import { StyledRewardsCardPoint } from '../ui';
+import { StyledRewardsCardCoupon, StyledRewardsCardPoint } from '../ui';
+import { Redeem } from '@mui/icons-material';
 
 export type RewardsCardProps = {
-  point: number;
+  userCoupon: number;
+  userPoint: number;
   item: RewardType.Data;
 };
 
-export const RewardsCard = ({ point, item }: RewardsCardProps) => {
+export const RewardsCard = ({
+  userPoint,
+  userCoupon,
+  item,
+}: RewardsCardProps) => {
   const router = useRouter();
   const { product, location } = item;
   return (
     <UIFlexWrapBox
       sx={{
         width: '260px',
-        height: '460px',
+        height: '470px',
         background: 'rgba(255, 255, 255, 0.05)',
         '&:hover': {
           background: 'rgba(255, 255, 255, 0.2)',
@@ -72,20 +78,36 @@ export const RewardsCard = ({ point, item }: RewardsCardProps) => {
           {location?.name}
         </Typography>
       </Box>
-      <RewardsCardProgress myPoint={point} itemPoint={product?.point} />
-      <RewardsCardPoint itemPoint={product?.point} />
+      <RewardsCardProgress myPoint={userPoint} itemPoint={item?.point ?? 0} />
+      <RewardsCardPoint itemPoint={item?.point ?? 0} />
       <StyledRewardsCardPoint>
         Points Completion:{' '}
         <span>
-          {point}/{product?.point}
+          {userPoint}/{item?.point ?? 0}
         </span>
       </StyledRewardsCardPoint>
+      {item?.coupon && (
+        <UIFlexWrapBox sx={{ alignItems: 'center', mt: '12px' }}>
+          <Redeem
+            style={{ fontSize: '16px', color: 'rgba(137, 200, 198, 0.8)' }}
+          />
+          <StyledRewardsCardCoupon>
+            {item?.coupon} Coupons
+          </StyledRewardsCardCoupon>
+        </UIFlexWrapBox>
+      )}
       <UIHoverButton
-        disabled={point < product.point ? true : false}
-        sx={{ mt: '30px', width: '220px', height: '42px' }}
+        disabled={
+          userPoint >= (item?.point ?? 0) || userCoupon >= (item?.coupon ?? 0)
+            ? false
+            : true
+        }
+        sx={{ mt: '8px', width: '220px', height: '42px' }}
         onClick={() => router.push(`/rewards/${item.id}`)}
       >
-        {point < product.point ? 'Replenish' : 'Exchange Offer'}
+        {userPoint >= (item?.point ?? 0) || userCoupon >= (item?.coupon ?? 0)
+          ? 'Exchange Offer'
+          : 'Replenish'}
       </UIHoverButton>
     </UIFlexWrapBox>
   );
