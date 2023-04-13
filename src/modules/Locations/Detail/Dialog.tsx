@@ -1,8 +1,8 @@
 import { Dialog, IconButton, DialogContent } from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
 import { RewardDetailCard } from '@/modules/Rewards/Detail/DetailCard';
-import { RewardType } from '@/types';
-import { usePoint } from '@/hooks';
+import { RewardType, UserType } from '@/types';
+import { useAuth, usePoint } from '@/hooks';
 
 export interface RewardDetailDialogProps {
   open: boolean;
@@ -18,7 +18,7 @@ export const RewardDetailDialog = ({
   onExchangeOffer,
 }: RewardDetailDialogProps) => {
   const { points } = usePoint();
-
+  const { me } = useAuth({});
   return (
     <Dialog
       open={open}
@@ -52,10 +52,11 @@ export const RewardDetailDialog = ({
       <DialogContent sx={{ width: '1100px', height: '500px' }}>
         <RewardDetailCard
           rewardItem={item}
-          myPoint={
+          userPoint={
             points.find((p) => p?.userLocation?.locationId === item.locationId)
               ?.point ?? 0
           }
+          userCoupon={(me as UserType.User)?.coupon ?? 0}
           onExchange={onExchangeOffer}
         />
       </DialogContent>

@@ -5,14 +5,16 @@ import Carousel from 'react-material-ui-carousel';
 import { RewardsInfoBox } from './DetailInfo';
 
 export interface RewardDetailCardProps {
-  myPoint: number;
+  userPoint: number;
+  userCoupon: number;
   rewardItem: RewardType.Data;
   onExchange: () => void;
 }
 
 export const RewardDetailCard = ({
   rewardItem,
-  myPoint,
+  userPoint,
+  userCoupon,
   onExchange,
 }: RewardDetailCardProps) => {
   const { product } = rewardItem;
@@ -44,7 +46,7 @@ export const RewardDetailCard = ({
         </Carousel>
       </Box>
       <Box mt="35px">
-        <RewardsInfoBox rewardItem={rewardItem} myPoint={myPoint} />
+        <RewardsInfoBox rewardItem={rewardItem} userPoint={userPoint} />
         <Button
           sx={{
             mt: '40px',
@@ -61,7 +63,12 @@ export const RewardDetailCard = ({
             textTransform: 'none',
           }}
           onClick={onExchange}
-          disabled={myPoint < product.point ? true : false}
+          disabled={
+            userPoint >= (rewardItem?.point ?? 0) ||
+            userCoupon >= (rewardItem?.coupon ?? 0)
+              ? false
+              : true
+          }
         >
           Exchange Offer
         </Button>

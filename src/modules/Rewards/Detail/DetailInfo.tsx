@@ -8,15 +8,16 @@ import {
   StyledRewardsSpecKey,
 } from '../ui';
 import { UIFlexWrapBox } from '@/components/UI';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import { Redeem } from '@mui/icons-material';
 
 export type RewardsInfoBoxProps = {
-  myPoint: number;
+  userPoint: number;
   rewardItem: RewardType.Data;
 };
 
 export const RewardsInfoBox = ({
-  myPoint,
+  userPoint,
   rewardItem,
 }: RewardsInfoBoxProps) => {
   const { location, product } = rewardItem;
@@ -24,15 +25,31 @@ export const RewardsInfoBox = ({
     <>
       <StyledRewardsName>{product?.name}</StyledRewardsName>
       <StyledRewardsLocation>{location?.name}</StyledRewardsLocation>
-      <Box mt="29px">
-        <RewardsCardPoint itemPoint={product.point} />
-      </Box>
-
-      <RewardsCardProgress myPoint={myPoint} itemPoint={product.point} />
+      <UIFlexWrapBox sx={{ mt: '29px', gap: 4, alignItems: 'center' }}>
+        <RewardsCardPoint itemPoint={rewardItem?.point} />
+        {rewardItem?.coupon && (
+          <UIFlexWrapBox
+            sx={{
+              alignItems: 'center',
+              mt: '12px',
+              color: 'rgba(137, 200, 198, 0.8)',
+            }}
+          >
+            <Redeem style={{ fontSize: '20px' }} />
+            <Typography sx={{ fontWeight: 600, mt: '4px' }}>
+              {rewardItem?.coupon} Coupons
+            </Typography>
+          </UIFlexWrapBox>
+        )}
+      </UIFlexWrapBox>
+      <RewardsCardProgress
+        myPoint={userPoint}
+        itemPoint={rewardItem?.point ?? 0}
+      />
       <StyledRewardsCardPoint sx={{ fontSize: '16px' }}>
         Points Completion:{' '}
         <span>
-          {myPoint}/{product.point}
+          {userPoint}/{rewardItem?.point ?? 0}
         </span>
       </StyledRewardsCardPoint>
       <UIFlexWrapBox mt="20px">
