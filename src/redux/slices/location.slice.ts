@@ -91,7 +91,6 @@ export const locationSlice = createSlice({
         (state, { payload }: PayloadAction<LocationType>) => {
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
-          console.log(payload);
         }
       )
       .addCase(getLocation.rejected, (state, { payload }) => {

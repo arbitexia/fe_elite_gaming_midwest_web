@@ -78,7 +78,7 @@ const MyPoints = () => {
                 color: '#89C8C6',
               }}
             >
-              My Points
+              My Total Points
             </Typography>
           </UIFlexCenterBox>
           <UIFlexColumnBox

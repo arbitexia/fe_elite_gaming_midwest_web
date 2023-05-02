@@ -31,12 +31,6 @@ export enum AuthCallbackStatus {
   RESET = 'reset',
 }
 
-export enum AwardStatus {
-  ACCEPTED = 'ACCEPTED',
-  DECLINED = 'DECLINED',
-  WAITING = 'WAITING',
-}
-
 export enum MenuAction {
   VIEW = `view`,
   EDIT = `edit`,
