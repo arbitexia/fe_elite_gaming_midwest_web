@@ -85,7 +85,7 @@ function AuthVerify() {
               color: '#008A83',
             }}
           >
-            Reset Code
+            Resend Code
           </Typography>
           <UIFlexSpaceBox sx={{ marginTop: 8, width: 350, mx: 'auto' }}>
             <StyledLinkText sx={{ color: '#1bac8e' }} onClick={handleSignup}>
