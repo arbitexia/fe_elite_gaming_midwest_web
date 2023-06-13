@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react';
 import { UIContainer, UIWrapPanel } from '@/components/UI';
 import { LocationsHeader, LocationsCard } from '@/modules/Locations';
 import { DashboardLayout } from '@/layouts';
-//import { locationsData } from '@/_mock/Locations';
-// import { LocationType, GetLocationsParam } from '@/types';
 import { useLocation } from '@/hooks';
 
 const Locations = () => {

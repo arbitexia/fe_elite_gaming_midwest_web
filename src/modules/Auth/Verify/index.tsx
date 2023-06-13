@@ -12,23 +12,31 @@ import { AuthLogo } from '@/modules/Auth';
 import { useAuth } from '@/hooks';
 import { useFormik } from 'formik';
 import { useAppToast } from '@/providers';
+import { useSelectedLanguage, useTranslation } from 'next-export-i18n';
 
 function AuthVerify() {
+  const { t } = useTranslation();
+  const { lang } = useSelectedLanguage();
   const router = useRouter();
   const appToast = useAppToast();
   const { type } = router.query;
   const { onVerifyPhone } = useAuth({
     handleAuthVerifySuccess: () => {
-      router.push('/points');
+      router.push({
+        pathname: '/points',
+        query: {
+          ...(lang === 'es' && { lang }),
+        },
+      });
     },
   });
 
   const handleFormikChange = (value: string) => {
     let error = '';
     const phoneRegExp = /^[0-9]{4}$/i;
-    if (!value) error = 'Verification Code is required';
+    if (!value) error = t('error.verification-required');
     else if (!value.match(phoneRegExp) || value.length < 4)
-      error = 'Verification Code is not valid';
+      error = t('error.verification-valid');
     if (error) appToast({ severity: 'error', message: error });
     return error;
   };
@@ -46,7 +54,13 @@ function AuthVerify() {
   });
 
   const handleSignup = () => {
-    router.push('/auth?path=signup');
+    router.push({
+      pathname: '/auth',
+      query: {
+        ...(lang === 'es' && { lang }),
+        path: 'signup',
+      },
+    });
   };
 
   return (
@@ -61,7 +75,7 @@ function AuthVerify() {
             textAlign="center"
             sx={{ color: '#D0E4E3', fontSize: '64px' }}
           >
-            {type === 'login' ? 'Log in' : 'Sign up'}
+            {type === 'login' ? t('common.login') : t('common.signup')}
           </Box>
           <Box justifyContent={'center'} flexDirection="row" display={'flex'}>
             <StyledTextFieldWrapper
@@ -71,10 +85,12 @@ function AuthVerify() {
                 // handleFormikChange(e.target.value);
                 formik.handleChange(e);
               }}
-              placeholder="Enter the code we sent to your phone number"
+              placeholder={t('verify.placeholder-verify-phone')}
             />
           </Box>
-          <StyledAuthButton type="submit">Verify Code</StyledAuthButton>
+          <StyledAuthButton type="submit">
+            {t('verify.verify-code')}
+          </StyledAuthButton>
           <Typography
             sx={{
               marginTop: '15px',
@@ -85,15 +101,15 @@ function AuthVerify() {
               color: '#008A83',
             }}
           >
-            Resend Code
+            {t('verify.resend-code')}
           </Typography>
-          <UIFlexSpaceBox sx={{ marginTop: 8, width: 350, mx: 'auto' }}>
+          <UIFlexSpaceBox sx={{ marginTop: 8, minWidth: 350, mx: 'auto' }}>
             <StyledLinkText sx={{ color: '#1bac8e' }} onClick={handleSignup}>
-              + Create New Account
+              + {t('login.create-new-account')}
             </StyledLinkText>
             <Link href="https://admin.elitegaming.rpatdev.com" passHref={true}>
               <StyledLinkText sx={{ color: '#B7B7B7' }}>
-                Login as Administrator
+                {t('login.login-as-administrator')}
               </StyledLinkText>
             </Link>
           </UIFlexSpaceBox>

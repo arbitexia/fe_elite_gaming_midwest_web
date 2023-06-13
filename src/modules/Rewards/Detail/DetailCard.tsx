@@ -3,6 +3,7 @@ import { RewardType } from '@/types';
 import { Box, Button } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
 import { RewardsInfoBox } from './DetailInfo';
+import { useTranslation } from 'next-export-i18n';
 
 export interface RewardDetailCardProps {
   userPoint: number;
@@ -17,6 +18,7 @@ export const RewardDetailCard = ({
   userCoupon,
   onExchange,
 }: RewardDetailCardProps) => {
+  const { t } = useTranslation();
   const { product } = rewardItem;
   return (
     <UIFlexWrapBox
@@ -70,7 +72,7 @@ export const RewardDetailCard = ({
               : true
           }
         >
-          Exchange Offer
+          {t('common.exchange-offer')}
         </Button>
       </Box>
     </UIFlexWrapBox>

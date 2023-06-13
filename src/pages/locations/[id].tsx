@@ -5,8 +5,10 @@ import { LocationDetailHeader } from '@/modules/Locations/Detail/Header';
 import { LocationsDetail } from '@/modules/Locations/Detail';
 import { useRouter } from 'next/router';
 import { useReward } from '@/hooks';
+import { useTranslation } from 'next-export-i18n';
 
 const LocationsById = () => {
+  const { t } = useTranslation();
   const router = useRouter();
   const { id } = router.query;
   const { availableRewards, onFilterRewardsByLocationId } = useReward();
@@ -19,7 +21,7 @@ const LocationsById = () => {
 
   return (
     <DashboardLayout
-      title={availableRewards ? availableRewards.name : 'Rewards'}
+      title={availableRewards ? availableRewards.name : t('common.rewards')}
     >
       {availableRewards && (
         <UIContainer sx={{ minHeight: 'calc(100vh - 86px)' }}>

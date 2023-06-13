@@ -1,7 +1,9 @@
 import { UIFlexWrapBox, UIImage } from '@/components/UI';
 import { Divider, Typography } from '@mui/material';
+import { useTranslation } from 'next-export-i18n';
 
 export const ProfileHeader = () => {
+  const { t } = useTranslation();
   return (
     <>
       <UIFlexWrapBox sx={{ mt: '35px', alignItems: 'center', gap: '12px' }}>
@@ -15,7 +17,7 @@ export const ProfileHeader = () => {
             color: '#89C8C6',
           }}
         >
-          My Profile
+          {t('common.my-profile')}
         </Typography>
       </UIFlexWrapBox>
       <Divider

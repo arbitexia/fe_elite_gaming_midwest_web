@@ -24,6 +24,12 @@ import {
   StyledProfileMenuItem,
 } from './ui';
 import { UserType } from '@/types';
+import {
+  useTranslation,
+  useLanguageQuery,
+  useSelectedLanguage,
+} from 'next-export-i18n';
+import AppLanguageSelector from '../LanguageSelector';
 
 interface Props {
   /**
@@ -34,15 +40,31 @@ interface Props {
 }
 
 const drawerWidth = 240;
-const navDefaultItems = ['Locations', 'News', 'Contact', 'Signup', 'Login'];
-const navAuthItems = ['My Points', 'Rewards', 'Locations'];
-
 export default function AppNavbar(props: Props) {
+  const { t } = useTranslation();
+  const [query] = useLanguageQuery();
+  const { lang } = useSelectedLanguage();
+  const navDefaultItems = [
+    { label: 'header.locations', value: 'Locations' },
+    { label: 'header.news', value: 'News' },
+    { label: 'header.contact', value: 'Contact' },
+    { label: 'header.signup', value: 'Signup' },
+    { label: 'header.login', value: 'Login' },
+  ];
+
+  const navAuthItems = [
+    { label: 'header.my-points', value: 'My Points' },
+    { label: 'header.rewards', value: 'Rewards' },
+    { label: 'header.locations', value: 'Locations' },
+  ];
+
   const { window } = props;
   const router = useRouter();
   const path = router.asPath.slice(1, router.asPath.length);
   const { isAuthenticated, onLogout, me } = useAuth({});
-  const [navItems, setNavItems] = useState<string[]>([]);
+  const [navItems, setNavItems] = useState<{ label: string; value: string }[]>(
+    []
+  );
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorElNotifications, setAnchorElNotifications] =
     useState<null | HTMLElement>(null);
@@ -62,14 +84,14 @@ export default function AppNavbar(props: Props) {
   const mobileDrawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        Elite Gaming <br></br> Mid West
+        {t('header.m-elite-gaming')} <br></br> {t('header.m-mid-west')}
       </Typography>
       <Divider />
       <List>
-        {navItems.map((item: string) => (
-          <ListItem key={item} disablePadding>
+        {navItems.map(({ label, value }) => (
+          <ListItem key={value} disablePadding>
             <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
+              <ListItemText primary={label} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -81,20 +103,51 @@ export default function AppNavbar(props: Props) {
     window !== undefined ? () => window().document.body : undefined;
 
   const handleNavBtnClick = (key: string) => {
-    if (key.includes('Signup') || key.includes('Login'))
-      router.push(`/auth?path=${key.toLowerCase()}`);
-    else if (key.includes('Logout')) onLogout();
-    else if (key === 'My Points') router.push('/points');
-    else router.push(`/${key.toLowerCase()}`);
+    if (key.includes('Signup') || key.includes('Login')) {
+      router.push({
+        pathname: '/auth',
+        query: {
+          ...(query.lang === 'es' && query),
+          path: `${key.toLowerCase()}`,
+        },
+      });
+    } else if (key.includes('Logout')) {
+      onLogout();
+    } else if (key === 'My Points') {
+      router.push({
+        pathname: '/points',
+        query: {
+          ...(lang === 'es' && { lang }),
+        },
+      });
+    } else {
+      router.push({
+        pathname: `/${key.toLowerCase()}`,
+        query: {
+          ...(lang === 'es' && { lang }),
+        },
+      });
+    }
   };
 
   const [dropdownMenuItems, setdropdownMenuItems] = useState([
-    'Profile',
-    'Logout',
+    {
+      value: 'Profile',
+      label: 'common.profile',
+    },
+    {
+      label: 'common.logout',
+      value: 'Logout',
+    },
   ]);
 
   const handleLogo = () => {
-    router.push('/');
+    router.push({
+      pathname: '/',
+      query: {
+        ...(query.lang === 'es' && { lang: query.lang }),
+      },
+    });
   };
 
   return (
@@ -131,22 +184,44 @@ export default function AppNavbar(props: Props) {
           </Box>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', sm: 'flex', gap: '15px' } }}>
-            {navItems.map((item) => (
-              <StyledNavButton
-                key={item}
-                btntype={item}
-                onClick={() => handleNavBtnClick(item)}
-                sx={{
-                  color: item.toLowerCase().includes(path)
-                    ? '#04A49C'
-                    : '#FFFFFF',
-                }}
-              >
-                {item}
-              </StyledNavButton>
-            ))}
+            {navItems.map(({ label, value }) => {
+              if (value === 'Signup') {
+                return (
+                  <>
+                    <AppLanguageSelector />
+                    <StyledNavButton
+                      key={value}
+                      btntype={value}
+                      onClick={() => handleNavBtnClick(value)}
+                      sx={{
+                        color: value.toLowerCase().includes(path)
+                          ? '#04A49C'
+                          : '#FFFFFF',
+                      }}
+                    >
+                      {t(label)}
+                    </StyledNavButton>
+                  </>
+                );
+              }
+              return (
+                <StyledNavButton
+                  key={value}
+                  btntype={value}
+                  onClick={() => handleNavBtnClick(value)}
+                  sx={{
+                    color: value.toLowerCase().includes(path)
+                      ? '#04A49C'
+                      : '#FFFFFF',
+                  }}
+                >
+                  {t(label)}
+                </StyledNavButton>
+              );
+            })}
             {isAuthenticated && (
               <>
+                <AppLanguageSelector sx={{ mx: '0px', ml: '24px' }} />
                 <StyledIconButton
                   onClick={(event: React.MouseEvent<HTMLElement>) => {
                     setAnchorElNotifications(event.currentTarget);
@@ -237,9 +312,9 @@ export default function AppNavbar(props: Props) {
             <StyledProfileMenuItem
               disableRipple
               disableTouchRipple
-              onClick={() => handleNavBtnClick(el)}
+              onClick={() => handleNavBtnClick(el.value)}
             >
-              <Typography>{el}</Typography>
+              <Typography>{t(el.label)}</Typography>
             </StyledProfileMenuItem>
           </div>
         ))}

@@ -1,5 +1,6 @@
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { UIFlexCenterBox, UIFlexWrapBox, UIImage } from '@/components/UI';
+import { useTranslation } from 'next-export-i18n';
 
 export type HeroCardProps = {
   data: {
@@ -10,6 +11,7 @@ export type HeroCardProps = {
 };
 
 const HeroCard = ({ data }: HeroCardProps) => {
+  const { t } = useTranslation();
   return (
     <UIFlexWrapBox
       sx={{
@@ -36,6 +38,7 @@ const HeroCard = ({ data }: HeroCardProps) => {
       >
         <UIImage src={data.image} width={44} height={44} />
       </UIFlexCenterBox>
+
       <Typography
         sx={{
           mt: '40px',
@@ -45,10 +48,11 @@ const HeroCard = ({ data }: HeroCardProps) => {
           color: '#FFFFFF',
         }}
       >
-        {data.title}
+        {t(data.title)}
       </Typography>
       <Typography
         sx={{
+          width: '300px',
           mt: '25px',
           fontWeight: '400',
           fontSize: '14px',
@@ -57,7 +61,7 @@ const HeroCard = ({ data }: HeroCardProps) => {
           color: 'rgba(137, 200, 198, 0.8)',
         }}
       >
-        {data.description}
+        {t(data.description)}
       </Typography>
     </UIFlexWrapBox>
   );

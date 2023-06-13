@@ -8,8 +8,11 @@ import { Divider } from '@mui/material';
 import { RewardDetailCard } from '@/modules/Rewards/Detail/DetailCard';
 import { useAuth, usePoint, useReward, useTransaction } from '@/hooks';
 import { TransactionStatus } from '@/types/transaction.type';
+import { useLanguageQuery, useTranslation } from 'next-export-i18n';
 
 const RewardsById = () => {
+  const { t } = useTranslation();
+  const { query } = useLanguageQuery();
   const router = useRouter();
   const { id } = router.query;
   const { me } = useAuth({});
@@ -60,11 +63,18 @@ const RewardsById = () => {
       };
       await onCreateTransaction(dataToSave);
     }
-    router.push('/rewards');
+    router.push({
+      pathname: '/rewards',
+      query: {
+        ...(query && query.lang === 'es' && query),
+      },
+    });
   };
 
   return (
-    <DashboardLayout title={rewardItem ? rewardItem.product.name : 'Rewards'}>
+    <DashboardLayout
+      title={rewardItem ? rewardItem.product.name : t('common.rewards')}
+    >
       <UIContainer sx={{ minHeight: 'calc(100vh - 86px)' }}>
         <RewardsHeader />
         <Divider

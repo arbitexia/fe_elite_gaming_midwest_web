@@ -13,16 +13,33 @@ import { AuthLogo } from '@/modules/Auth';
 import { useAppToast } from '@/providers';
 import { TextMaskCustom } from '../TextMask';
 import { useAuth } from '@/hooks';
+import { useTranslation, useLanguageQuery } from 'next-export-i18n';
 
 function AuthLogin() {
+  const { t } = useTranslation();
+  const [query] = useLanguageQuery();
+
   const router = useRouter();
   const appToast = useAppToast();
   const handleSignup = () => {
-    router.push('/auth?path=signup');
+    router.push({
+      pathname: '/auth',
+      query: {
+        ...(query.lang === 'es' && query),
+        path: 'signup',
+      },
+    });
   };
   const { onLogin } = useAuth({
     handleAuthUserSuccess: () => {
-      router.push('/auth?path=verify&type=login');
+      router.push({
+        pathname: '/auth',
+        query: {
+          ...(query.lang === 'es' && query),
+          path: 'verify',
+          type: 'login',
+        },
+      });
     },
   });
 
@@ -42,9 +59,9 @@ function AuthLogin() {
     let error = '';
     if (name === 'phoneNumber') {
       const phoneRegExp = /^\([0-9]{3}\) [0-9]{3} [0-9]{4}$/i;
-      if (!value) error = 'Phonenumber is required';
+      if (!value) error = t('error.phone-number-required');
       else if (!value.match(phoneRegExp) || value.length < 10)
-        error = 'Phonenumber is not valid';
+        error = t('error.phone-number-valid');
     }
     if (error) appToast({ severity: 'error', message: error, isBlur });
     return error;
@@ -62,12 +79,12 @@ function AuthLogin() {
             textAlign="center"
             sx={{ color: '#D0E4E3', fontSize: '64px' }}
           >
-            Log in
+            {t('common.login')}
           </Box>
           <Box justifyContent={'center'} flexDirection="row" display={'flex'}>
             <StyledTextFieldWrapper
               name="phoneNumber"
-              placeholder="Phone Number"
+              placeholder={t('common.phone-number')}
               value={formik.values.phoneNumber}
               onBlur={(e) => {
                 handleFormikChange('phoneNumber', e.target.value, true);
@@ -80,14 +97,14 @@ function AuthLogin() {
               }}
             />
           </Box>
-          <StyledAuthButton type="submit">Log in</StyledAuthButton>
-          <UIFlexSpaceBox sx={{ marginTop: 8, width: 350, mx: 'auto' }}>
+          <StyledAuthButton type="submit">{t('common.login')}</StyledAuthButton>
+          <UIFlexSpaceBox sx={{ marginTop: 8, minWidth: 350, mx: 'auto' }}>
             <StyledLinkText sx={{ color: '#1bac8e' }} onClick={handleSignup}>
-              + Create New Account
+              + {t('login.create-new-account')}
             </StyledLinkText>
             <Link href="https://admin.elitegaming.rpatdev.com" passHref={true}>
               <StyledLinkText sx={{ color: '#B7B7B7' }}>
-                Login as Administrator
+                {t('login.login-as-administrator')}
               </StyledLinkText>
             </Link>
           </UIFlexSpaceBox>

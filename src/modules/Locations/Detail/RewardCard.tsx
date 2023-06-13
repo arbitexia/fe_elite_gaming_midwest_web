@@ -7,12 +7,15 @@ import { RewardType, UserType } from '@/types';
 import { RewardDetailDialog } from './Dialog';
 import { useAuth, usePoint, useTransaction } from '@/hooks';
 import { TransactionStatus, TransactionType } from '@/types/transaction.type';
-
+import { useLanguageQuery, useTranslation } from 'next-export-i18n';
 export interface RewardCardProps {
   item: RewardType.Data;
 }
 
 export const RewardCard = ({ item }: RewardCardProps) => {
+  const { t } = useTranslation();
+  const { query } = useLanguageQuery();
+
   const router = useRouter();
   const { points } = usePoint();
   const { me } = useAuth({});
@@ -61,7 +64,13 @@ export const RewardCard = ({ item }: RewardCardProps) => {
       };
       await onCreateTransaction(dataToSave);
     }
-    router.push('/rewards');
+
+    router.push({
+      pathname: '/rewards',
+      query: {
+        ...(query && query.lang === 'es' && query),
+      },
+    });
   };
 
   return (
@@ -124,7 +133,7 @@ export const RewardCard = ({ item }: RewardCardProps) => {
         }}
         onClick={handleDetailClick}
       >
-        Details
+        {t('common.details')}
       </UIHoverButton>
       <RewardDetailDialog
         open={openDetail}

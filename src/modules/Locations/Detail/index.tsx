@@ -7,6 +7,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { RewardCard } from './RewardCard';
 import { StyledLocationCardBox } from './ui';
 import Carousel from 'react-material-ui-carousel';
+import { useTranslation } from 'next-export-i18n';
 
 const accessToken =
   'pk.eyJ1Ijoic2FoaWx0aGFrYXJlNTIxIiwiYSI6ImNrbjVvMTkzNDA2MXQydnM2OHJ6aHJvbXEifQ.z5aEqRBTtDMWoxVzf3aGsg';
@@ -16,6 +17,8 @@ export interface LocationsDetailProps {
 }
 
 export const LocationsDetail = ({ rewardItem }: LocationsDetailProps) => {
+  const { t } = useTranslation();
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [map, setMap] = useState<mapboxgl.Map>();
 
@@ -63,7 +66,7 @@ export const LocationsDetail = ({ rewardItem }: LocationsDetailProps) => {
             span: { color: 'rgba(137, 200, 198, 0.5)', fontWeight: 600 },
           }}
         >
-          <span>Location: </span>
+          <span>{t('common.location')}: </span>
           {`${rewardItem.address?.address1 ?? ''} ${
             rewardItem.address?.address2 ?? ''
           } ${rewardItem.address?.city ?? ''} ${
@@ -116,7 +119,7 @@ export const LocationsDetail = ({ rewardItem }: LocationsDetailProps) => {
               color: 'rgba(137, 200, 198, 0.5)',
             }}
           >
-            Map
+            {t('common.map')}
           </Typography>
           <Box
             ref={mapNode}
@@ -146,7 +149,7 @@ export const LocationsDetail = ({ rewardItem }: LocationsDetailProps) => {
             color: 'rgba(137, 200, 198, 0.5)',
           }}
         >
-          Rewards
+          {t('common.rewards')}
         </Typography>
         <UIFlexColumnBox
           sx={{

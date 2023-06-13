@@ -19,12 +19,15 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { MobileDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { Moment } from 'moment';
 import { useAppToast } from '@/providers';
+import { useTranslation } from 'next-export-i18n';
 
 type profileEditProps = {
   profile: UserType.User;
   onEdit: (value: UpdateUserParam) => void;
 };
 export const ProfileEdit = ({ profile, onEdit }: profileEditProps) => {
+  const { t } = useTranslation();
+
   const appToast = useAppToast();
   const [selectedFile, setSelectedFile] = useState<string>();
   const [uploadPhoto, setUploadPhoto] = useState<File>();
@@ -99,7 +102,7 @@ export const ProfileEdit = ({ profile, onEdit }: profileEditProps) => {
         }}
       >
         <StyledProfileButton startIcon={<EditIcon />} type="submit">
-          Save
+          {t('common.save')}
         </StyledProfileButton>
         <UIFlexCenterBox sx={{ width: '40%', height: '100%' }}>
           <UIFlexColumnBox
@@ -180,7 +183,7 @@ export const ProfileEdit = ({ profile, onEdit }: profileEditProps) => {
                       color: '#8C8787',
                     }}
                   >
-                    Edit Photo
+                    {t('common.edit-photo')}
                   </Typography>
                 </>
               )}
@@ -212,11 +215,19 @@ export const ProfileEdit = ({ profile, onEdit }: profileEditProps) => {
           sx={{ gap: '80px', height: '100%', alignItems: 'center' }}
         >
           <Box>
-            <StyledProfileEditLabel>Full Name</StyledProfileEditLabel>
-            <StyledProfileEditLabel>Last Name</StyledProfileEditLabel>
-            <StyledProfileEditLabel>Phone number</StyledProfileEditLabel>
-            <StyledProfileEditLabel>Email</StyledProfileEditLabel>
-            <StyledProfileEditLabel>Birthday</StyledProfileEditLabel>
+            <StyledProfileEditLabel>
+              {t('common.first-name')}
+            </StyledProfileEditLabel>
+            <StyledProfileEditLabel>
+              {t('common.last-name')}
+            </StyledProfileEditLabel>
+            <StyledProfileEditLabel>
+              {t('common.phone-number')}
+            </StyledProfileEditLabel>
+            <StyledProfileEditLabel>{t('common.email')}</StyledProfileEditLabel>
+            <StyledProfileEditLabel>
+              {t('common.birthday')}
+            </StyledProfileEditLabel>
           </Box>
           <Box sx={{ width: '270px' }}>
             <StyledProfileTextField
@@ -254,7 +265,7 @@ export const ProfileEdit = ({ profile, onEdit }: profileEditProps) => {
                   return (
                     <StyledProfileTextField
                       {...params}
-                      placeholder="Birthday"
+                      placeholder={t('common.birthday')}
                     />
                   );
                 }}

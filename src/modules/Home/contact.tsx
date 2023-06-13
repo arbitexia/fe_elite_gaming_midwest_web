@@ -5,8 +5,10 @@ import {
   StyledContactTextArea,
   StyledContactButton,
 } from './ui';
+import { useTranslation } from 'next-export-i18n';
 
 const ContactContent = () => {
+  const { t } = useTranslation();
   return (
     <UIContainer>
       <Box
@@ -29,18 +31,18 @@ const ContactContent = () => {
                 color: '#FFFFFF',
               }}
             >
-              More questions on Elite’s exclusive rewards program?
+              {t('index.contact-title')}
             </Typography>
             <UIFlexWrapBox sx={{ gap: '15px', my: '50px' }}>
-              <StyledContactTextField placeholder="Your Email" />
-              <StyledContactTextField placeholder="Name" />
+              <StyledContactTextField placeholder={t('index.your-email')} />
+              <StyledContactTextField placeholder={t('index.name')} />
               <StyledContactTextArea
-                placeholder="Description"
+                placeholder={t('index.description')}
                 multiline
                 rows={5}
               />
             </UIFlexWrapBox>
-            <StyledContactButton>Get in Touch</StyledContactButton>
+            <StyledContactButton>{t('index.get-in-touch')}</StyledContactButton>
           </Box>
         </UIFlexWrapBox>
       </Box>

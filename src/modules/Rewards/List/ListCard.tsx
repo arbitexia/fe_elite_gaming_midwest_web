@@ -6,6 +6,7 @@ import { RewardsCardProgress } from '../cardProgress';
 import { RewardsCardPoint } from '../cardPoint';
 import { StyledRewardsCardCoupon, StyledRewardsCardPoint } from '../ui';
 import { Redeem } from '@mui/icons-material';
+import { useSelectedLanguage, useTranslation } from 'next-export-i18n';
 
 export type RewardsCardProps = {
   userCoupon: number;
@@ -18,6 +19,8 @@ export const RewardsCard = ({
   userCoupon,
   item,
 }: RewardsCardProps) => {
+  const { t } = useTranslation();
+  const { lang } = useSelectedLanguage();
   const router = useRouter();
   const { product, location } = item;
   return (
@@ -81,7 +84,7 @@ export const RewardsCard = ({
       <RewardsCardProgress myPoint={userPoint} itemPoint={item?.point ?? 0} />
       <RewardsCardPoint itemPoint={item?.point ?? 0} />
       <StyledRewardsCardPoint>
-        Points Completion:{' '}
+        {t('common.points-completion')}:{' '}
         <span>
           {userPoint}/{item?.point ?? 0}
         </span>
@@ -92,7 +95,7 @@ export const RewardsCard = ({
             style={{ fontSize: '16px', color: 'rgba(137, 200, 198, 0.8)' }}
           />
           <StyledRewardsCardCoupon>
-            {item?.coupon} Coupons
+            {item?.coupon} {t('common.coupons')}
           </StyledRewardsCardCoupon>
         </UIFlexWrapBox>
       )}
@@ -103,11 +106,18 @@ export const RewardsCard = ({
             : true
         }
         sx={{ mt: '8px', width: '220px', height: '42px' }}
-        onClick={() => router.push(`/rewards/${item.id}`)}
+        onClick={() => {
+          router.push({
+            pathname: `/rewards/${item.id}`,
+            query: {
+              ...(lang === 'es' && { lang }),
+            },
+          });
+        }}
       >
         {userPoint >= (item?.point ?? 0) || userCoupon >= (item?.coupon ?? 0)
-          ? 'Exchange Offer'
-          : 'Replenish'}
+          ? t('common.exchange-offer')
+          : t('common.replenish')}
       </UIHoverButton>
     </UIFlexWrapBox>
   );

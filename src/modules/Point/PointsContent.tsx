@@ -8,12 +8,14 @@ import {
   StyledSendButton,
 } from './ui';
 import { PointType } from '@/types';
+import { useTranslation } from 'next-export-i18n';
 
 interface PointsContentProps {
   points: PointType[];
 }
 
 const PointsContent = ({ points }: PointsContentProps) => {
+  const { t } = useTranslation();
   const [currDeg, setCurrDeg] = useState(0);
   const [second, setSecond] = useState(1);
   const rotateAngle = 360 / (points.length == 0 ? 1 : points.length);
@@ -95,7 +97,7 @@ const PointsContent = ({ points }: PointsContentProps) => {
           <UIImage src="images/icons/prev.svg" width={30} height={52} />
         </StyledArrowButton>
       </StyledPointMainBox>
-      <StyledSendButton>Send Email</StyledSendButton>
+      <StyledSendButton>{t('point.send-email')}</StyledSendButton>
     </>
   );
 };

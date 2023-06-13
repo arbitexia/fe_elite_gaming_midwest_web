@@ -6,6 +6,7 @@ import {
   Divider,
 } from '@mui/material';
 import { Add as AddIcon, Remove as RemoveIcon } from '@mui/icons-material';
+import { useTranslation } from 'next-export-i18n';
 
 export interface FaqItemProps {
   expanded: string | false;
@@ -22,6 +23,7 @@ const FaqItem = ({
   detail,
   index,
 }: FaqItemProps) => {
+  const { t } = useTranslation();
   return (
     <Accordion
       disableGutters
@@ -60,7 +62,7 @@ const FaqItem = ({
             color: expanded === `panel${index}` ? '#FFFFFF' : '#89C8C6',
           }}
         >
-          {title}
+          {t(title)}
         </Typography>
       </AccordionSummary>
       <AccordionDetails>
@@ -74,7 +76,7 @@ const FaqItem = ({
             color: 'rgba(255, 255, 255, 0.8)',
           }}
         >
-          {detail}
+          {t(detail)}
         </Typography>
       </AccordionDetails>
     </Accordion>

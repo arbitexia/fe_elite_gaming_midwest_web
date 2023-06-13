@@ -13,3 +13,5 @@ export {
   TransactionStatus,
 } from './enum';
 export { productStatus } from './product';
+export { languageMenuItems } from './lang';
+export { heroData, faqData } from './landing';

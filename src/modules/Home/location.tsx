@@ -10,11 +10,13 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { locationData } from '@/_mock/Home';
 import LocationItem from './locationItem';
+import { useTranslation } from 'next-export-i18n';
 
 const accessToken =
   'pk.eyJ1Ijoic2FoaWx0aGFrYXJlNTIxIiwiYSI6ImNrbjVvMTkzNDA2MXQydnM2OHJ6aHJvbXEifQ.z5aEqRBTtDMWoxVzf3aGsg';
 
 const LocationContent = () => {
+  const { t } = useTranslation();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [map, setMap] = useState<mapboxgl.Map>();
 
@@ -60,7 +62,7 @@ const LocationContent = () => {
             color: '#FFFFFF',
           }}
         >
-          Elite Games Locations
+          {t('index.location-title')}
         </Typography>
         <UIFlexSpaceBox
           sx={{
@@ -91,10 +93,10 @@ const LocationContent = () => {
                   color: '#B7B7B7',
                 }}
               >
-                Your Location
+                {t('index.your-location')}
               </Typography>
               <UIDefaultTextField
-                placeholder="Location"
+                placeholder={t('index.location')}
                 value={'Effingham, IL, USA'}
                 sx={{
                   width: 'calc(100% - 125px)',
@@ -115,7 +117,9 @@ const LocationContent = () => {
               }}
             >
               {locationData.map((item, index) => {
-                return <LocationItem key={`location-item-${index}`} data={item} />;
+                return (
+                  <LocationItem key={`location-item-${index}`} data={item} />
+                );
               })}
             </List>
           </Box>
