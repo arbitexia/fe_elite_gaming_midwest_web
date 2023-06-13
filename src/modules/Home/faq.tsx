@@ -2,9 +2,11 @@ import React from 'react';
 import { UIFlexWrapBox, UIContainer } from '@/components/UI';
 import { Box, Typography } from '@mui/material';
 import FaqItem from './faqItem';
-import { faqData } from '@/_mock/Home';
+import { faqData } from '@/constants';
+import { useTranslation } from 'next-export-i18n';
 
 const FaqContent = () => {
+  const { t } = useTranslation();
   const [expanded, setExpanded] = React.useState<string | false>(false);
 
   const handleChange = (panel: string, isExpanded: boolean) => {
@@ -57,7 +59,7 @@ const FaqContent = () => {
               zIndex: 1,
             }}
           >
-            Freqfently Asked Questions
+            {t('index.faq-title')}
           </Typography>
           <UIFlexWrapBox sx={{ mt: '70px', gap: '15px' }}>
             {faqData.map((item, index) => {

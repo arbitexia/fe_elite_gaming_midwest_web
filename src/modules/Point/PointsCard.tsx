@@ -6,6 +6,7 @@ import {
   StyledScoreText,
 } from './ui';
 import { PointType } from '@/types';
+import { useTranslation } from 'next-export-i18n';
 
 export type PointsCardProps = {
   index: number;
@@ -15,6 +16,7 @@ export type PointsCardProps = {
 };
 
 const PointsCard = ({ index, deg, item, filter }: PointsCardProps) => {
+  const { t } = useTranslation();
   return (
     <StyledCardBox
       sx={{
@@ -34,7 +36,7 @@ const PointsCard = ({ index, deg, item, filter }: PointsCardProps) => {
           }}
         >
           <StyledScoreText>{item.point}</StyledScoreText>
-          <StyledPointText>points</StyledPointText>
+          <StyledPointText>{t('point.points')}</StyledPointText>
         </UIFlexColumnBox>
       </UIFlexCenterBox>
     </StyledCardBox>

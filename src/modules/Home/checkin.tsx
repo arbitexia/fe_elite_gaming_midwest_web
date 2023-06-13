@@ -11,15 +11,31 @@ import {
   StyledCheckInDescription,
   StyledCheckInTitle,
 } from './ui';
+import { useTranslation, useLanguageQuery } from 'next-export-i18n';
 
 const CheckInContent = () => {
+  const { t } = useTranslation();
+  const [query] = useLanguageQuery();
   const router = useRouter();
   const handleVerify = () => {
     //TODO Send Phone number to be and fetch verification code
-    router.push('/auth?path=verify&type=login');
+    router.push({
+      pathname: '/auth',
+      query: {
+        ...(query.lang === 'es' && query),
+        path: 'verify',
+        type: 'login',
+      },
+    });
   };
   const handleSignUp = () => {
-    router.push('/auth?path=signup');
+    router.push({
+      pathname: '/auth',
+      query: {
+        ...(query.lang === 'es' && query),
+        path: 'signup',
+      },
+    });
   };
   return (
     <UIContainer>
@@ -32,25 +48,30 @@ const CheckInContent = () => {
       >
         <StyledCheckInCard sx={{ '*': { zIndex: 1 } }}>
           <Box>
-            <StyledCheckInTitle>Check Your Point Balance</StyledCheckInTitle>
+            <StyledCheckInTitle>
+              {t('index.check-your-point-balance')}
+            </StyledCheckInTitle>
             <StyledCheckInDescription>
-              Enter your 10 digit number and your points will be shown below.
+              {t('index.checkin-balance-desc')}
             </StyledCheckInDescription>
           </Box>
-          <UIDefaultTextField sx={{ mt: '35px' }} placeholder="Phone number" />
+          <UIDefaultTextField
+            sx={{ mt: '35px' }}
+            placeholder={t('index.phone-number')}
+          />
           <StyledCheckInButton onClick={handleVerify}>
-            View points
+            {t('index.view-points')}
           </StyledCheckInButton>
         </StyledCheckInCard>
         <StyledCheckInCard sx={{ '*': { zIndex: 1 } }}>
           <Box>
-            <StyledCheckInTitle>Not a member yet?</StyledCheckInTitle>
+            <StyledCheckInTitle>{t('index.not-member-yet')}</StyledCheckInTitle>
             <StyledCheckInDescription>
-              Register today by clicking the button below!
+              {t('index.not-member-yet-desc')}
             </StyledCheckInDescription>
           </Box>
           <StyledCheckInButton onClick={handleSignUp}>
-            Sign up now
+            {t('index.signup-now')}
           </StyledCheckInButton>
         </StyledCheckInCard>
       </UIFlexSpaceBox>

@@ -3,12 +3,16 @@ import { UIHoverButton } from '@/components/UI';
 import { Box, Typography } from '@mui/material';
 import { LocationType } from '@/types';
 import { StyledCardBox } from './ui';
+import { useSelectedLanguage, useTranslation } from 'next-export-i18n';
 
 export type LocationsCardProps = {
   item: LocationType;
 };
 
 export const LocationsCard = ({ item }: LocationsCardProps) => {
+  const { t } = useTranslation();
+  const { lang } = useSelectedLanguage();
+
   const router = useRouter();
   return (
     <StyledCardBox>
@@ -42,7 +46,7 @@ export const LocationsCard = ({ item }: LocationsCardProps) => {
           color: 'rgba(137, 200, 198, 0.8)',
         }}
       >
-        Location:
+        {t('common.location')}:
       </Typography>
       <Typography
         sx={{
@@ -57,14 +61,21 @@ export const LocationsCard = ({ item }: LocationsCardProps) => {
         } ${item.address?.state ?? ''} ${item.address?.zipcode ?? ''}`}
       </Typography>
       <UIHoverButton
-        onClick={() => router.push(`/locations/${item.id}`)}
+        onClick={() => {
+          router.push({
+            pathname: `/locations/${item.id}`,
+            query: {
+              ...(lang === 'es' && { lang }),
+            },
+          });
+        }}
         sx={{
           marginTop: '30px',
           width: '220px',
           height: '42px',
         }}
       >
-        View more
+        {t('common.view-more')}
       </UIHoverButton>
     </StyledCardBox>
   );

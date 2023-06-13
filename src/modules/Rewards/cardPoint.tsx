@@ -1,10 +1,12 @@
 import { UIFlexWrapBox, UIImage } from '@/components/UI';
 import { Typography } from '@mui/material';
+import { useTranslation } from 'next-export-i18n';
 
 type RewardsCardPointProps = {
   itemPoint?: number;
 };
 export const RewardsCardPoint = ({ itemPoint }: RewardsCardPointProps) => {
+  const { t } = useTranslation();
   return (
     <>
       {itemPoint && (
@@ -18,7 +20,9 @@ export const RewardsCardPoint = ({ itemPoint }: RewardsCardPointProps) => {
           }}
         >
           <UIImage src="images/icons/coin.png" width={20} height={20} />
-          <Typography>{itemPoint} points</Typography>
+          <Typography>
+            {itemPoint} {t('common.points')}
+          </Typography>
         </UIFlexWrapBox>
       )}
     </>

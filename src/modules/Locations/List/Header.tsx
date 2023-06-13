@@ -2,6 +2,7 @@ import { UIFlexSpaceBox, UIFlexWrapBox, UIImage } from '@/components/UI';
 import { StyledSearchTextField } from './ui';
 import { Divider, Typography, InputAdornment } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
+import { useTranslation } from 'next-export-i18n';
 
 interface LocationsHeaderProps {
   searchValue: string;
@@ -12,6 +13,7 @@ export const LocationsHeader = ({
   searchValue,
   onValueChange,
 }: LocationsHeaderProps) => {
+  const { t } = useTranslation();
   return (
     <>
       <UIFlexSpaceBox sx={{ mt: '35px' }}>
@@ -26,11 +28,11 @@ export const LocationsHeader = ({
               color: '#89C8C6',
             }}
           >
-            Locations
+            {t('header.locations')}
           </Typography>
         </UIFlexWrapBox>
         <StyledSearchTextField
-          placeholder="Search"
+          placeholder={t('common.search')}
           size="small"
           sx={{
             '.MuiOutlinedInput-root': { width: '160px' },

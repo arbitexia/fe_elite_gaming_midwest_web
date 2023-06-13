@@ -17,8 +17,10 @@ import { MobileDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { Moment } from 'moment';
 import { TextMaskCustom } from '../TextMask';
 import { useAuth } from '@/hooks';
+import { useTranslation } from 'next-export-i18n';
 
 function AuthSignup() {
+  const { t } = useTranslation();
   const [checked, setChecked] = useState(false);
   const router = useRouter();
   const appToast = useAppToast();
@@ -52,25 +54,25 @@ function AuthSignup() {
     let error = '';
     if (name === 'phoneNumber') {
       const phoneRegExp = /^\([0-9]{3}\) [0-9]{3} [0-9]{4}$/i;
-      if (!value) error = 'Phonenumber is required';
+      if (!value) error = t('error.phone-number-required');
       else if (!value.match(phoneRegExp) || value.length < 10)
-        error = 'Phonenumber is not valid';
+        error = t('error.phone-number-valid');
     }
     if (name === 'email') {
       const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
       if (!value) {
-        error = 'Email is required';
+        error = t('error.email-required');
       } else if (!regex.test(value)) {
-        error = 'Invalid Email';
+        error = t('error.invalid-email');
       }
     }
     if (name === 'birthday') {
       const regex =
         /^(0[1-9]|1[012])[-/.](0[1-9]|[12][0-9]|3[01])[-/.](19|20)\d\d$/i;
       if (!value) {
-        error = 'Birthday is required';
+        error = t('error.birthday-required');
       } else if (!regex.test(value)) {
-        error = 'Invalid Birthday';
+        error = t('error.invalid-birthday');
       }
     }
     if (error) appToast({ severity: 'error', message: error, isBlur });
@@ -96,7 +98,7 @@ function AuthSignup() {
             textAlign="center"
             sx={{ color: '#D0E4E3', fontSize: '64px' }}
           >
-            Sign up
+            {t('common.signup')}
           </Box>
           <Box
             justifyContent={'center'}
@@ -106,7 +108,7 @@ function AuthSignup() {
           >
             <StyledTextFieldWrapper
               name="phoneNumber"
-              placeholder="Phone Number"
+              placeholder={t('common.phone-number')}
               value={formik.values.phoneNumber}
               onBlur={(e) => {
                 handleFormikChange('phoneNumber', e.target.value, true);
@@ -126,7 +128,7 @@ function AuthSignup() {
             mb={2}
           >
             <StyledTextFieldWrapper
-              placeholder="Email"
+              placeholder={t('common.email')}
               id="email"
               name="email"
               value={formik.values.email}
@@ -162,7 +164,7 @@ function AuthSignup() {
                   return (
                     <StyledTextFieldWrapper
                       {...params}
-                      placeholder="Birthday"
+                      placeholder={t('common.birthday')}
                     />
                   );
                 }}
@@ -180,13 +182,12 @@ function AuthSignup() {
               }}
             />
             <StyledTextBox>
-              By submitting this form, I confirm that I am at least 21 years of
-              age, accept the{' '}
-              <StyledLinkText>Terms and Conditions.</StyledLinkText>
+              {t('signup.checkbox-desc')}{' '}
+              <StyledLinkText>{t('signup.terms-and-condition')}</StyledLinkText>
             </StyledTextBox>
           </UIFlexSpaceBox>
           <StyledAuthButton disabled={!checked} type="submit">
-            Submit
+            {t('signup.submit')}
           </StyledAuthButton>
         </Box>
       </UIFlexCenterBox>

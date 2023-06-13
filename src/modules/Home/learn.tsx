@@ -1,7 +1,9 @@
 import { UIFlexSpaceBox, UIImage, UIContainer } from '@/components/UI';
 import { Box, Typography, Button } from '@mui/material';
+import { useTranslation } from 'next-export-i18n';
 
 const LearnContent = () => {
+  const { t } = useTranslation();
   return (
     <UIContainer>
       <UIFlexSpaceBox sx={{ width: '100%', height: '700px', p: '110px 165px' }}>
@@ -14,7 +16,7 @@ const LearnContent = () => {
               color: '#FFFFFF',
             }}
           >
-            Win a share of over $270,000 in Gameday Giveaway!
+            {t('index.learn-title')}
           </Typography>
           <Typography
             sx={{
@@ -25,11 +27,7 @@ const LearnContent = () => {
               color: 'rgba(137, 200, 198, 0.8)',
             }}
           >
-            Learn how you could win in our next big sweepstakes! While checking
-            in on the tablet, patrons can also play the “Featured Game” to earn
-            Points that can be redeemed for items on the tablet. These points
-            are universal and can be accrued and redeemed at any participating
-            establishment.
+            {t('index.learn-desc')}
           </Typography>
           <Button
             sx={{
@@ -47,7 +45,7 @@ const LearnContent = () => {
               WebkiWebkitTextStroke: '3px solid rgba(19, 90, 86, 0.56)',
             }}
           >
-            Send to Email
+            {t('index.send-to-email')}
           </Button>
         </Box>
         <UIImage src={'images/learn.svg'} width={475} height={480} />

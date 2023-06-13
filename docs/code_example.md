@@ -1,5 +1,6 @@
 ### Code best practices
-````typescript
+
+```typescript
 import { useRouter } from 'next/router';
 import { Box, Button } from '@mui/material';
 import { AppLayout } from '@/layouts';
@@ -25,10 +26,10 @@ const LoginPage = () => {
       >
         Home
       </Button>
-      <Box>{t('login.login')}</Box>
+      <Box>{t('common.login')}</Box>
     </AppLayout>
   );
 };
 
 export default LoginPage;
-````
+```

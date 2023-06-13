@@ -1,8 +1,10 @@
 import { UIFlexWrapBox, UIImage } from '@/components/UI';
 import { usePoint } from '@/hooks';
 import { Box, Typography } from '@mui/material';
+import { useTranslation } from 'next-export-i18n';
 
 const RewardsFilterBox = () => {
+  const { t } = useTranslation();
   const { onGetPointCount } = usePoint();
   return (
     <UIFlexWrapBox sx={{ mt: '26px', justifyContent: 'end' }}>
@@ -17,7 +19,9 @@ const RewardsFilterBox = () => {
         }}
       >
         <UIImage src={'images/icons/points-color.svg'} width={29} height={23} />
-        <Typography>My Points : {onGetPointCount()}</Typography>
+        <Typography>
+          {t('common.my-total-points')} : {onGetPointCount()}
+        </Typography>
       </Box>
     </UIFlexWrapBox>
   );

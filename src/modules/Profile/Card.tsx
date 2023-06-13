@@ -10,14 +10,23 @@ import {
 import { UserType } from '@/types';
 import { format } from 'date-fns';
 import { formatPhoneNumber } from '@/libs/data-helper';
+import { useSelectedLanguage, useTranslation } from 'next-export-i18n';
 
 type ProfileCardProps = {
   profile: UserType.User;
 };
 export const ProfileCard = ({ profile }: ProfileCardProps) => {
+  const { t } = useTranslation();
+  const { lang } = useSelectedLanguage();
   const router = useRouter();
   const handleEdit = () => {
-    router.push('/profile?type=edit');
+    router.push({
+      pathname: '/profile',
+      query: {
+        ...(lang === 'es' && { lang }),
+        type: 'edit',
+      },
+    });
   };
 
   return (
@@ -34,7 +43,7 @@ export const ProfileCard = ({ profile }: ProfileCardProps) => {
       }}
     >
       <StyledProfileButton startIcon={<EditIcon />} onClick={handleEdit}>
-        Edit
+        {t('common.edit')}
       </StyledProfileButton>
       <UIFlexCenterBox sx={{ width: '40%', height: '100%' }}>
         <Box sx={{ height: '350px' }}>
@@ -69,11 +78,10 @@ export const ProfileCard = ({ profile }: ProfileCardProps) => {
       </UIFlexCenterBox>
       <UIFlexWrapBox sx={{ gap: '80px', height: '100%', alignItems: 'center' }}>
         <Box>
-          <StyledProfileLabel>Full Name</StyledProfileLabel>
-          <StyledProfileLabel>Phone number</StyledProfileLabel>
-          <StyledProfileLabel>Email</StyledProfileLabel>
-          {/* <StyledProfileLabel>Location</StyledProfileLabel> */}
-          <StyledProfileLabel>Birthday</StyledProfileLabel>
+          <StyledProfileLabel>{t('common.full-name')}</StyledProfileLabel>
+          <StyledProfileLabel>{t('common.phone-number')}</StyledProfileLabel>
+          <StyledProfileLabel>{t('common.email')}</StyledProfileLabel>
+          <StyledProfileLabel>{t('common.birthday')}</StyledProfileLabel>
         </Box>
         <Box>
           <StyledProfileValue>{`${profile.firstName} ${profile.lastName}`}</StyledProfileValue>

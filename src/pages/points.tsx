@@ -10,8 +10,10 @@ import { DashboardLayout } from '@/layouts';
 import { PointsContent } from '@/modules/Point';
 import { usePoint, useAuth, useLocation } from '@/hooks';
 import { GetPointParam, PointType, UserType } from '@/types';
+import { useTranslation } from 'next-export-i18n';
 
 const MyPoints = () => {
+  const { t } = useTranslation();
   const { points, onGetPoints } = usePoint();
   const { locations, onGetLocations } = useLocation();
   const { me } = useAuth({});
@@ -78,7 +80,7 @@ const MyPoints = () => {
                 color: '#89C8C6',
               }}
             >
-              My Total Points
+              {t('point.my-total-points')}
             </Typography>
           </UIFlexCenterBox>
           <UIFlexColumnBox

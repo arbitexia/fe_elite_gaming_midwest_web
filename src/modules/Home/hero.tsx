@@ -7,13 +7,22 @@ import {
 } from '@/components/UI';
 import { Box, Typography } from '@mui/material';
 import HeroCard from './heroCard';
-import { heroData } from '@/_mock/Home';
+import { heroData } from '@/constants';
 import { StyledHeroBg, StyledHeroTabletBg } from './ui';
+import { useTranslation, useLanguageQuery } from 'next-export-i18n';
 
 const HeroContent = () => {
+  const { t } = useTranslation();
+  const [query] = useLanguageQuery();
   const router = useRouter();
   const handleSignUp = () => {
-    router.push('/auth?path=signup');
+    router.push({
+      pathname: '/auth',
+      query: {
+        ...(query.lang === 'es' && query),
+        path: 'signup',
+      },
+    });
   };
   return (
     <Box
@@ -43,7 +52,7 @@ const HeroContent = () => {
             zIndex: '3',
           }}
         >
-          Your Trusted Gaming <br />& Amusements Partner
+          {t('index.hero-title1')} <br /> {t('index.hero-title2')}
         </Typography>
         <Typography
           sx={{
@@ -58,14 +67,13 @@ const HeroContent = () => {
             zIndex: '3',
           }}
         >
-          Today, our focus remains steadfast: to provide world-class service to
-          help your business succeed.
+          {t('index.hero-desc')}
         </Typography>
         <UIDefaultButton
           sx={{ mb: '170px', zIndex: '3' }}
           onClick={handleSignUp}
         >
-          Sing up now
+          {t('index.signup-now')}
         </UIDefaultButton>
       </UIFlexCenterBox>
       <Box sx={{ position: 'relative' }}>

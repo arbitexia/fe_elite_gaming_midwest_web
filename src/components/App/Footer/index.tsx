@@ -7,8 +7,10 @@ import {
 } from '@/components/UI';
 import FooterLink from './Link';
 import { StyledSocialButton } from './ui';
+import { useTranslation } from 'next-export-i18n';
 
 const AppFooter = () => {
+  const { t } = useTranslation();
   return (
     <Box
       sx={{
@@ -62,11 +64,11 @@ const AppFooter = () => {
                 color: 'rgba(137, 200, 198, 0.8)',
               }}
             >
-              Our focus remains steadfast:
+              {t('footer.desc1')}
               <br />
-              to provide world-class service
+              {t('footer.desc2')}
               <br />
-              to help your business succeed.
+              {t('footer.desc3')}
             </Typography>
           </Box>
           <UIFlexWrapBox sx={{ gap: '130px' }}>
@@ -79,11 +81,11 @@ const AppFooter = () => {
                   color: '#FFFFFF',
                 }}
               >
-                Menu
+                {t('footer.menu')}
               </Typography>
-              <FooterLink label="Locations" href="/profile" />
-              <FooterLink label="Gaming" href="/game" />
-              <FooterLink label="News" href="/news" />
+              <FooterLink label={t('footer.locations')} href="/profile" />
+              <FooterLink label={t('footer.gaming')} href="/game" />
+              <FooterLink label={t('footer.news')} href="/news" />
             </Box>
             <Box>
               <Typography
@@ -94,7 +96,7 @@ const AppFooter = () => {
                   color: '#FFFFFF',
                 }}
               >
-                Contact
+                {t('footer.contact')}
               </Typography>
               <Typography
                 sx={{

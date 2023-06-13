@@ -5,8 +5,11 @@ import { Box } from '@mui/material';
 import { ProfileCard, ProfileHeader, ProfileEdit } from '@/modules/Profile';
 import { useAsset, useAuth } from '@/hooks';
 import { UpdateUserParam, UserType } from '@/types';
+import { useSelectedLanguage, useTranslation } from 'next-export-i18n';
 
 const ProfilePage = () => {
+  const { t } = useTranslation();
+  const { lang } = useSelectedLanguage();
   const router = useRouter();
   const { type } = router.query;
   const { me, onUpdateProfile } = useAuth({});
@@ -23,13 +26,18 @@ const ProfilePage = () => {
       } else {
         await onUpdateProfile(value);
       }
-      router.push('/profile');
+      router.push({
+        pathname: '/profile',
+        query: {
+          ...(lang === 'es' && { lang }),
+        },
+      });
     } catch (error) {
       console.log(error);
     }
   };
   return (
-    <DashboardLayout title="Profile">
+    <DashboardLayout title={t('common.profile')}>
       <UIContainer>
         <Box sx={{ px: '165px' }}>
           <ProfileHeader />
