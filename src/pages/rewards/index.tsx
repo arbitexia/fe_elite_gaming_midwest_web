@@ -9,9 +9,10 @@ import {
 import { DashboardLayout } from '@/layouts';
 import { useAuth, usePoint, useReward } from '@/hooks';
 import { UserType } from '@/types';
+import LoadingScreen from '@/components/App/LoadingScreen';
 
 const Rewards = () => {
-  const { rewards, onFilterRewards } = useReward();
+  const { loading, rewards, onFilterRewards } = useReward();
   const { points, onGetPoints } = usePoint();
   const { me } = useAuth({});
   const [filterPoint, setFilterPoint] = useState<number>(0);
@@ -77,20 +78,28 @@ const Rewards = () => {
         />
         <RewardsFilterBox />
         <UIWrapPanel itemSpacing={40} paddingY={60}>
-          {rewards?.map((item) => {
-            const userPoint =
-              points.find(
-                (p) => p?.userLocation?.locationId === item.locationId
-              )?.point ?? 0;
-            return (
-              <RewardsCard
-                key={item.id}
-                userPoint={userPoint}
-                userCoupon={(me as UserType.User)?.coupon ?? 0}
-                item={item}
-              />
-            );
-          })}
+          {loading ? (
+            <LoadingScreen />
+          ) : (
+            <>
+              {rewards?.map((item) => {
+                const userPoint =
+                  points.find(
+                    (p) => p?.userLocation?.locationId === item.locationId
+                  )?.point ?? 0;
+                return (
+                  <RewardsCard
+                    key={item.id}
+                    userPoint={userPoint}
+                    userCoupon={(me as UserType.User)?.coupon ?? 0}
+                    item={item}
+                  />
+                );
+              })}
+            </>
+          )}
+
+          {/* {*/}
         </UIWrapPanel>
       </UIContainer>
     </DashboardLayout>

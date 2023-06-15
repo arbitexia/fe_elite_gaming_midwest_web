@@ -14,7 +14,7 @@ import { useTranslation } from 'next-export-i18n';
 
 const MyPoints = () => {
   const { t } = useTranslation();
-  const { points, onGetPoints } = usePoint();
+  const { points, onGetPoints, onSendEmailCustomer } = usePoint();
   const { locations, onGetLocations } = useLocation();
   const { me } = useAuth({});
   const [userPoints, setUserPoint] = useState<PointType[]>();
@@ -60,6 +60,12 @@ const MyPoints = () => {
     }
   }, [locations]);
 
+  const handleSendEmail = async () => {
+    await onSendEmailCustomer({
+      customerId: (me as UserType.User).id,
+    });
+  };
+
   return (
     <DashboardLayout title="My Points">
       <UIContainer sx={{ maxHeight: 'calc(100vh - 86px)' }}>
@@ -90,7 +96,12 @@ const MyPoints = () => {
               height: 'calc(100% - 122px)',
             }}
           >
-            {userPoints && <PointsContent points={userPoints} />}
+            {userPoints && (
+              <PointsContent
+                points={userPoints}
+                onSendEmail={handleSendEmail}
+              />
+            )}
           </UIFlexColumnBox>
         </Box>
       </UIContainer>

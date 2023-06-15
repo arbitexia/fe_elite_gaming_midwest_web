@@ -21,7 +21,6 @@ const AppLanguageSelector = ({ sx }: AppLanguageSelectorProps) => {
   );
   const { lang } = useSelectedLanguage();
   const isLanguageMenuOpen = Boolean(anchorElLanguage);
-  console.log(sx);
   return (
     <Box sx={{ mt: '4px', mx: '24px', ...sx }}>
       <Button

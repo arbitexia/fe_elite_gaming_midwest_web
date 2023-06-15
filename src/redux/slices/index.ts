@@ -33,6 +33,7 @@ export {
   pointSelector,
   getPoints,
   resetPointMessage,
+  sendEmailCustomer,
 } from './point.slice';
 
 export {

@@ -36,6 +36,7 @@ export const useLocation = () => {
   };
 
   return {
+    loading,
     locations,
     pageInfo,
     onGetLocationById,

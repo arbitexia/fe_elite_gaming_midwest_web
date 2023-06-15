@@ -4,3 +4,4 @@ export { default as AppNavbar } from './Navbar';
 export { default as AppFooter } from './Footer';
 export { default as AppToolbar } from './Toolbar';
 export { default as AppLanguageSelector } from './LanguageSelector';
+export { default as AppLoadingScreen } from './LoadingScreen';

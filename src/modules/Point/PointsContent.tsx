@@ -12,9 +12,10 @@ import { useTranslation } from 'next-export-i18n';
 
 interface PointsContentProps {
   points: PointType[];
+  onSendEmail: () => void;
 }
 
-const PointsContent = ({ points }: PointsContentProps) => {
+const PointsContent = ({ points, onSendEmail }: PointsContentProps) => {
   const { t } = useTranslation();
   const [currDeg, setCurrDeg] = useState(0);
   const [second, setSecond] = useState(1);
@@ -97,7 +98,9 @@ const PointsContent = ({ points }: PointsContentProps) => {
           <UIImage src="images/icons/prev.svg" width={30} height={52} />
         </StyledArrowButton>
       </StyledPointMainBox>
-      <StyledSendButton>{t('point.send-email')}</StyledSendButton>
+      <StyledSendButton onClick={onSendEmail}>
+        {t('point.send-email')}
+      </StyledSendButton>
     </>
   );
 };

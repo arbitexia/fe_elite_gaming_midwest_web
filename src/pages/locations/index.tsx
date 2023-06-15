@@ -3,10 +3,11 @@ import { UIContainer, UIWrapPanel } from '@/components/UI';
 import { LocationsHeader, LocationsCard } from '@/modules/Locations';
 import { DashboardLayout } from '@/layouts';
 import { useLocation } from '@/hooks';
+import LoadingScreen from '@/components/App/LoadingScreen';
 
 const Locations = () => {
   const [searchValue, setSearchValue] = useState('');
-  const { locations, onGetLocations } = useLocation();
+  const { loading, locations, onGetLocations } = useLocation();
 
   useEffect(() => {
     onGetLocations({ filterBy: { search: searchValue } });
@@ -20,9 +21,13 @@ const Locations = () => {
           onValueChange={(value) => setSearchValue(value)}
         />
         <UIWrapPanel itemSpacing={40} paddingY={60}>
-          {locations.map((item) => {
-            return <LocationsCard key={item.id} item={item} />;
-          })}
+          {loading ? (
+            <LoadingScreen />
+          ) : (
+            locations.map((item) => {
+              return <LocationsCard key={item.id} item={item} />;
+            })
+          )}
         </UIWrapPanel>
       </UIContainer>
     </DashboardLayout>
