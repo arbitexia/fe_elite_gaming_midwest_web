@@ -27,8 +27,12 @@ export const usePoint = () => {
   };
 
   const onGetPointCount = () => {
-    const totalCount = points?.map((p) => p.point).reduce((a, b) => a + b) ?? 0;
-    return totalCount;
+    if (points && points.length > 0) {
+      const totalCount =
+        points?.map((p) => p.point)?.reduce((a, b) => a + b) ?? 0;
+      return totalCount;
+    }
+    return 0;
   };
 
   const onSendEmailCustomer = async (param: CustomerEmailParam) => {

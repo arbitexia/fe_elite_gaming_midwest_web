@@ -84,7 +84,9 @@ export const ProfileCard = ({ profile }: ProfileCardProps) => {
           <StyledProfileLabel>{t('common.birthday')}</StyledProfileLabel>
         </Box>
         <Box>
-          <StyledProfileValue>{`${profile.firstName} ${profile.lastName}`}</StyledProfileValue>
+          <StyledProfileValue>{`${profile?.firstName ?? ''} ${
+            profile?.lastName ?? ''
+          }`}</StyledProfileValue>
           <StyledProfileValue>
             {formatPhoneNumber(profile.phone)}
           </StyledProfileValue>
