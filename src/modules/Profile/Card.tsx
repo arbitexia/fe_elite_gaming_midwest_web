@@ -1,5 +1,9 @@
 import { useRouter } from 'next/router';
-import { UIFlexWrapBox, UIFlexCenterBox } from '@/components/UI';
+import {
+  UIFlexWrapBox,
+  UIFlexCenterBox,
+  UIDefaultButton,
+} from '@/components/UI';
 import { Box, Avatar } from '@mui/material';
 import { Edit as EditIcon } from '@mui/icons-material';
 import {
@@ -14,8 +18,9 @@ import { useSelectedLanguage, useTranslation } from 'next-export-i18n';
 
 type ProfileCardProps = {
   profile: UserType.User;
+  onRequestCoupon?: () => void;
 };
-export const ProfileCard = ({ profile }: ProfileCardProps) => {
+export const ProfileCard = ({ profile, onRequestCoupon }: ProfileCardProps) => {
   const { t } = useTranslation();
   const { lang } = useSelectedLanguage();
   const router = useRouter();
@@ -97,6 +102,11 @@ export const ProfileCard = ({ profile }: ProfileCardProps) => {
           </StyledProfileValue>
         </Box>
       </UIFlexWrapBox>
+      <UIFlexCenterBox sx={{ position: 'absolute', bottom: 32, width: '100%' }}>
+        <UIDefaultButton onClick={onRequestCoupon}>
+          Request coupon
+        </UIDefaultButton>
+      </UIFlexCenterBox>
     </UIFlexWrapBox>
   );
 };

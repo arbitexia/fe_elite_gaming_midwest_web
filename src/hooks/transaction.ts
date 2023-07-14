@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useAppToast } from '@/providers';
 import {
   createTransaction,
+  requestCouponTransaction,
   resetTransactionMessage,
   transactionSelector,
 } from '@/redux/slices';
@@ -24,7 +25,14 @@ export const useTransaction = () => {
     await dispatch(createTransaction(param));
   };
 
+  const onRequestCouponTransaction = async (
+    param: TransactionType.CouponBody
+  ) => {
+    await dispatch(requestCouponTransaction(param));
+  };
+
   return {
     onCreateTransaction,
+    onRequestCouponTransaction,
   };
 };
