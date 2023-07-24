@@ -30,7 +30,6 @@ const MyPoints = () => {
     };
     loadData();
   }, [me]);
-
   useEffect(() => {
     if (locations) {
       const filteredPoint = locations

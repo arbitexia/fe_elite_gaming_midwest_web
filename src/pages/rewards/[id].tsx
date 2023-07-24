@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { DashboardLayout } from '@/layouts';
 import { UIContainer, UIFlexWrapBox } from '@/components/UI';
 import { RewardsHeader, RewardsFilterBox } from '@/modules/Rewards';
-import { RewardType, TransactionType, UserType } from '@/types';
+import { RewardType, TransactionType, UserCouponType, UserType } from '@/types';
 import { Divider } from '@mui/material';
 import { RewardDetailCard } from '@/modules/Rewards/Detail/DetailCard';
 import { useAuth, usePoint, useReward, useTransaction } from '@/hooks';
@@ -33,7 +33,11 @@ const RewardsById = () => {
     const rewardPoint = rewardItem?.point ?? 0;
     const rewardCoupon = rewardItem?.coupon ?? 0;
     const userPoint = filteredUserPoints?.point ?? 0;
-    const userCoupon = (me as UserType.User)?.coupon ?? 0;
+    const userCoupon =
+      me?.userCoupons
+        ?.filter((c) => c.status === 1)
+        ?.map((obj) => obj.amount)
+        ?.reduce((a, b) => a + b, 0) ?? 0;
     if (userPoint >= rewardPoint) {
       const dataToSave: TransactionType.Body = {
         input: {
@@ -57,8 +61,12 @@ const RewardsById = () => {
           pointId: 0,
           status: TransactionStatus.WAITING,
           type: 'COUPON',
-          amount: rewardPoint,
+          amount: rewardCoupon,
           balance: Number(userCoupon) - Number(rewardCoupon),
+          userCouponCodes: filterCouponCodes(
+            me?.userCoupons ?? [],
+            Number(rewardCoupon)
+          ),
         },
       };
       await onCreateTransaction(dataToSave);
@@ -71,6 +79,19 @@ const RewardsById = () => {
     });
   };
 
+  const filterCouponCodes = (coupons: UserCouponType[], targetSum: number) => {
+    let currentSum = 0;
+    let filteredCodes = [];
+    for (const coupon of coupons) {
+      currentSum += coupon.amount;
+      if (currentSum <= targetSum) {
+        filteredCodes.push(coupon.code);
+      } else {
+        break;
+      }
+    }
+    return filteredCodes;
+  };
   return (
     <DashboardLayout
       title={rewardItem ? rewardItem.product.name : t('common.rewards')}

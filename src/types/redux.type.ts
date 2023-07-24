@@ -4,6 +4,7 @@ import { LocationType } from './location.type';
 import { PointType } from './point.type';
 import { RewardType } from './rewards.type';
 import { AssetType } from './asset.type';
+import { UserType } from './user.type';
 
 export declare namespace ReduxJson {
   export type CommonReduxData<T> = {
@@ -24,7 +25,7 @@ export declare namespace ReduxJson {
     status: ResponseStatus | null;
     accessToken: string;
     refreshToken: string;
-    user: object | null;
+    user: UserType.User | null;
     role: object;
     message: string;
     errorMessage: string | null;

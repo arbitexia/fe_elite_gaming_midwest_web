@@ -17,6 +17,7 @@ export declare namespace UserType {
     status: UserStatus;
     role?: RoleType.Role;
     coupon?: number;
+    userCoupons?: UserCouponType[];
     createdAt?: string;
     updatedAt?: string;
   };
@@ -25,4 +26,13 @@ export type UpdateUserParam = {
   userId: number;
   input: UserType.User;
   profileFile?: File;
+};
+
+export type UserCouponType = {
+  id: number;
+  code: string;
+  type: 'FREE' | 'MATCH';
+  expirationDate: string;
+  amount: number;
+  status: number;
 };
